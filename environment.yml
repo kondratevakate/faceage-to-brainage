@@ -1,0 +1,27 @@
+name: faceage
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy>=1.24
+  - scipy>=1.11
+  - pandas>=2.0
+  - matplotlib>=3.7
+  - nibabel>=5.1
+  - scikit-image>=0.21
+  - pyvista>=0.42
+  - vtk>=9.2
+  - tqdm>=4.65
+  - pillow>=10.0
+  - seaborn>=0.12
+  - ipywidgets>=8.0
+  - jupyterlab
+  - pip
+  - pip:
+    - torch>=2.0
+    - torchvision>=0.15
+    - facenet-pytorch>=2.5.3
+    - pingouin>=0.5
+    # FaceAge is installed from vendor/ — see data/README.md
