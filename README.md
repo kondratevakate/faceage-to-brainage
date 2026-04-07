@@ -106,6 +106,9 @@ faceage-to-brainage/
 └── environment.yml
 ```
 
+See `related works/README.md` for the current shortlist of testable baselines and promising works without confirmed open weights.
+See `related works/research_questions.md` for a dated memo on chronological-age accuracy, face-age versus brain-age gaps, 2D-to-3D avatar reconstruction, and non-defaced dataset opportunities.
+
 ---
 
 ## Setup
@@ -176,6 +179,8 @@ jupyter notebook notebooks/03_ixi_main_experiment.ipynb
 → See `notes/literature_review.md` for a full annotated review including the key question: *does accelerated facial aging correlate with accelerated brain aging?*
 
 ---
+
+Current local code support is strongest for `FaceAge`, `SFCN`, and the SynthSeg-based volumetric pipeline. Treat the current SFCN wrapper in `src/brain_age.py` as provisional until the age-bin decoding is verified.
 
 ## Background: What We Know
 
