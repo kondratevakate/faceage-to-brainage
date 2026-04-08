@@ -1,0 +1,7 @@
+{
+  "ixi_root": "D:\\path\\to\\guest-20260316_094258",
+  "ixi_workbook": "D:\\path\\to\\guest-20260316_094258\\IXI.xls",
+  "simon_bids_root": "D:\\path\\to\\SIMON_data\\SIMON_BIDS",
+  "simon_pheno_csv": "D:\\path\\to\\SIMON_data\\SIMON_pheno (4).csv",
+  "output_root": "D:\\path\\to\\brain_images\\t1_only"
+}

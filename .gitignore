@@ -49,3 +49,6 @@ Thumbs.db
 # IDE
 .vscode/settings.json
 .idea/
+
+# Local machine configs
+config/local/
