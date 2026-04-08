@@ -86,6 +86,7 @@ faceage-to-brainage/
 ├── scripts/
 │   ├── batch_render.py       # Render faces for a whole directory of scans
 │   ├── batch_brain_age.py    # Run SynthSeg on all scans
+│   ├── batch_sfcn.py         # Config-driven SFCN batch inference
 │   └── batch_face_age.py     # Run FaceAge on all rendered PNGs
 │
 ├── notebooks/
@@ -108,6 +109,7 @@ faceage-to-brainage/
 
 See `related works/README.md` for the current shortlist of testable baselines and promising works without confirmed open weights.
 See `related works/research_questions.md` for a dated memo on chronological-age accuracy, face-age versus brain-age gaps, 2D-to-3D avatar reconstruction, and non-defaced dataset opportunities.
+See `notes/brain_age_reproduction.md` for the current SFCN-first reproduction workflow and Colab GPU bring-up checklist.
 
 ---
 
@@ -160,6 +162,9 @@ python scripts/batch_face_age.py results/simon_renders/ results/simon_face_ages.
 
 # 4. Run SynthSeg brain age
 python scripts/batch_brain_age.py data/simon/ results/simon_brain_ages/
+
+# 4b. Run SFCN brain age from local config
+python scripts/batch_sfcn.py --dataset simon --limit 3
 
 # 5. Full IXI analysis
 jupyter notebook notebooks/03_ixi_main_experiment.ipynb

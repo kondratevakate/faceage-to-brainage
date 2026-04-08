@@ -1,0 +1,43 @@
+{
+  "runtime": {
+    "device": "cuda"
+  },
+  "sfcn": {
+    "model_dir": "D:\\path\\to\\faceage-to-brainage\\vendor\\SFCN",
+    "weight_path": "D:\\path\\to\\faceage-to-brainage\\vendor\\SFCN\\brain_age\\run_20190719_00_epoch_best_mae.p",
+    "skullstrip_command": "mri_synthstrip",
+    "skip_skullstrip": false,
+    "keep_skullstripped": false,
+    "age_bins": {
+      "start": 42.0,
+      "step": 1.0,
+      "count": 40
+    }
+  },
+  "datasets": {
+    "ixi": {
+      "manifest_csv": "D:\\path\\to\\brain_images\\t1_only\\ixi\\manifest.csv",
+      "input_path_column": "t1_path",
+      "chron_age_column": "age",
+      "subject_id_column": "subject_id",
+      "scan_id_column": "scan_id",
+      "session_id_column": "",
+      "run_column": "",
+      "acquisition_label_column": "",
+      "preproc_dir": "D:\\path\\to\\brain_images\\t1_only\\ixi\\sfcn_preproc",
+      "output_csv": "D:\\path\\to\\brain_images\\t1_only\\ixi\\sfcn_predictions.csv"
+    },
+    "simon": {
+      "manifest_csv": "D:\\path\\to\\brain_images\\t1_only\\simon\\manifest.csv",
+      "input_path_column": "t1_path",
+      "chron_age_column": "age",
+      "subject_id_column": "subject_id",
+      "session_id_column": "session_id",
+      "scan_id_column": "",
+      "run_column": "run",
+      "acquisition_label_column": "acquisition_label",
+      "preproc_dir": "D:\\path\\to\\brain_images\\t1_only\\simon\\sfcn_preproc",
+      "output_csv": "D:\\path\\to\\brain_images\\t1_only\\simon\\sfcn_predictions.csv"
+    }
+  }
+}

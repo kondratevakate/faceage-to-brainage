@@ -9,9 +9,12 @@ Supported models:
 
 Both functions return a predicted brain age (years, float).
 """
+import importlib.util
+import shutil
 import subprocess
 from pathlib import Path
 
+import nibabel as nib
 import numpy as np
 import pandas as pd
 
@@ -108,10 +111,193 @@ def synthseg_to_brain_age(
 # SFCN wrapper
 # ---------------------------------------------------------------------------
 
+def run_synthstrip(
+    nifti_path: str | Path,
+    out_path: str | Path,
+    mask_path: str | Path | None = None,
+    command: str = "mri_synthstrip",
+) -> Path:
+    """
+    Run FreeSurfer's SynthStrip brain extraction on a single scan.
+
+    Parameters
+    ----------
+    nifti_path : input T1 (.nii / .nii.gz / .mgz)
+    out_path   : path to the skull-stripped output NIfTI
+    mask_path  : optional path to save the brain mask
+    command    : SynthStrip executable name on PATH
+    """
+    nifti_path = Path(nifti_path)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if shutil.which(command) is None:
+        raise RuntimeError(
+            f"{command} is not on PATH. Install FreeSurfer/SynthStrip or set the command in local config."
+        )
+
+    cmd = [command, "-i", str(nifti_path), "-o", str(out_path)]
+    if mask_path is not None:
+        mask_path = Path(mask_path)
+        mask_path.parent.mkdir(parents=True, exist_ok=True)
+        cmd.extend(["-m", str(mask_path)])
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise RuntimeError(f"{command} failed for {nifti_path}:\n{result.stderr}")
+
+    return out_path
+
+
+def prepare_sfcn_input(
+    nifti_path: str | Path,
+    out_path: str | Path,
+    skullstrip: bool = True,
+    skullstrip_command: str = "mri_synthstrip",
+    keep_skullstripped: bool = False,
+) -> Path:
+    """
+    Prepare a T1 volume for SFCN inference.
+
+    Pipeline:
+      1. optional skull stripping via SynthStrip
+      2. RAS reorientation
+      3. 1 mm isotropic conforming
+      4. centered crop/pad to [160, 192, 160]
+    """
+    from .utils import conform_1mm, load_vol, reorient_to_ras
+
+    nifti_path = Path(nifti_path)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    input_for_geometry = nifti_path
+    if "_sfcn_input" in out_path.name:
+        skull_name = out_path.name.replace("_sfcn_input", "_brain")
+    else:
+        skull_name = f"{out_path.stem}_brain.nii.gz"
+    skull_path = out_path.with_name(skull_name)
+
+    if skullstrip:
+        input_for_geometry = run_synthstrip(
+            nifti_path=nifti_path,
+            out_path=skull_path,
+            command=skullstrip_command,
+        )
+
+    img = conform_1mm(reorient_to_ras(load_vol(input_for_geometry)))
+    data = img.get_fdata(dtype=np.float32)
+    cropped = _crop_center(data, (160, 192, 160))
+    prepared = nib.Nifti1Image(cropped.astype(np.float32), img.affine, img.header.copy())
+    nib.save(prepared, str(out_path))
+
+    if skullstrip and not keep_skullstripped and skull_path.exists():
+        skull_path.unlink()
+
+    return out_path
+
+
+def build_sfcn_age_bins(
+    start: float = 42.0,
+    step: float = 1.0,
+    count: int = 40,
+) -> np.ndarray:
+    """Build the age-bin centers used to decode SFCN outputs."""
+    return np.arange(start, start + count * step, step, dtype=np.float32)
+
+
+def decode_sfcn_output(
+    model_output,
+    age_bins: np.ndarray | None = None,
+) -> float:
+    """Decode SFCN log-probabilities into an expected age value."""
+    import torch
+
+    if isinstance(model_output, (list, tuple)):
+        if not model_output:
+            raise ValueError("SFCN model returned an empty output container.")
+        model_output = model_output[0]
+
+    if model_output.ndim > 2:
+        model_output = model_output.reshape(model_output.shape[0], model_output.shape[1], -1).mean(dim=-1)
+    if model_output.ndim == 1:
+        model_output = model_output.unsqueeze(0)
+
+    probs = torch.softmax(model_output, dim=1).squeeze(0).detach().cpu().numpy()
+    bins = build_sfcn_age_bins() if age_bins is None else np.asarray(age_bins, dtype=np.float32)
+    if probs.shape[0] != bins.shape[0]:
+        raise ValueError(
+            f"SFCN output dimension {probs.shape[0]} does not match configured age bins {bins.shape[0]}."
+        )
+
+    return float(np.sum(probs * bins))
+
+
+def _load_sfcn_class(model_dir: str | Path):
+    model_dir = Path(model_dir)
+    candidate_paths = [
+        model_dir / "sfcn.py",
+        model_dir / "dp_model" / "model_files" / "sfcn.py",
+        model_dir / "brain_age" / "sfcn.py",
+    ]
+
+    for candidate in candidate_paths:
+        if not candidate.exists():
+            continue
+        spec = importlib.util.spec_from_file_location("_sfcn_repo_module", candidate)
+        if spec is None or spec.loader is None:
+            continue
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        if hasattr(module, "SFCN"):
+            return module.SFCN
+
+    searched = ", ".join(str(p) for p in candidate_paths)
+    raise FileNotFoundError(f"Could not locate sfcn.py under {model_dir}. Searched: {searched}")
+
+
+def _resolve_sfcn_weight_path(
+    model_dir: str | Path,
+    weight_path: str | Path | None = None,
+) -> Path:
+    if weight_path is not None:
+        resolved = Path(weight_path)
+        if not resolved.exists():
+            raise FileNotFoundError(f"SFCN weight file not found: {resolved}")
+        return resolved
+
+    model_dir = Path(model_dir)
+    candidates = sorted(model_dir.rglob("*.p")) + sorted(model_dir.rglob("*.pth")) + sorted(model_dir.rglob("*.pt"))
+    if not candidates:
+        raise FileNotFoundError(f"No SFCN weight file (*.p / *.pth / *.pt) found under {model_dir}")
+
+    preferred = [p for p in candidates if "best_mae" in p.name.lower()]
+    if preferred:
+        return preferred[0]
+    return candidates[0]
+
+
+def _normalize_sfcn_state_dict(state):
+    if isinstance(state, dict) and "state_dict" in state:
+        state = state["state_dict"]
+    if not isinstance(state, dict):
+        raise TypeError("Unexpected SFCN checkpoint format; expected a state_dict-like mapping.")
+
+    normalized = {}
+    for key, value in state.items():
+        clean_key = key[7:] if key.startswith("module.") else key
+        normalized[clean_key] = value
+    return normalized
+
+
 def predict_sfcn(
     nifti_path: str | Path,
     model_dir: str | Path,
     device: str = "cpu",
+    weight_path: str | Path | None = None,
+    age_bin_start: float = 42.0,
+    age_bin_step: float = 1.0,
+    age_bin_count: int = 40,
 ) -> float:
     """
     Predict brain age using the SFCN pretrained model (Peng et al. 2021).
@@ -121,55 +307,45 @@ def predict_sfcn(
 
     Parameters
     ----------
-    nifti_path : T1 MRI (.nii / .nii.gz / .mgz), should be skull-stripped
-    model_dir  : directory containing sfcn.py and the .pth weight file
+    nifti_path : preprocessed T1 MRI (.nii / .nii.gz / .mgz), ideally skull-stripped
+    model_dir  : directory containing the official SFCN repo
     device     : 'cpu' or 'cuda'
+    weight_path: optional explicit path to the official pretrained weight file
+    age_bin_*  : age-bin decoding parameters; keep configurable until verified in runtime
 
     Returns
     -------
     Predicted brain age (years, float).
     """
-    import sys
-
     import torch
 
-    from .utils import conform_1mm, load_vol, reorient_to_ras
-
     model_dir = Path(model_dir)
-    if str(model_dir) not in sys.path:
-        sys.path.insert(0, str(model_dir))
-
-    # Locate weight file
-    pth_files = list(model_dir.glob("*.pth"))
-    if not pth_files:
-        raise FileNotFoundError(f"No .pth weight file found in {model_dir}")
-    weight_path = pth_files[0]
-
-    from sfcn import SFCN  # noqa: PLC0415
-
+    resolved_weight_path = _resolve_sfcn_weight_path(model_dir, weight_path)
+    SFCN = _load_sfcn_class(model_dir)
     model = SFCN()
-    state = torch.load(str(weight_path), map_location="cpu")
-    model.load_state_dict(state)
+    state = torch.load(str(resolved_weight_path), map_location="cpu")
+    model.load_state_dict(_normalize_sfcn_state_dict(state), strict=True)
     model.eval()
     model = model.to(device)
 
-    img = conform_1mm(reorient_to_ras(load_vol(nifti_path)))
-    data = img.get_fdata(dtype=np.float32)
+    from .utils import load_vol
 
-    # SFCN expects (1, 1, 160, 192, 160) — crop to standard size
+    img = load_vol(nifti_path)
+    data = img.get_fdata(dtype=np.float32)
+    if data.ndim != 3:
+        raise ValueError(f"SFCN expects a 3D input volume, got shape {data.shape} for {nifti_path}")
     data = _crop_center(data, (160, 192, 160))
     tensor = torch.from_numpy(data).unsqueeze(0).unsqueeze(0).to(device)
 
     with torch.no_grad():
         output = model(tensor)
 
-    # SFCN output is a probability distribution over age bins (40 bins, 3-year width)
-    # Age bins: 42, 45, 48, ..., 159 — decode as weighted sum
-    age_bins = np.arange(42, 42 + 40 * 1, 1, dtype=np.float32)  # adjust to actual bins
-    probs = torch.softmax(output, dim=1).squeeze().cpu().numpy()
-    # Typical SFCN: bins from 42 to 82 years in 1-year steps (40 bins)
-    predicted_age = float(np.sum(probs * age_bins[: len(probs)]))
-    return predicted_age
+    age_bins = build_sfcn_age_bins(
+        start=age_bin_start,
+        step=age_bin_step,
+        count=age_bin_count,
+    )
+    return decode_sfcn_output(output, age_bins=age_bins)
 
 
 def _crop_center(data: np.ndarray, target: tuple) -> np.ndarray:
