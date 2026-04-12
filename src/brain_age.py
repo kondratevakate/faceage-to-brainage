@@ -149,6 +149,33 @@ def run_synthstrip(
     return out_path
 
 
+def run_deepbet(
+    nifti_path: str | Path,
+    out_path: str | Path,
+    mask_path: str | Path | None = None,
+) -> Path:
+    """Brain extraction via deepbet (Fisch et al. 2024) — pure pip, no FreeSurfer."""
+    from deepbet import run_bet
+
+    nifti_path = Path(nifti_path)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    mask_p = (
+        Path(mask_path)
+        if mask_path
+        else out_path.parent / out_path.name.replace(".nii.gz", "_mask.nii.gz")
+    )
+    run_bet(
+        input_path=str(nifti_path),
+        brain_path=str(out_path),
+        mask_path=str(mask_p),
+        tiv_path=None,
+        threshold=0.5,
+        n_dilate=0,
+    )
+    return out_path
+
+
 def prepare_sfcn_input(
     nifti_path: str | Path,
     out_path: str | Path,
@@ -179,11 +206,17 @@ def prepare_sfcn_input(
     skull_path = out_path.with_name(skull_name)
 
     if skullstrip:
-        input_for_geometry = run_synthstrip(
-            nifti_path=nifti_path,
-            out_path=skull_path,
-            command=skullstrip_command,
-        )
+        if skullstrip_command == "deepbet":
+            input_for_geometry = run_deepbet(
+                nifti_path=nifti_path,
+                out_path=skull_path,
+            )
+        else:
+            input_for_geometry = run_synthstrip(
+                nifti_path=nifti_path,
+                out_path=skull_path,
+                command=skullstrip_command,
+            )
 
     img = conform_1mm(reorient_to_ras(load_vol(input_for_geometry)))
     data = img.get_fdata(dtype=np.float32)
