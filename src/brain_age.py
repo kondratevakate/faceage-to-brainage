@@ -166,10 +166,10 @@ def run_deepbet(
         else out_path.parent / out_path.name.replace(".nii.gz", "_mask.nii.gz")
     )
     run_bet(
-        input_path=str(nifti_path),
-        brain_path=str(out_path),
-        mask_path=str(mask_p),
-        tiv_path=None,
+        input_paths=[str(nifti_path)],
+        brain_paths=[str(out_path)],
+        mask_paths=[str(mask_p)],
+        tiv_paths=None,
         threshold=0.5,
         n_dilate=0,
     )
