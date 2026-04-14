@@ -602,8 +602,8 @@ def predict_midi_brainage(
     import uuid
     import tempfile
 
-    nifti_path = Path(nifti_path)
-    midi_dir = Path(midi_dir)
+    nifti_path = Path(nifti_path).resolve()
+    midi_dir = Path(midi_dir).resolve()
 
     # Patch pre_process.py for compatibility issues
     pp = midi_dir / "pre_process.py"
@@ -627,15 +627,23 @@ def predict_midi_brainage(
             raw = shim + raw
             changed = True
 
-        # 2. hd-bet >= 2.0: -mode fast removed; -device syntax unchanged; --disable_tta replaces mode
+        # 2. hd-bet >= 2.0: -mode fast removed; GPU needs explicit -device 0; CPU: -device cpu
+        #    Patch is idempotent: also fixes already-patched files that lack -device 0.
         if "-mode fast" in raw:
             raw = raw.replace(
                 "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
             )
             raw = raw.replace(
                 "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device cpu --disable_tta'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device cpu'.format(reoriented_path, stripped_path)",
+            )
+            changed = True
+        # Fix already-patched files where GPU command is bare (no -device 0)
+        if "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)" in raw:
+            raw = raw.replace(
+                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
             )
             changed = True
 
@@ -685,6 +693,12 @@ def predict_midi_brainage(
             col = "Predicted_age (years)"
             if col not in df.columns:
                 raise KeyError(f"Expected column '{col}' in MIDI output. Got: {list(df.columns)}")
+            if df.empty or len(df) == 0:
+                raise RuntimeError(
+                    f"MIDI output CSV has 0 rows.\n"
+                    f"stdout:\n{result.stdout[-2000:]}\n"
+                    f"stderr:\n{result.stderr[-2000:]}"
+                )
             return float(df[col].iloc[0])
         finally:
             import shutil

@@ -63,11 +63,16 @@ class TestPreProcessPatch:
         if "-mode fast" in raw:
             raw = raw.replace(
                 "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
             )
             raw = raw.replace(
                 "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} --device cpu'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device cpu'.format(reoriented_path, stripped_path)",
+            )
+        if "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)" in raw:
+            raw = raw.replace(
+                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
             )
         return raw
 
@@ -105,6 +110,16 @@ class TestPreProcessPatch:
         """Patched source must not contain deprecated -mode fast flag."""
         src = self._get_patched()
         assert "-mode fast" not in src, "Deprecated hd-bet flag '-mode fast' still present after patch"
+
+    def test_gpu_hdbet_uses_device_0(self):
+        """Patched GPU hd-bet command must use -device 0 (not bare command)."""
+        src = self._get_patched()
+        # The GPU path (no 'cpu' in the cmd) must have -device 0
+        for line in src.splitlines():
+            if "hd-bet" in line and "cpu" not in line and "cmd" in line:
+                assert "-device 0" in line, (
+                    f"GPU hd-bet command missing '-device 0': {line!r}"
+                )
 
     def test_no_old_hdbet_device_flag(self):
         """Patched source must not use '-device cpu' (old syntax, should be --device)."""
