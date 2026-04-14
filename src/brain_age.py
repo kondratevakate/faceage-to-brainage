@@ -590,11 +590,31 @@ def predict_midi_brainage(
     skull_strip : enable MIDI's built-in skull stripping + MNI registration
     """
     import csv
+    import re
     import uuid
     import tempfile
 
     nifti_path = Path(nifti_path)
     midi_dir = Path(midi_dir)
+
+    # Patch pre_process.py for MONAI >= 1.0 (AddChannel removed)
+    pp = midi_dir / "pre_process.py"
+    if pp.exists():
+        raw = pp.read_text(encoding="utf-8")
+        if "AddChannel" in raw and "class AddChannel" not in raw:
+            raw = re.sub(r"[ \t]*AddChannel,?[ \t]*\r?\n", "", raw)
+            raw = re.sub(r"from monai\.transforms import AddChannel\r?\n", "", raw)
+            shim = (
+                "try:\n"
+                "    from monai.transforms import AddChannel\n"
+                "except ImportError:\n"
+                "    class AddChannel:\n"
+                "        def __call__(self, x):\n"
+                "            import numpy as np\n"
+                "            return np.expand_dims(x, 0)\n"
+            )
+            raw = shim + raw
+            pp.write_text(raw, encoding="utf-8")
 
     # Use a unique project name so re-runs don't collide (MIDI raises on duplicate)
     project_name = f"midi_run_{uuid.uuid4().hex[:8]}"
