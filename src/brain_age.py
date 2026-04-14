@@ -605,10 +605,13 @@ def predict_midi_brainage(
     nifti_path = Path(nifti_path)
     midi_dir = Path(midi_dir)
 
-    # Patch pre_process.py for MONAI >= 1.0 (AddChannel removed)
+    # Patch pre_process.py for compatibility issues
     pp = midi_dir / "pre_process.py"
     if pp.exists():
         raw = pp.read_text(encoding="utf-8")
+        changed = False
+
+        # 1. MONAI >= 1.0: AddChannel removed
         if "AddChannel" in raw and "class AddChannel" not in raw:
             raw = re.sub(r"[ \t]*AddChannel,?[ \t]*\r?\n", "", raw)
             raw = re.sub(r"from monai\.transforms import AddChannel\r?\n", "", raw)
@@ -622,6 +625,21 @@ def predict_midi_brainage(
                 "            return np.expand_dims(x, 0)\n"
             )
             raw = shim + raw
+            changed = True
+
+        # 2. hd-bet >= 2.0: -mode and -device flags removed
+        if "-mode fast" in raw:
+            raw = raw.replace(
+                "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
+            )
+            raw = raw.replace(
+                "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} --device cpu'.format(reoriented_path, stripped_path)",
+            )
+            changed = True
+
+        if changed:
             pp.write_text(raw, encoding="utf-8")
 
     # Use a unique project name so re-runs don't collide (MIDI raises on duplicate)
