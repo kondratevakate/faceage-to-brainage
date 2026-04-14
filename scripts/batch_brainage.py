@@ -48,6 +48,36 @@ def to_float_or_nan(value):
         return float("nan")
 
 
+def _clean_resume_part(value):
+    if value in ("", None):
+        return ""
+    if isinstance(value, float) and math.isnan(value):
+        return ""
+    return str(value)
+
+
+def build_resume_key(values: dict) -> str:
+    """
+    Build a stable per-scan resume key.
+
+    For datasets like SIMON a single subject can have many sessions/runs, so
+    subject_id alone is not sufficient. We combine all available identifying
+    fields and fall back to the input path.
+    """
+    parts = [
+        _clean_resume_part(values.get("subject_id")),
+        _clean_resume_part(values.get("session_id")),
+        _clean_resume_part(values.get("scan_id")),
+        _clean_resume_part(values.get("run")),
+        _clean_resume_part(values.get("acquisition_label")),
+        _clean_resume_part(values.get("input_path")),
+    ]
+    normalized = [p for p in parts if p != ""]
+    if not normalized:
+        raise ValueError("Cannot build a resume key from an empty record.")
+    return "|".join(normalized)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Batch brain age inference")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
@@ -140,14 +170,24 @@ def main():
         output_csv.parent.mkdir(parents=True, exist_ok=True)
 
         # Resume: load already-processed subject IDs
-        done_ids: set = set()
+        done_keys: set = set()
         existing_records: list = []
         if args.resume and output_csv.exists():
             existing_df = pd.read_csv(output_csv)
             ok_rows = existing_df[existing_df["status"] == "ok"]
-            done_ids = set(ok_rows["subject_id"].astype(str))
+            done_keys = {
+                build_resume_key({
+                    "subject_id": row.get("subject_id", ""),
+                    "session_id": row.get("session_id", ""),
+                    "scan_id": row.get("scan_id", ""),
+                    "run": row.get("run", ""),
+                    "acquisition_label": row.get("acquisition_label", ""),
+                    "input_path": row.get("input_path", ""),
+                })
+                for _, row in ok_rows.iterrows()
+            }
             existing_records = existing_df.to_dict("records")
-            log.info("Resume: %d scans already done, skipping them", len(done_ids))
+            log.info("Resume: %d scans already done, skipping them", len(done_keys))
 
         frame = pd.read_csv(manifest_csv)
         if args.limit:
@@ -157,22 +197,34 @@ def main():
         new_count = 0
         for _, row in tqdm(frame.iterrows(), total=len(frame), desc=f"{model_label} {dataset_name}"):
             subject_id = str(get_optional(row, subject_col))
+            session_id = get_optional(row, session_col)
+            scan_id = get_optional(row, scan_col)
+            run_value = get_optional(row, run_col)
+            acquisition_label = get_optional(row, acq_col)
+            input_path = Path(get_required(row, input_col, dataset_name))
+            resume_key = build_resume_key({
+                "subject_id": subject_id,
+                "session_id": session_id,
+                "scan_id": scan_id,
+                "run": run_value,
+                "acquisition_label": acquisition_label,
+                "input_path": str(input_path),
+            })
 
             # Skip already processed
-            if args.resume and subject_id in done_ids:
+            if args.resume and resume_key in done_keys:
                 continue
 
-            input_path = Path(get_required(row, input_col, dataset_name))
             stem = input_path.name.replace(".nii.gz", "").replace(".nii", "").replace(".mgz", "")
             preproc_path = preproc_dir / f"{stem}_sfcn_input.nii.gz"
 
             record = {
                 "dataset": dataset_name.upper(),
                 "subject_id": subject_id,
-                "session_id": get_optional(row, session_col),
-                "scan_id": get_optional(row, scan_col),
-                "run": get_optional(row, run_col),
-                "acquisition_label": get_optional(row, acq_col),
+                "session_id": session_id,
+                "scan_id": scan_id,
+                "run": run_value,
+                "acquisition_label": acquisition_label,
                 "chron_age": to_float_or_nan(get_optional(row, age_col)),
                 "model_name": model_label,
                 "predicted_age": float("nan"),
@@ -229,6 +281,7 @@ def main():
                 if not math.isnan(chron):
                     record["brain_age_gap"] = predicted_age - chron
                 record["status"] = "ok"
+                done_keys.add(resume_key)
 
             except Exception as exc:
                 log.warning("Error on %s: %s", input_path.name, exc)
