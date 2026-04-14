@@ -523,12 +523,20 @@ def predict_synthba(
     device       : 'cpu' or 'cuda'
     mr_weighting : 't1', 't2', or 'flair'
     """
+    import gc
+    import torch
     from synthba import SynthBA
 
     sba = SynthBA(device=device)
-    img = nib.load(str(nifti_path))
-    result = sba.run(img, preprocess=True, mr_weighting=mr_weighting)
-    return float(result)
+    try:
+        img = nib.load(str(nifti_path))
+        result = float(sba.run(img, preprocess=True, mr_weighting=mr_weighting))
+    finally:
+        del sba
+        gc.collect()
+        if device == "cuda":
+            torch.cuda.empty_cache()
+    return result
 
 
 def predict_synthba_tta(
@@ -638,25 +646,31 @@ def predict_midi_brainage(
         if device == "cuda":
             cmd.append("--gpu")
 
-        result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(midi_dir))
-
-        if result.returncode != 0:
-            raise RuntimeError(f"MIDIBrainAge failed:\n{result.stderr}\n{result.stdout}")
-
-        # Without --return_metrics, output is written to ./{project_name}/brain_age_output.csv
-        out_csv = midi_dir / project_name / "brain_age_output.csv"
-        if not out_csv.exists():
-            raise FileNotFoundError(
-                f"MIDIBrainAge finished but output CSV not found at {out_csv}. "
-                f"stdout:\n{result.stdout}"
+        try:
+            result = subprocess.run(
+                cmd, capture_output=True, text=True, cwd=str(midi_dir), timeout=1800
             )
 
-        df = pd.read_csv(out_csv)
-        # MIDI output column is 'Predicted_age (years)'
-        col = "Predicted_age (years)"
-        if col not in df.columns:
-            raise KeyError(f"Expected column '{col}' in MIDI output. Got: {list(df.columns)}")
-        return float(df[col].iloc[0])
+            if result.returncode != 0:
+                raise RuntimeError(f"MIDIBrainAge failed:\n{result.stderr}\n{result.stdout}")
+
+            # Without --return_metrics, output is written to ./{project_name}/brain_age_output.csv
+            out_csv = midi_dir / project_name / "brain_age_output.csv"
+            if not out_csv.exists():
+                raise FileNotFoundError(
+                    f"MIDIBrainAge finished but output CSV not found at {out_csv}. "
+                    f"stdout:\n{result.stdout}"
+                )
+
+            df = pd.read_csv(out_csv)
+            # MIDI output column is 'Predicted_age (years)'
+            col = "Predicted_age (years)"
+            if col not in df.columns:
+                raise KeyError(f"Expected column '{col}' in MIDI output. Got: {list(df.columns)}")
+            return float(df[col].iloc[0])
+        finally:
+            import shutil
+            shutil.rmtree(midi_dir / project_name, ignore_errors=True)
 
 
 def predict_sfcn_tta(

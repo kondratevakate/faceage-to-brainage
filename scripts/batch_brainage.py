@@ -6,6 +6,7 @@ Usage examples:
   python scripts/batch_brainage.py --model sfcn   --dataset ixi --tta
   python scripts/batch_brainage.py --model synthba --dataset ixi
   python scripts/batch_brainage.py --model midi   --dataset ixi
+  python scripts/batch_brainage.py --model synthba --dataset ixi --resume
 """
 import argparse
 import json
@@ -54,6 +55,8 @@ def main():
     parser.add_argument("--dataset", choices=("all", "ixi", "simon"), default="ixi")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--resume", action="store_true",
+                        help="Skip scans already in output CSV with status=ok")
     parser.add_argument("--tta", action="store_true",
                         help="Test-time augmentation (L-R flip + voxel shifts for SFCN; L-R flip for SynthBA)")
     args = parser.parse_args()
@@ -69,6 +72,15 @@ def main():
 
     device = runtime_cfg.get("device", "cpu")
 
+    # Validate GPU availability early
+    if device == "cuda":
+        import torch
+        if not torch.cuda.is_available():
+            log.warning("device=cuda requested but CUDA not available — falling back to cpu")
+            device = "cpu"
+        else:
+            log.info("GPU: %s", torch.cuda.get_device_name(0))
+
     sys.path.insert(0, str(REPO_ROOT))
     from src.brain_age import (
         predict_midi_brainage,
@@ -77,6 +89,8 @@ def main():
         predict_synthba,
         predict_synthba_tta,
         prepare_sfcn_input,
+        _load_sfcn_model,
+        _predict_sfcn_with_model,
     )
 
     # SFCN-specific config
@@ -94,6 +108,13 @@ def main():
 
     midi_dir = REPO_ROOT / "vendor" / "MIDIBrainAge"
     model_label = args.model.upper() + ("+TTA" if args.tta else "")
+
+    # Load SFCN model once (not per scan)
+    sfcn_model = None
+    if args.model == "sfcn":
+        log.info("Loading SFCN model...")
+        sfcn_model = _load_sfcn_model(model_dir, device=device, weight_path=weight_path)
+        log.info("SFCN model loaded")
 
     selected = ["ixi", "simon"] if args.dataset == "all" else [args.dataset]
 
@@ -118,19 +139,36 @@ def main():
         preproc_dir.mkdir(parents=True, exist_ok=True)
         output_csv.parent.mkdir(parents=True, exist_ok=True)
 
+        # Resume: load already-processed subject IDs
+        done_ids: set = set()
+        existing_records: list = []
+        if args.resume and output_csv.exists():
+            existing_df = pd.read_csv(output_csv)
+            ok_rows = existing_df[existing_df["status"] == "ok"]
+            done_ids = set(ok_rows["subject_id"].astype(str))
+            existing_records = existing_df.to_dict("records")
+            log.info("Resume: %d scans already done, skipping them", len(done_ids))
+
         frame = pd.read_csv(manifest_csv)
         if args.limit:
             frame = frame.head(args.limit).copy()
 
-        records = []
+        records = list(existing_records)
+        new_count = 0
         for _, row in tqdm(frame.iterrows(), total=len(frame), desc=f"{model_label} {dataset_name}"):
+            subject_id = str(get_optional(row, subject_col))
+
+            # Skip already processed
+            if args.resume and subject_id in done_ids:
+                continue
+
             input_path = Path(get_required(row, input_col, dataset_name))
             stem = input_path.name.replace(".nii.gz", "").replace(".nii", "").replace(".mgz", "")
             preproc_path = preproc_dir / f"{stem}_sfcn_input.nii.gz"
 
             record = {
                 "dataset": dataset_name.upper(),
-                "subject_id": get_optional(row, subject_col),
+                "subject_id": subject_id,
                 "session_id": get_optional(row, session_col),
                 "scan_id": get_optional(row, scan_col),
                 "run": get_optional(row, run_col),
@@ -168,11 +206,10 @@ def main():
                         record["predicted_age_std"] = r["std"]
                         record["n_aug"] = r["n_aug"]
                     else:
-                        predicted_age = predict_sfcn(preproc_path, model_dir, device=device,
-                                                     weight_path=weight_path,
-                                                     age_bin_start=age_bin_start,
-                                                     age_bin_step=age_bin_step,
-                                                     age_bin_count=age_bin_count)
+                        predicted_age = _predict_sfcn_with_model(
+                            sfcn_model, preproc_path, device,
+                            age_bin_start, age_bin_step, age_bin_count,
+                        )
 
                 elif args.model == "synthba":
                     if args.tta:
@@ -198,9 +235,12 @@ def main():
                 record["error"] = str(exc)
 
             records.append(record)
+            new_count += 1
+
+            # Write CSV after every scan (incremental — no data loss on crash)
+            pd.DataFrame(records).to_csv(output_csv, index=False)
 
         out_df = pd.DataFrame(records)
-        out_df.to_csv(output_csv, index=False)
         ok = int((out_df["status"] == "ok").sum())
         log.info("%s %s → %s  (%d ok / %d total)", model_label, dataset_name, output_csv, ok, len(out_df))
 
