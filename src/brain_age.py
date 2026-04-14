@@ -577,7 +577,7 @@ def predict_midi_brainage(
     midi_dir: str | Path,
     device: str = "cpu",
     sequence: str = "t1",
-    skull_strip: bool = True,
+    skull_strip: bool = False,
 ) -> float:
     """
     Predict brain age using MIDIconsortium BrainAge (Wood et al. 2024).
