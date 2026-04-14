@@ -9,14 +9,65 @@ Supported models:
 
 Both functions return a predicted brain age (years, float).
 """
+import importlib
 import importlib.util
 import shutil
 import subprocess
+import sys
+import warnings
 from pathlib import Path
 
 import nibabel as nib
 import numpy as np
 import pandas as pd
+
+
+_CUDA_CUDART_DEPRECATION_RE = r".*cuda\.cudart module is deprecated.*"
+_SYNTHBA_IMPORT_ROOTS = ("synthba", "monai", "cuda", "skimage", "scipy")
+
+
+def suppress_synthba_import_warnings() -> None:
+    """
+    Hide known third-party import noise from SynthBA/MONAI.
+
+    The warning originates in upstream CUDA Python bindings during import and is
+    not actionable from this repository.
+    """
+    warnings.filterwarnings(
+        "ignore",
+        message=_CUDA_CUDART_DEPRECATION_RE,
+        category=FutureWarning,
+    )
+
+
+def reset_synthba_import_state() -> int:
+    """
+    Clear partially imported SynthBA dependency modules from ``sys.modules``.
+
+    Useful in notebooks after interrupting ``from synthba import SynthBA`` so a
+    full kernel restart is not always required before retrying the import.
+
+    Returns
+    -------
+    int
+        Number of cleared module entries.
+    """
+    cleared = 0
+    for name in list(sys.modules):
+        if any(name == root or name.startswith(f"{root}.") for root in _SYNTHBA_IMPORT_ROOTS):
+            sys.modules.pop(name, None)
+            cleared += 1
+
+    if cleared:
+        importlib.invalidate_caches()
+    return cleared
+
+
+def _import_synthba_class():
+    suppress_synthba_import_warnings()
+    from synthba import SynthBA
+
+    return SynthBA
 
 
 # ---------------------------------------------------------------------------
@@ -525,7 +576,7 @@ def predict_synthba(
     """
     import gc
     import torch
-    from synthba import SynthBA
+    SynthBA = _import_synthba_class()
 
     sba = SynthBA(device=device)
     try:

@@ -6,6 +6,7 @@ Run with:
 """
 import sys
 import tempfile
+import warnings
 from pathlib import Path
 
 import nibabel as nib
@@ -22,6 +23,8 @@ from src.brain_age import (
     decode_sfcn_output,
     n4_bias_correction,
     predict_synthba_tta,
+    reset_synthba_import_state,
+    suppress_synthba_import_warnings,
 )
 
 
@@ -263,3 +266,38 @@ class TestPredicSynthbaTta:
         assert result["mean"] == pytest.approx(56.5)
         assert result["std"] == pytest.approx(0.5)
         assert call_count["n"] == 2
+
+
+# ---------------------------------------------------------------------------
+# SynthBA import helpers
+# ---------------------------------------------------------------------------
+
+class TestSynthbaImportHelpers:
+    def test_suppress_synthba_import_warnings_ignores_known_futurewarning(self):
+        suppress_synthba_import_warnings()
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.warn(
+                "The cuda.cudart module is deprecated and will be removed in a future release.",
+                FutureWarning,
+            )
+        assert caught == []
+
+    def test_reset_synthba_import_state_clears_known_roots(self):
+        sentinel = object()
+        sys.modules["synthba"] = sentinel
+        sys.modules["monai.transforms"] = sentinel
+        sys.modules["cuda.cudart"] = sentinel
+        sys.modules["skimage.segmentation"] = sentinel
+        sys.modules["scipy.cluster"] = sentinel
+        sys.modules["unrelated.module"] = sentinel
+
+        cleared = reset_synthba_import_state()
+
+        assert cleared >= 5
+        assert "synthba" not in sys.modules
+        assert "monai.transforms" not in sys.modules
+        assert "cuda.cudart" not in sys.modules
+        assert "skimage.segmentation" not in sys.modules
+        assert "scipy.cluster" not in sys.modules
+        assert sys.modules["unrelated.module"] is sentinel
+        sys.modules.pop("unrelated.module", None)

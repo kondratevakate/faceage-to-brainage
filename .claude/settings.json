@@ -20,7 +20,17 @@
       "Bash(python -c \"import json; json.load\\(open\\('notebooks/05_sfcn_colab_bootstrap.ipynb'\\)\\); print\\('valid JSON'\\)\")",
       "Bash(python -)",
       "Bash(python3 -c ':*)",
-      "Bash(python -c \"import ast; src = chr\\(10\\).join\\(['pp.write_text\\(chr\\(10\\).join\\(out\\)\\)', 'print\\(42\\)']\\); ast.parse\\(src\\); print\\('OK'\\)\")"
+      "Bash(python -c \"import ast; src = chr\\(10\\).join\\(['pp.write_text\\(chr\\(10\\).join\\(out\\)\\)', 'print\\(42\\)']\\); ast.parse\\(src\\); print\\('OK'\\)\")",
+      "Bash(nbstripout --install)",
+      "Bash(cat)",
+      "Bash(chmod +x \"c:\\\\Projects\\\\02_academia\\\\faceage-to-brainage\\\\.git\\\\hooks\\\\pre-commit\")",
+      "Bash(python -m py_compile scripts/batch_brainage.py)",
+      "Bash(python -m pytest tests/test_midi_compat.py -v)",
+      "Read(//c/Users/kondr/.claude/**)",
+      "Bash(python3)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\kondr\\.claude"
     ]
   }
 }
