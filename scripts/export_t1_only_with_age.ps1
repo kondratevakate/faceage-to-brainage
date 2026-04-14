@@ -419,7 +419,7 @@ foreach ($file in $ixiT1Files) {
         site = $site
         scan_id = $scanId
         t1_filename = $file.Name
-        t1_path = $destFile
+        t1_path = $file.Name
         age = $resolved.resolved_age
         sex_id = $resolved.sex_id
         ethnic_id = $resolved.ethnic_id
@@ -509,7 +509,7 @@ foreach ($file in $simonFiles) {
         json_institution = [string](Get-ObjectPropertyValue -Object $json -PropertyName "InstitutionName")
         json_field_strength = [string](Get-ObjectPropertyValue -Object $json -PropertyName "MagneticFieldStrength")
         t1_filename = $file.Name
-        t1_path = $destNii
+        t1_path = $file.Name
         json_filename = [System.IO.Path]::GetFileName($jsonSource)
         json_path = $destJson
         age_source = "SIMON_pheno (4).csv"

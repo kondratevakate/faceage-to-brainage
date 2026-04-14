@@ -79,6 +79,11 @@ def main():
         action="store_true",
         help="Recompute preprocessed inputs and overwrite output CSVs",
     )
+    parser.add_argument(
+        "--tta",
+        action="store_true",
+        help="Use test-time augmentation (L-R flip + voxel shifts, 8 forward passes)",
+    )
     args = parser.parse_args()
 
     config_path = Path(args.config)
@@ -96,15 +101,17 @@ def main():
     age_bins_cfg = sfcn_cfg.get("age_bins", {})
     model_dir = Path(get_required(sfcn_cfg, "model_dir", "sfcn"))
     weight_path = Path(get_required(sfcn_cfg, "weight_path", "sfcn"))
-    skullstrip_command = sfcn_cfg.get("skullstrip_command", "mri_synthstrip")
+    skullstrip_command = sfcn_cfg.get("skullstrip_command", "deepbet")
     skip_skullstrip = bool(sfcn_cfg.get("skip_skullstrip", False))
     keep_skullstripped = bool(sfcn_cfg.get("keep_skullstripped", False))
+    n4_correct = bool(sfcn_cfg.get("n4_correct", True))
+    register_mni = bool(sfcn_cfg.get("register_mni", True))
     age_bin_start = float(age_bins_cfg.get("start", 42.0))
     age_bin_step = float(age_bins_cfg.get("step", 1.0))
     age_bin_count = int(age_bins_cfg.get("count", 40))
 
     sys.path.insert(0, str(REPO_ROOT))
-    from src.brain_age import prepare_sfcn_input, predict_sfcn
+    from src.brain_age import predict_sfcn, predict_sfcn_tta, prepare_sfcn_input
 
     selected = ["ixi", "simon"] if args.dataset == "all" else [args.dataset]
     for dataset_name in selected:
@@ -151,8 +158,10 @@ def main():
                 "run": run,
                 "acquisition_label": acquisition_label,
                 "chron_age": chron_age,
-                "model_name": "SFCN",
+                "model_name": "SFCN" + ("+TTA" if args.tta else ""),
                 "predicted_age": float("nan"),
+                "predicted_age_std": float("nan"),
+                "n_aug": 1,
                 "brain_age_gap": float("nan"),
                 "input_path": str(input_path),
                 "preproc_path": str(preproc_path),
@@ -168,17 +177,34 @@ def main():
                         skullstrip=not skip_skullstrip,
                         skullstrip_command=skullstrip_command,
                         keep_skullstripped=keep_skullstripped,
+                        n4_correct=n4_correct,
+                        register_mni=register_mni,
                     )
 
-                predicted_age = predict_sfcn(
-                    nifti_path=preproc_path,
-                    model_dir=model_dir,
-                    weight_path=weight_path,
-                    device=device,
-                    age_bin_start=age_bin_start,
-                    age_bin_step=age_bin_step,
-                    age_bin_count=age_bin_count,
-                )
+                if args.tta:
+                    tta_result = predict_sfcn_tta(
+                        nifti_path=preproc_path,
+                        model_dir=model_dir,
+                        weight_path=weight_path,
+                        device=device,
+                        age_bin_start=age_bin_start,
+                        age_bin_step=age_bin_step,
+                        age_bin_count=age_bin_count,
+                    )
+                    predicted_age = tta_result["mean"]
+                    record["predicted_age_std"] = tta_result["std"]
+                    record["n_aug"] = tta_result["n_aug"]
+                else:
+                    predicted_age = predict_sfcn(
+                        nifti_path=preproc_path,
+                        model_dir=model_dir,
+                        weight_path=weight_path,
+                        device=device,
+                        age_bin_start=age_bin_start,
+                        age_bin_step=age_bin_step,
+                        age_bin_count=age_bin_count,
+                    )
+
                 record["predicted_age"] = predicted_age
                 if not math.isnan(chron_age):
                     record["brain_age_gap"] = predicted_age - chron_age

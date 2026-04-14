@@ -29,8 +29,11 @@ Pillow>=10.0
 pingouin>=0.5
 seaborn>=0.12
 
-# Skull stripping
+# Skull stripping + MRI registration
 deepbet>=0.2
+SimpleITK>=2.3
+nilearn>=0.10
+synthba
 
 # Notebook / Colab
 ipywidgets>=8.0

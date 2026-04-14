@@ -176,21 +176,113 @@ def run_deepbet(
     return out_path
 
 
+def n4_bias_correction(
+    nifti_path: str | Path,
+    out_path: str | Path,
+) -> Path:
+    """
+    N4ITK bias field correction via SimpleITK.
+
+    Removes slow intensity inhomogeneity artefacts before registration.
+    Runs on CPU in ~10-30 s per scan.
+    """
+    import SimpleITK as sitk
+
+    nifti_path = Path(nifti_path)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    img = sitk.ReadImage(str(nifti_path), sitk.sitkFloat32)
+    corrector = sitk.N4BiasFieldCorrectionImageFilter()
+    corrector.SetMaximumNumberOfIterations([50, 50, 50, 50])
+    corrected = corrector.Execute(img)
+    sitk.WriteImage(corrected, str(out_path))
+    return out_path
+
+
+def register_to_mni(
+    nifti_path: str | Path,
+    out_path: str | Path,
+) -> Path:
+    """
+    Affine registration to MNI152 1mm template via SimpleITK.
+
+    SFCN and SynthBA were both trained on MNI-registered T1 volumes.
+    Uses mutual information metric + multi-scale optimisation.
+    Runs on CPU in ~60-120 s per scan.
+    """
+    import tempfile
+
+    import SimpleITK as sitk
+    from nilearn.datasets import load_mni152_template
+
+    nifti_path = Path(nifti_path)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # write MNI template to a temp file; clean up after registration
+    mni_nib = load_mni152_template(resolution=1)
+    with tempfile.NamedTemporaryFile(suffix=".nii.gz", delete=False) as f:
+        mni_tmp = Path(f.name)
+    try:
+        nib.save(mni_nib, str(mni_tmp))
+        fixed = sitk.ReadImage(str(mni_tmp), sitk.sitkFloat32)
+    finally:
+        mni_tmp.unlink(missing_ok=True)
+
+    moving = sitk.ReadImage(str(nifti_path), sitk.sitkFloat32)
+
+    # moment-based initial alignment
+    initial_tx = sitk.CenteredTransformInitializer(
+        fixed, moving, sitk.AffineTransform(3),
+        sitk.CenteredTransformInitializerFilter.MOMENTS,
+    )
+
+    reg = sitk.ImageRegistrationMethod()
+    reg.SetMetricAsMattesMutualInformation(numberOfHistogramBins=50)
+    reg.SetMetricSamplingStrategy(reg.RANDOM)
+    reg.SetMetricSamplingPercentage(0.1)
+    reg.SetOptimizerAsGradientDescent(
+        learningRate=1.0,
+        numberOfIterations=200,
+        convergenceMinimumValue=1e-6,
+        convergenceWindowSize=10,
+    )
+    reg.SetOptimizerScalesFromPhysicalShift()
+    reg.SetShrinkFactorsPerLevel([4, 2, 1])
+    reg.SetSmoothingSigmasPerLevel([2, 1, 0])
+    reg.SmoothingSigmasAreSpecifiedInPhysicalUnitsOn()
+    reg.SetInitialTransform(initial_tx, inPlace=False)
+    reg.SetInterpolator(sitk.sitkLinear)
+
+    final_tx = reg.Execute(fixed, moving)
+
+    resampled = sitk.Resample(
+        moving, fixed, final_tx,
+        sitk.sitkLinear, 0.0, moving.GetPixelID(),
+    )
+    sitk.WriteImage(resampled, str(out_path))
+    return out_path
+
+
 def prepare_sfcn_input(
     nifti_path: str | Path,
     out_path: str | Path,
     skullstrip: bool = True,
-    skullstrip_command: str = "mri_synthstrip",
+    skullstrip_command: str = "deepbet",
     keep_skullstripped: bool = False,
+    n4_correct: bool = True,
+    register_mni: bool = True,
 ) -> Path:
     """
     Prepare a T1 volume for SFCN inference.
 
-    Pipeline:
-      1. optional skull stripping via SynthStrip
-      2. RAS reorientation
-      3. 1 mm isotropic conforming
-      4. centered crop/pad to [160, 192, 160]
+    Pipeline (Peng et al. 2021 / UK Biobank protocol):
+      1. N4 bias field correction (optional, recommended)
+      2. skull stripping via deepbet or synthstrip
+      3. affine registration to MNI152 1mm (optional, recommended)
+      4. RAS reorientation + 1 mm isotropic conforming
+      5. centered crop/pad to [160, 192, 160]
     """
     from .utils import conform_1mm, load_vol, reorient_to_ras
 
@@ -198,34 +290,46 @@ def prepare_sfcn_input(
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    input_for_geometry = nifti_path
-    if "_sfcn_input" in out_path.name:
-        skull_name = out_path.name.replace("_sfcn_input", "_brain")
-    else:
-        skull_name = f"{out_path.stem}_brain.nii.gz"
-    skull_path = out_path.with_name(skull_name)
+    stem = out_path.name.replace("_sfcn_input.nii.gz", "").replace(".nii.gz", "")
+    n4_path = out_path.with_name(f"{stem}_n4.nii.gz")
+    skull_path = out_path.with_name(f"{stem}_brain.nii.gz")
+    mni_path = out_path.with_name(f"{stem}_mni.nii.gz")
 
+    intermediates = []
+
+    # 1. N4 bias correction
+    current = nifti_path
+    if n4_correct:
+        n4_bias_correction(current, n4_path)
+        current = n4_path
+        intermediates.append(n4_path)
+
+    # 2. skull stripping
     if skullstrip:
         if skullstrip_command == "deepbet":
-            input_for_geometry = run_deepbet(
-                nifti_path=nifti_path,
-                out_path=skull_path,
-            )
+            run_deepbet(nifti_path=current, out_path=skull_path)
         else:
-            input_for_geometry = run_synthstrip(
-                nifti_path=nifti_path,
-                out_path=skull_path,
-                command=skullstrip_command,
-            )
+            run_synthstrip(nifti_path=current, out_path=skull_path, command=skullstrip_command)
+        current = skull_path
+        if not keep_skullstripped:
+            intermediates.append(skull_path)
 
-    img = conform_1mm(reorient_to_ras(load_vol(input_for_geometry)))
+    # 3. MNI registration
+    if register_mni:
+        register_to_mni(current, mni_path)
+        current = mni_path
+        intermediates.append(mni_path)
+
+    # 4-5. reorient + conform + crop
+    img = conform_1mm(reorient_to_ras(load_vol(current)))
     data = img.get_fdata(dtype=np.float32)
     cropped = _crop_center(data, (160, 192, 160))
     prepared = nib.Nifti1Image(cropped.astype(np.float32), img.affine, img.header.copy())
     nib.save(prepared, str(out_path))
 
-    if skullstrip and not keep_skullstripped and skull_path.exists():
-        skull_path.unlink()
+    for p in intermediates:
+        if p.exists():
+            p.unlink()
 
     return out_path
 
@@ -323,6 +427,52 @@ def _normalize_sfcn_state_dict(state):
     return normalized
 
 
+def _load_sfcn_model(
+    model_dir: str | Path,
+    device: str = "cpu",
+    weight_path: str | Path | None = None,
+):
+    """Load SFCN model and weights once. Returns (model, device)."""
+    import torch
+
+    model_dir = Path(model_dir)
+    resolved_weight_path = _resolve_sfcn_weight_path(model_dir, weight_path)
+    SFCN = _load_sfcn_class(model_dir)
+    model = SFCN()
+    state = torch.load(str(resolved_weight_path), map_location="cpu")
+    model.load_state_dict(_normalize_sfcn_state_dict(state), strict=True)
+    model.eval()
+    model = model.to(device)
+    return model
+
+
+def _predict_sfcn_with_model(
+    model,
+    nifti_path: str | Path,
+    device: str,
+    age_bin_start: float,
+    age_bin_step: float,
+    age_bin_count: int,
+) -> float:
+    """Run one SFCN forward pass with a pre-loaded model."""
+    import torch
+
+    from .utils import load_vol
+
+    img = load_vol(nifti_path)
+    data = img.get_fdata(dtype=np.float32)
+    if data.ndim != 3:
+        raise ValueError(f"SFCN expects a 3D input volume, got shape {data.shape} for {nifti_path}")
+    data = _crop_center(data, (160, 192, 160))
+    tensor = torch.from_numpy(data).unsqueeze(0).unsqueeze(0).to(device)
+
+    with torch.no_grad():
+        output = model(tensor)
+
+    age_bins = build_sfcn_age_bins(start=age_bin_start, step=age_bin_step, count=age_bin_count)
+    return decode_sfcn_output(output, age_bins=age_bins)
+
+
 def predict_sfcn(
     nifti_path: str | Path,
     model_dir: str | Path,
@@ -344,41 +494,220 @@ def predict_sfcn(
     model_dir  : directory containing the official SFCN repo
     device     : 'cpu' or 'cuda'
     weight_path: optional explicit path to the official pretrained weight file
-    age_bin_*  : age-bin decoding parameters; keep configurable until verified in runtime
+    age_bin_*  : age-bin decoding parameters
 
     Returns
     -------
     Predicted brain age (years, float).
     """
+    model = _load_sfcn_model(model_dir, device=device, weight_path=weight_path)
+    return _predict_sfcn_with_model(
+        model, nifti_path, device, age_bin_start, age_bin_step, age_bin_count
+    )
+
+
+def predict_synthba(
+    nifti_path: str | Path,
+    device: str = "cpu",
+    mr_weighting: str = "t1",
+) -> float:
+    """
+    Predict brain age using SynthBA (Puglisi et al. 2024).
+
+    SynthBA handles its own preprocessing (SynthSeg + MNI alignment).
+    Pass raw T1 — do NOT use prepare_sfcn_input beforehand.
+
+    Parameters
+    ----------
+    nifti_path   : raw T1 NIfTI (.nii / .nii.gz)
+    device       : 'cpu' or 'cuda'
+    mr_weighting : 't1', 't2', or 'flair'
+    """
+    from synthba import SynthBA
+
+    sba = SynthBA(device=device)
+    img = nib.load(str(nifti_path))
+    result = sba.run(img, preprocess=True, mr_weighting=mr_weighting)
+    return float(result)
+
+
+def predict_synthba_tta(
+    nifti_path: str | Path,
+    device: str = "cpu",
+    mr_weighting: str = "t1",
+) -> dict:
+    """
+    SynthBA with minimal TTA: original + L-R flip.
+
+    SynthBA is trained with domain randomization so it is already robust.
+    Only L-R flip is applied (2 forward passes).
+    """
+    import tempfile
+
+    img = nib.load(str(nifti_path))
+    data = img.get_fdata(dtype=np.float32)
+
+    flipped = nib.Nifti1Image(np.flip(data, axis=0).copy(), img.affine)
+    with tempfile.NamedTemporaryFile(suffix=".nii.gz", delete=False) as f:
+        flip_path = f.name
+    nib.save(flipped, flip_path)
+
+    p_orig = predict_synthba(nifti_path, device=device, mr_weighting=mr_weighting)
+    p_flip = predict_synthba(flip_path, device=device, mr_weighting=mr_weighting)
+    Path(flip_path).unlink(missing_ok=True)
+
+    preds = [p_orig, p_flip]
+    return {
+        "mean": float(np.mean(preds)),
+        "std": float(np.std(preds)),
+        "n_aug": 2,
+    }
+
+
+def predict_midi_brainage(
+    nifti_path: str | Path,
+    midi_dir: str | Path,
+    device: str = "cpu",
+    sequence: str = "t1",
+    skull_strip: bool = True,
+) -> float:
+    """
+    Predict brain age using MIDIconsortium BrainAge (Wood et al. 2024).
+
+    Calls the official run_inference.py via subprocess.
+    Pass raw T1 — MIDI handles its own preprocessing (reorient + 1.4mm + 130³).
+
+    For T1, skull_strip=True is required (MIDI has no raw-T1 model).
+    When skull_strip=True, MIDI runs HD-BET + ANTs MNI registration internally
+    (requires antspyx, works on Colab Linux but not Windows WDAC).
+
+    Parameters
+    ----------
+    nifti_path  : raw T1 NIfTI
+    midi_dir    : path to cloned MIDIconsortium/BrainAge repo
+    device      : 'cpu' or 'cuda' (maps to --gpu flag)
+    sequence    : 't1' or 't2'
+    skull_strip : enable MIDI's built-in skull stripping + MNI registration
+    """
+    import csv
+    import uuid
+    import tempfile
+
+    nifti_path = Path(nifti_path)
+    midi_dir = Path(midi_dir)
+
+    # Use a unique project name so re-runs don't collide (MIDI raises on duplicate)
+    project_name = f"midi_run_{uuid.uuid4().hex[:8]}"
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        csv_path = Path(tmp_dir) / "input.csv"
+        with csv_path.open("w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["ID", "file_name", "Age"])
+            writer.writerow(["subj", str(nifti_path), ""])
+
+        cmd = [
+            "python", str(midi_dir / "run_inference.py"),
+            "--csv_file", str(csv_path),
+            "--project_name", project_name,
+            "--sequence", sequence,
+            "--ensemble",
+        ]
+        if skull_strip:
+            cmd.append("--skull_strip")
+        if device == "cuda":
+            cmd.append("--gpu")
+
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(midi_dir))
+
+        if result.returncode != 0:
+            raise RuntimeError(f"MIDIBrainAge failed:\n{result.stderr}\n{result.stdout}")
+
+        # Without --return_metrics, output is written to ./{project_name}/brain_age_output.csv
+        out_csv = midi_dir / project_name / "brain_age_output.csv"
+        if not out_csv.exists():
+            raise FileNotFoundError(
+                f"MIDIBrainAge finished but output CSV not found at {out_csv}. "
+                f"stdout:\n{result.stdout}"
+            )
+
+        df = pd.read_csv(out_csv)
+        # MIDI output column is 'Predicted_age (years)'
+        col = "Predicted_age (years)"
+        if col not in df.columns:
+            raise KeyError(f"Expected column '{col}' in MIDI output. Got: {list(df.columns)}")
+        return float(df[col].iloc[0])
+
+
+def predict_sfcn_tta(
+    nifti_path: str | Path,
+    model_dir: str | Path,
+    device: str = "cpu",
+    weight_path: str | Path | None = None,
+    age_bin_start: float = 42.0,
+    age_bin_step: float = 1.0,
+    age_bin_count: int = 40,
+    n_shifts: int = 5,
+) -> dict:
+    """
+    SFCN inference with test-time augmentation (TTA).
+
+    Augmentations match SFCN training (Peng et al. 2021, Table 2):
+      - L-R mirroring
+      - voxel shifting ±n_shifts along each axis (zero-padded)
+
+    Total: 1 + 1 + 6 = 8 forward passes. Model is loaded once.
+    Returns mean and std of predicted ages across augmentations.
+    """
+    import tempfile
+
     import torch
 
-    model_dir = Path(model_dir)
-    resolved_weight_path = _resolve_sfcn_weight_path(model_dir, weight_path)
-    SFCN = _load_sfcn_class(model_dir)
-    model = SFCN()
-    state = torch.load(str(resolved_weight_path), map_location="cpu")
-    model.load_state_dict(_normalize_sfcn_state_dict(state), strict=True)
-    model.eval()
-    model = model.to(device)
+    # Load model ONCE; reuse for all 8 augmented forward passes.
+    model = _load_sfcn_model(model_dir, device=device, weight_path=weight_path)
 
-    from .utils import load_vol
-
-    img = load_vol(nifti_path)
+    img = nib.load(str(nifti_path))
     data = img.get_fdata(dtype=np.float32)
-    if data.ndim != 3:
-        raise ValueError(f"SFCN expects a 3D input volume, got shape {data.shape} for {nifti_path}")
-    data = _crop_center(data, (160, 192, 160))
-    tensor = torch.from_numpy(data).unsqueeze(0).unsqueeze(0).to(device)
 
-    with torch.no_grad():
-        output = model(tensor)
+    def _shift_zero_pad(arr: np.ndarray, shift: int, axis: int) -> np.ndarray:
+        result = np.zeros_like(arr)
+        if shift == 0:
+            return arr.copy()
+        if shift > 0:
+            dst = [slice(None)] * 3; src = [slice(None)] * 3
+            dst[axis] = slice(shift, None)
+            src[axis] = slice(None, arr.shape[axis] - shift)
+            result[tuple(dst)] = arr[tuple(src)]
+        else:
+            s = -shift
+            dst = [slice(None)] * 3; src = [slice(None)] * 3
+            dst[axis] = slice(None, arr.shape[axis] - s)
+            src[axis] = slice(s, None)
+            result[tuple(dst)] = arr[tuple(src)]
+        return result
 
-    age_bins = build_sfcn_age_bins(
-        start=age_bin_start,
-        step=age_bin_step,
-        count=age_bin_count,
-    )
-    return decode_sfcn_output(output, age_bins=age_bins)
+    # Build augmented volumes: original + LR flip + ±shift on each axis
+    augmented = [data, np.flip(data, axis=0).copy()]
+    for axis in range(3):
+        for shift in (n_shifts, -n_shifts):
+            augmented.append(_shift_zero_pad(data, shift, axis))
+
+    age_bins = build_sfcn_age_bins(start=age_bin_start, step=age_bin_step, count=age_bin_count)
+    preds = []
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        for i, aug_data in enumerate(augmented):
+            tmp_path = Path(tmp_dir) / f"aug_{i}.nii.gz"
+            nib.save(nib.Nifti1Image(aug_data, img.affine), str(tmp_path))
+            p = _predict_sfcn_with_model(
+                model, tmp_path, device, age_bin_start, age_bin_step, age_bin_count
+            )
+            preds.append(p)
+
+    return {
+        "mean": float(np.mean(preds)),
+        "std": float(np.std(preds)),
+        "n_aug": len(preds),
+    }
 
 
 def _crop_center(data: np.ndarray, target: tuple) -> np.ndarray:

@@ -1,0 +1,3 @@
+[submodule "vendor/MIDIBrainAge"]
+	path = vendor/MIDIBrainAge
+	url = https://github.com/MIDIconsortium/BrainAge
