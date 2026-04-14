@@ -627,12 +627,15 @@ def predict_midi_brainage(
             raw = shim + raw
             changed = True
 
-        # 2. hd-bet >= 2.0: -mode and -device flags removed, use bare command
+        # 2. hd-bet >= 2.0: -mode fast removed; -device syntax unchanged; --disable_tta replaces mode
         if "-mode fast" in raw:
-            raw = re.sub(
-                r"cmd = 'hd-bet -i \{} -o \{}[^']*'\.format\(reoriented_path, stripped_path\)",
+            raw = raw.replace(
+                "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
                 "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
-                raw,
+            )
+            raw = raw.replace(
+                "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
+                "cmd = 'hd-bet -i {} -o {} -device cpu --disable_tta'.format(reoriented_path, stripped_path)",
             )
             changed = True
 
