@@ -627,15 +627,12 @@ def predict_midi_brainage(
             raw = shim + raw
             changed = True
 
-        # 2. hd-bet >= 2.0: -mode and -device flags removed
+        # 2. hd-bet >= 2.0: -mode and -device flags removed, use bare command
         if "-mode fast" in raw:
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
+            raw = re.sub(
+                r"cmd = 'hd-bet -i \{} -o \{}[^']*'\.format\(reoriented_path, stripped_path\)",
                 "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
-            )
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} --device cpu'.format(reoriented_path, stripped_path)",
+                raw,
             )
             changed = True
 
