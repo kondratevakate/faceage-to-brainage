@@ -91,4 +91,6 @@ This schema is intentionally stable so `SynthBA` can be added later without chan
 
 ## Important caution
 
-The current default age-bin settings in the config are still treated as runtime-configurable rather than permanently fixed in code. Before the first large SFCN batch, confirm the official inference decoding assumption against the official SFCN repo/notebook in the actual runtime.
+- Official SFCN inference uses age-bin centres `42.5..81.5` (from `bin_range=[42,82]`, `bin_step=1`) rather than integer ages.
+- Official SFCN inference also mean-normalises the cropped volume (`data = data / data.mean()`).
+- The upstream preprocessing for non-UKB scans is still our adaptation; only the final decode + intensity normalisation now match the vendor example exactly.

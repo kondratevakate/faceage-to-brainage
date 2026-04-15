@@ -19,6 +19,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from src.brain_age import (
     _crop_center,
+    _prepare_sfcn_array,
     build_sfcn_age_bins,
     decode_sfcn_output,
     n4_bias_correction,
@@ -97,20 +98,37 @@ class TestBuildSfcnAgeBins:
     def test_default_bins(self):
         bins = build_sfcn_age_bins()
         assert bins.shape == (40,)
-        assert bins[0] == pytest.approx(42.0)
-        assert bins[-1] == pytest.approx(81.0)
+        assert bins[0] == pytest.approx(42.5)
+        assert bins[-1] == pytest.approx(81.5)
 
     def test_custom_bins(self):
         bins = build_sfcn_age_bins(start=20.0, step=2.0, count=10)
         assert bins.shape == (10,)
-        assert bins[0] == pytest.approx(20.0)
-        assert bins[1] == pytest.approx(22.0)
-        assert bins[-1] == pytest.approx(38.0)
+        assert bins[0] == pytest.approx(21.0)
+        assert bins[1] == pytest.approx(23.0)
+        assert bins[-1] == pytest.approx(39.0)
 
     def test_step_1(self):
         bins = build_sfcn_age_bins(start=0.0, step=1.0, count=5)
-        expected = np.array([0.0, 1.0, 2.0, 3.0, 4.0], dtype=np.float32)
+        expected = np.array([0.5, 1.5, 2.5, 3.5, 4.5], dtype=np.float32)
         np.testing.assert_allclose(bins, expected, atol=1e-5)
+
+
+# ---------------------------------------------------------------------------
+# _prepare_sfcn_array
+# ---------------------------------------------------------------------------
+
+class TestPrepareSfcnArray:
+    def test_crop_and_mean_normalize(self):
+        data = np.full((180, 200, 170), 2.0, dtype=np.float32)
+        out = _prepare_sfcn_array(data)
+        assert out.shape == (160, 192, 160)
+        assert float(out.mean()) == pytest.approx(1.0, abs=1e-6)
+
+    def test_zero_mean_raises(self):
+        data = np.zeros((160, 192, 160), dtype=np.float32)
+        with pytest.raises(ValueError, match="mean-normalization failed"):
+            _prepare_sfcn_array(data)
 
 
 # ---------------------------------------------------------------------------
@@ -249,7 +267,7 @@ class TestPredicSynthbaTta:
         import src.brain_age as ba
 
         call_count = {"n": 0}
-        def mock_predict(path, device="cpu", mr_weighting="t1"):
+        def mock_predict(path, device="cpu", mr_weighting="t1", model_type="g"):
             call_count["n"] += 1
             return 55.0 + call_count["n"]  # 56.0 then 57.0
 

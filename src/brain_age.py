@@ -390,8 +390,32 @@ def build_sfcn_age_bins(
     step: float = 1.0,
     count: int = 40,
 ) -> np.ndarray:
-    """Build the age-bin centers used to decode SFCN outputs."""
-    return np.arange(start, start + count * step, step, dtype=np.float32)
+    """
+    Build the official SFCN age-bin centers used to decode outputs.
+
+    The reference SFCN notebook defines ``bin_range=[42, 82]`` and
+    ``bin_step=1``. The corresponding bin centers are therefore
+    ``42.5, 43.5, ..., 81.5`` rather than integer ages.
+    """
+    return start + (step / 2.0) + step * np.arange(count, dtype=np.float32)
+
+
+def _prepare_sfcn_array(
+    data: np.ndarray,
+    target_shape: tuple[int, int, int] = (160, 192, 160),
+) -> np.ndarray:
+    """
+    Match the official SFCN inference preprocessing on an already prepared MRI.
+
+    Official example notebook:
+      1. crop to ``(160, 192, 160)``
+      2. divide intensities by the mean voxel value
+    """
+    cropped = _crop_center(np.asarray(data, dtype=np.float32), target_shape)
+    mean_intensity = float(cropped.mean())
+    if not np.isfinite(mean_intensity) or abs(mean_intensity) < 1e-8:
+        raise ValueError("SFCN mean-normalization failed because the cropped input mean is zero or non-finite.")
+    return cropped / mean_intensity
 
 
 def decode_sfcn_output(
@@ -514,7 +538,7 @@ def _predict_sfcn_with_model(
     data = img.get_fdata(dtype=np.float32)
     if data.ndim != 3:
         raise ValueError(f"SFCN expects a 3D input volume, got shape {data.shape} for {nifti_path}")
-    data = _crop_center(data, (160, 192, 160))
+    data = _prepare_sfcn_array(data)
     tensor = torch.from_numpy(data).unsqueeze(0).unsqueeze(0).to(device)
 
     with torch.no_grad():
@@ -561,6 +585,7 @@ def predict_synthba(
     nifti_path: str | Path,
     device: str = "cpu",
     mr_weighting: str = "t1",
+    model_type: str = "g",
 ) -> float:
     """
     Predict brain age using SynthBA (Puglisi et al. 2024).
@@ -573,12 +598,13 @@ def predict_synthba(
     nifti_path   : raw T1 NIfTI (.nii / .nii.gz)
     device       : 'cpu' or 'cuda'
     mr_weighting : 't1', 't2', or 'flair'
+    model_type   : SynthBA model variant; official README recommends 'g'
     """
     import gc
     import torch
     SynthBA = _import_synthba_class()
 
-    sba = SynthBA(device=device)
+    sba = SynthBA(device=device, model_type=model_type)
     try:
         img = nib.load(str(nifti_path))
         result = float(sba.run(img, preprocess=True, mr_weighting=mr_weighting))
@@ -594,6 +620,7 @@ def predict_synthba_tta(
     nifti_path: str | Path,
     device: str = "cpu",
     mr_weighting: str = "t1",
+    model_type: str = "g",
 ) -> dict:
     """
     SynthBA with minimal TTA: original + L-R flip.
@@ -611,8 +638,18 @@ def predict_synthba_tta(
         flip_path = f.name
     nib.save(flipped, flip_path)
 
-    p_orig = predict_synthba(nifti_path, device=device, mr_weighting=mr_weighting)
-    p_flip = predict_synthba(flip_path, device=device, mr_weighting=mr_weighting)
+    p_orig = predict_synthba(
+        nifti_path,
+        device=device,
+        mr_weighting=mr_weighting,
+        model_type=model_type,
+    )
+    p_flip = predict_synthba(
+        flip_path,
+        device=device,
+        mr_weighting=mr_weighting,
+        model_type=model_type,
+    )
     Path(flip_path).unlink(missing_ok=True)
 
     preds = [p_orig, p_flip]
@@ -649,7 +686,6 @@ def predict_midi_brainage(
     skull_strip : enable MIDI's built-in skull stripping + MNI registration
     """
     import csv
-    import re
     import uuid
     import tempfile
 
@@ -659,47 +695,7 @@ def predict_midi_brainage(
     # Patch pre_process.py for compatibility issues
     pp = midi_dir / "pre_process.py"
     if pp.exists():
-        raw = pp.read_text(encoding="utf-8")
-        changed = False
-
-        # 1. MONAI >= 1.0: AddChannel removed
-        if "AddChannel" in raw and "class AddChannel" not in raw:
-            raw = re.sub(r"[ \t]*AddChannel,?[ \t]*\r?\n", "", raw)
-            raw = re.sub(r"from monai\.transforms import AddChannel\r?\n", "", raw)
-            shim = (
-                "try:\n"
-                "    from monai.transforms import AddChannel\n"
-                "except ImportError:\n"
-                "    class AddChannel:\n"
-                "        def __call__(self, x):\n"
-                "            import numpy as np\n"
-                "            return np.expand_dims(x, 0)\n"
-            )
-            raw = shim + raw
-            changed = True
-
-        # 2. hd-bet >= 2.0: -mode fast removed; GPU needs explicit -device 0; CPU: -device cpu
-        #    Patch is idempotent: also fixes already-patched files that lack -device 0.
-        if "-mode fast" in raw:
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
-            )
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device cpu'.format(reoriented_path, stripped_path)",
-            )
-            changed = True
-        # Fix already-patched files where GPU command is bare (no -device 0)
-        if "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)" in raw:
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
-            )
-            changed = True
-
-        if changed:
-            pp.write_text(raw, encoding="utf-8")
+        _patch_midi_preprocess_file(pp)
 
     # Use a unique project name so re-runs don't collide (MIDI raises on duplicate)
     project_name = f"midi_run_{uuid.uuid4().hex[:8]}"
@@ -754,6 +750,104 @@ def predict_midi_brainage(
         finally:
             import shutil
             shutil.rmtree(midi_dir / project_name, ignore_errors=True)
+
+
+def _patch_midi_preprocess_source(raw: str) -> str:
+    """
+    Normalize MIDIBrainAge ``pre_process.py`` for modern Colab environments.
+
+    The upstream file has drifted against current MONAI and HD-BET releases.
+    Keep this logic text-only so it can be unit-tested without importing vendor
+    dependencies.
+    """
+    import re
+
+    if "class AddChannel" not in raw:
+        raw = re.sub(r"(?m)^[ \t]*AddChannel,?[ \t]*\r?\n", "", raw)
+        raw = re.sub(r"(?m)^from monai\.transforms import AddChannel\r?\n", "", raw)
+        shim = (
+            "try:\n"
+            "    from monai.transforms import AddChannel\n"
+            "except ImportError:\n"
+            "    class AddChannel:\n"
+            "        def __call__(self, x):\n"
+            "            return np.expand_dims(x, axis=0)\n"
+        )
+        if "import monai\r\n" in raw:
+            raw = raw.replace("import monai\r\n", f"import monai\r\n{shim}", 1)
+        elif "import monai\n" in raw:
+            raw = raw.replace("import monai\n", f"import monai\n{shim}", 1)
+        else:
+            raw = f"{shim}{raw}"
+
+    if "from monai.data import MetaTensor" not in raw:
+        if "import monai\r\n" in raw:
+            raw = raw.replace("import monai\r\n", "import monai\r\nfrom monai.data import MetaTensor\r\n", 1)
+        elif "import monai\n" in raw:
+            raw = raw.replace("import monai\n", "import monai\nfrom monai.data import MetaTensor\n", 1)
+        else:
+            raw = f"from monai.data import MetaTensor\n{raw}"
+
+    replacements = {
+        "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)":
+            "cmd = 'hd-bet -i {} -o {} -device cuda'.format(reoriented_path, stripped_path)",
+        "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)":
+            "cmd = 'hd-bet -i {} -o {} -device cpu'.format(reoriented_path, stripped_path)",
+        "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)":
+            "cmd = 'hd-bet -i {} -o {} -device cuda'.format(reoriented_path, stripped_path)",
+        "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)":
+            "cmd = 'hd-bet -i {} -o {} -device cuda'.format(reoriented_path, stripped_path)",
+    }
+    for old, new in replacements.items():
+        raw = raw.replace(old, new)
+
+    lines = raw.splitlines()
+    new_lines: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        indent = line[: len(line) - len(line.lstrip())]
+
+        if re.match(
+            r"^[ \t]*resampled_arr\s*=\s*Spacing\(pixdim=\(1\.4, 1\.4, 1\.4\), mode='bilinear'\)\(reoriented_arr, reoriented_affine\)\[0\]\s*$",
+            line,
+        ):
+            new_lines.extend(
+                [
+                    f"{indent}meta_img = MetaTensor(reoriented_arr, affine=reoriented_affine)",
+                    f"{indent}resampled_arr = Spacing(pixdim=(1.4, 1.4, 1.4), mode='bilinear')(meta_img)",
+                    f"{indent}resampled_arr = np.asarray(resampled_arr)",
+                ]
+            )
+            i += 1
+            continue
+
+        new_lines.append(line)
+
+        if "reoriented_arr, reoriented_affine, *_ = reorder_voxels(orig_arr, orig_affine, 'RAS')" in line:
+            next_line = lines[i + 1] if i + 1 < len(lines) else ""
+            if "np.ascontiguousarray(reoriented_arr)" not in next_line:
+                new_lines.append(f"{indent}reoriented_arr = np.ascontiguousarray(reoriented_arr)")
+
+        if "resampled_arr = Spacing(pixdim=(1.4, 1.4, 1.4), mode='bilinear')(meta_img)" in line:
+            next_line = lines[i + 1] if i + 1 < len(lines) else ""
+            if "np.asarray(resampled_arr)" not in next_line:
+                new_lines.append(f"{indent}resampled_arr = np.asarray(resampled_arr)")
+
+        i += 1
+
+    return "\n".join(new_lines) + "\n"
+
+
+def _patch_midi_preprocess_file(path: str | Path) -> bool:
+    """Patch MIDIBrainAge ``pre_process.py`` in place. Returns True if changed."""
+    path = Path(path)
+    raw = path.read_text(encoding="utf-8")
+    patched = _patch_midi_preprocess_source(raw)
+    if patched == raw:
+        return False
+    path.write_text(patched, encoding="utf-8")
+    return True
 
 
 def predict_sfcn_tta(

@@ -1,24 +1,22 @@
 """
-Compatibility tests for MIDIBrainAge vendor integration.
+Unit tests for MIDIBrainAge compatibility patching.
 
-Catches issues that previously required multiple Colab iterations to discover:
-- hd-bet CLI flags change between versions
-- MONAI AddChannel removed in >= 1.0
-- pre_process.py import errors
+These tests lock down the real Colab failures we hit while validating MIDI on
+SIMON:
+- MONAI removed ``AddChannel`` and changed ``Spacing`` usage
+- HD-BET no longer accepts numeric GPU device strings like ``0``
+- reordered numpy arrays can carry negative strides into Torch/MONAI
 
 Run with:
     pytest tests/test_midi_compat.py -v
-
-Skipped automatically if vendor/MIDIBrainAge is not present.
 """
 import ast
-import re
-import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
+from textwrap import dedent
 
+import pandas as pd
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -27,196 +25,148 @@ PRE_PROCESS = MIDI_DIR / "pre_process.py"
 
 sys.path.insert(0, str(REPO_ROOT))
 
-pytestmark = pytest.mark.skipif(
-    not MIDI_DIR.exists() or not PRE_PROCESS.exists(),
-    reason="vendor/MIDIBrainAge not present",
+from src.brain_age import (
+    _patch_midi_preprocess_file,
+    _patch_midi_preprocess_source,
+    predict_midi_brainage,
 )
 
 
-# ---------------------------------------------------------------------------
-# pre_process.py patch correctness
-# ---------------------------------------------------------------------------
+LEGACY_PRE_PROCESS = dedent(
+    """\
+    import numpy as np
+    import nibabel as nib
+    import monai
+    from monai.transforms import (
+        AddChannel,
+        Spacing,
+        ResizeWithPadOrCrop
+    )
+    import os
 
-class TestPreProcessPatch:
-    def _get_patched(self) -> str:
-        """Apply predict_midi_brainage patch logic and return patched source."""
-        from src.brain_age import predict_midi_brainage
-        import inspect, unittest.mock as mock
+    def preprocess(input_path, use_gpu, skull_strip, register, project_name):
+        if skull_strip:
+            orig_nii = nib.load(input_path)
+            orig_arr, orig_affine = np.asarray(orig_nii.dataobj), orig_nii.affine
+            reoriented_arr, reoriented_affine, *_ = reorder_voxels(orig_arr, orig_affine, 'RAS')
+            new_image = nib.Nifti1Image(reoriented_arr, reoriented_affine)
+            nib.save(new_image, "./tmp/reorient.nii.gz")
+            if use_gpu:
+                cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)
+            else:
+                cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)
+            os.system(cmd)
 
-        raw = PRE_PROCESS.read_text(encoding="utf-8")
+        orig_nii = nib.load(input_path)
+        orig_arr, orig_affine = np.asarray(orig_nii.dataobj), orig_nii.affine
+        reoriented_arr, reoriented_affine, *_ = reorder_voxels(orig_arr, orig_affine, 'RAS')
+        reoriented_arr = AddChannel()(reoriented_arr)
+        resampled_arr =  Spacing(pixdim=(1.4, 1.4, 1.4), mode='bilinear')(reoriented_arr, reoriented_affine)[0]
+        return resampled_arr
+    """
+)
 
-        # Simulate the patch from predict_midi_brainage
-        if "AddChannel" in raw and "class AddChannel" not in raw:
-            raw = re.sub(r"[ \t]*AddChannel,?[ \t]*\r?\n", "", raw)
-            raw = re.sub(r"from monai\.transforms import AddChannel\r?\n", "", raw)
-            shim = (
-                "try:\n"
-                "    from monai.transforms import AddChannel\n"
-                "except ImportError:\n"
-                "    class AddChannel:\n"
-                "        def __call__(self, x):\n"
-                "            import numpy as np\n"
-                "            return np.expand_dims(x, 0)\n"
+
+def _assert_no_addchannel_in_monai_import_block(src: str) -> None:
+    in_block = False
+    for line in src.splitlines():
+        if line.strip().startswith("from monai.transforms import ("):
+            in_block = True
+        if in_block:
+            assert "AddChannel" not in line, (
+                f"AddChannel still present in monai import block: {line!r}"
             )
-            raw = shim + raw
+        if in_block and line.strip() == ")":
+            in_block = False
 
-        if "-mode fast" in raw:
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
-            )
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device cpu'.format(reoriented_path, stripped_path)",
-            )
-        if "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)" in raw:
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} -device 0'.format(reoriented_path, stripped_path)",
-            )
-        return raw
 
-    def test_patched_source_is_valid_python(self):
-        """Patched pre_process.py must parse without SyntaxError."""
-        src = self._get_patched()
-        try:
-            ast.parse(src)
-        except SyntaxError as e:
-            pytest.fail(f"Patched pre_process.py has SyntaxError at line {e.lineno}: {e.msg}")
+class TestPatchMidiPreprocessSource:
+    def test_legacy_source_is_rewritten_for_modern_colab(self):
+        patched = _patch_midi_preprocess_source(LEGACY_PRE_PROCESS)
 
-    def test_no_bare_addchannel_in_monai_import_block(self):
-        """After patching, AddChannel must not appear inside a monai import block."""
-        src = self._get_patched()
-        in_block = False
-        for line in src.splitlines():
-            if line.strip().startswith("from monai.transforms import ("):
-                in_block = True
-            if in_block:
-                assert "AddChannel" not in line, (
-                    f"AddChannel still present in monai import block: {line!r}"
-                )
-            if in_block and line.strip() == ")":
-                in_block = False
+        ast.parse(patched)
+        assert "class AddChannel" in patched
+        assert patched.count("class AddChannel") == 1
+        assert "from monai.data import MetaTensor" in patched
+        assert "-mode fast" not in patched
+        assert "-device 0" not in patched
+        assert "-device cuda" in patched
+        assert "-device cpu" in patched
+        assert "np.ascontiguousarray(reoriented_arr)" in patched
+        assert patched.count("np.ascontiguousarray(reoriented_arr)") == 2
+        assert "Spacing(pixdim=(1.4, 1.4, 1.4), mode='bilinear')(reoriented_arr, reoriented_affine)[0]" not in patched
+        assert "meta_img = MetaTensor(reoriented_arr, affine=reoriented_affine)" in patched
+        assert "resampled_arr = Spacing(pixdim=(1.4, 1.4, 1.4), mode='bilinear')(meta_img)" in patched
+        assert "resampled_arr = np.asarray(resampled_arr)" in patched
+        _assert_no_addchannel_in_monai_import_block(patched)
 
-    def test_addchannel_shim_present_after_patch(self):
-        """Patched source must define AddChannel via try/except or class."""
-        src = self._get_patched()
-        has_shim = "class AddChannel" in src or (
-            "try:" in src and "AddChannel" in src and "except ImportError" in src
+    def test_patch_is_idempotent(self):
+        patched_once = _patch_midi_preprocess_source(LEGACY_PRE_PROCESS)
+        patched_twice = _patch_midi_preprocess_source(patched_once)
+        assert patched_twice == patched_once
+
+    def test_current_vendor_source_patches_cleanly(self):
+        if not PRE_PROCESS.exists():
+            pytest.skip("vendor/MIDIBrainAge not present")
+
+        patched = _patch_midi_preprocess_source(PRE_PROCESS.read_text(encoding="utf-8"))
+        ast.parse(patched)
+        assert "-device 0" not in patched
+        assert "-mode fast" not in patched
+        assert "np.ascontiguousarray(reoriented_arr)" in patched
+        assert "Spacing(pixdim=(1.4, 1.4, 1.4), mode='bilinear')(reoriented_arr, reoriented_affine)[0]" not in patched
+        assert "resampled_arr = np.asarray(resampled_arr)" in patched
+
+
+class TestPatchMidiPreprocessFile:
+    def test_patch_file_is_in_place_and_idempotent(self, tmp_path):
+        pp = tmp_path / "pre_process.py"
+        pp.write_text(LEGACY_PRE_PROCESS, encoding="utf-8")
+
+        changed = _patch_midi_preprocess_file(pp)
+        first = pp.read_text(encoding="utf-8")
+        changed_again = _patch_midi_preprocess_file(pp)
+        second = pp.read_text(encoding="utf-8")
+
+        assert changed is True
+        assert changed_again is False
+        assert first == second
+        ast.parse(second)
+
+
+class TestPredictMidiBrainagePatching:
+    def test_predict_midi_brainage_patches_preprocess_before_subprocess(self, tmp_path, monkeypatch):
+        midi_dir = tmp_path / "MIDIBrainAge"
+        midi_dir.mkdir()
+        pp = midi_dir / "pre_process.py"
+        pp.write_text(LEGACY_PRE_PROCESS, encoding="utf-8")
+        (midi_dir / "run_inference.py").write_text("# dummy\n", encoding="utf-8")
+
+        nifti_path = tmp_path / "scan.nii.gz"
+        nifti_path.write_bytes(b"")
+
+        def fake_run(cmd, capture_output, text, cwd, timeout):
+            project_name = cmd[cmd.index("--project_name") + 1]
+            out_dir = Path(cwd) / project_name
+            out_dir.mkdir(parents=True, exist_ok=True)
+            pd.DataFrame(
+                [{"ID": "subj", "Predicted_age (years)": 44.2}]
+            ).to_csv(out_dir / "brain_age_output.csv", index=False)
+            return subprocess.CompletedProcess(cmd, 0, stdout="ok", stderr="")
+
+        monkeypatch.setattr("src.brain_age.subprocess.run", fake_run)
+
+        pred = predict_midi_brainage(
+            nifti_path=nifti_path,
+            midi_dir=midi_dir,
+            device="cuda",
+            sequence="t1",
+            skull_strip=True,
         )
-        assert has_shim, "No AddChannel compatibility shim found after patch"
-
-    def test_no_old_hdbet_mode_flag(self):
-        """Patched source must not contain deprecated -mode fast flag."""
-        src = self._get_patched()
-        assert "-mode fast" not in src, "Deprecated hd-bet flag '-mode fast' still present after patch"
-
-    def test_gpu_hdbet_uses_device_0(self):
-        """Patched GPU hd-bet command must use -device 0 (not bare command)."""
-        src = self._get_patched()
-        # The GPU path (no 'cpu' in the cmd) must have -device 0
-        for line in src.splitlines():
-            if "hd-bet" in line and "cpu" not in line and "cmd" in line:
-                assert "-device 0" in line, (
-                    f"GPU hd-bet command missing '-device 0': {line!r}"
-                )
-
-    def test_no_old_hdbet_device_flag(self):
-        """Patched source must not use '-device cpu' (old syntax, should be --device)."""
-        src = self._get_patched()
-        # Old: -device cpu (single dash). New: --device cpu (double dash)
-        assert "'-device cpu'" not in src and '"-device cpu"' not in src, (
-            "Deprecated hd-bet flag '-device cpu' still present (use '--device cpu')"
-        )
-
-
-# ---------------------------------------------------------------------------
-# hd-bet CLI compatibility
-# ---------------------------------------------------------------------------
-
-class TestHdBetCli:
-    @pytest.fixture(autouse=True)
-    def require_hdbet(self):
-        if shutil.which("hd-bet") is None:
-            pytest.skip("hd-bet not installed")
-
-    def test_hdbet_help_exits_zero(self):
-        """hd-bet --help must succeed (exit 0)."""
-        r = subprocess.run(["hd-bet", "--help"], capture_output=True, text=True)
-        assert r.returncode == 0, f"hd-bet --help failed:\n{r.stderr}"
-
-    def test_hdbet_does_not_accept_mode_flag(self):
-        """Verify that -mode fast is no longer valid (confirms we need the patch)."""
-        r = subprocess.run(
-            ["hd-bet", "-i", "x.nii.gz", "-o", "y.nii.gz", "-mode", "fast"],
-            capture_output=True, text=True,
-        )
-        # Either unrecognized argument error or file-not-found — NOT a clean success
-        assert r.returncode != 0 or "unrecognized" in r.stderr.lower(), (
-            "hd-bet accepted -mode fast — patch may be unnecessary now, review"
-        )
-
-    def test_hdbet_accepts_device_double_dash(self):
-        """hd-bet must accept --device flag (new API)."""
-        r = subprocess.run(
-            ["hd-bet", "--help"],
-            capture_output=True, text=True,
-        )
-        help_text = r.stdout + r.stderr
-        assert "--device" in help_text or "-device" in help_text, (
-            "hd-bet --help does not mention device flag at all"
-        )
-
-
-# ---------------------------------------------------------------------------
-# predict_midi_brainage applies patch before subprocess
-# ---------------------------------------------------------------------------
-
-class TestMidiPatchApplied:
-    def test_patch_applied_to_actual_file(self, tmp_path):
-        """predict_midi_brainage must patch pre_process.py before running."""
-        import shutil as sh
-        # Copy MIDI dir to tmp to avoid mutating vendor
-        tmp_midi = tmp_path / "MIDIBrainAge"
-        sh.copytree(MIDI_DIR, tmp_midi)
-
-        # Make sure it starts unpatched (restore original if already patched)
-        pp = tmp_midi / "pre_process.py"
-        original = PRE_PROCESS.read_text(encoding="utf-8")
-        pp.write_text(original, encoding="utf-8")
-
-        # Import and call patch logic directly (same code as predict_midi_brainage)
-        raw = pp.read_text(encoding="utf-8")
-        changed = False
-        if "AddChannel" in raw and "class AddChannel" not in raw:
-            raw = re.sub(r"[ \t]*AddChannel,?[ \t]*\r?\n", "", raw)
-            raw = re.sub(r"from monai\.transforms import AddChannel\r?\n", "", raw)
-            shim = (
-                "try:\n    from monai.transforms import AddChannel\n"
-                "except ImportError:\n    class AddChannel:\n"
-                "        def __call__(self, x):\n"
-                "            import numpy as np\n"
-                "            return np.expand_dims(x, 0)\n"
-            )
-            raw = shim + raw
-            changed = True
-        if "-mode fast" in raw:
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {}'.format(reoriented_path, stripped_path)",
-            )
-            raw = raw.replace(
-                "cmd = 'hd-bet -i {} -o {} -mode fast -device cpu'.format(reoriented_path, stripped_path)",
-                "cmd = 'hd-bet -i {} -o {} --device cpu'.format(reoriented_path, stripped_path)",
-            )
-            changed = True
-        if changed:
-            pp.write_text(raw, encoding="utf-8")
 
         patched = pp.read_text(encoding="utf-8")
-        assert "-mode fast" not in patched
-        assert "class AddChannel" in patched or (
-            "try:" in patched and "AddChannel" in patched
-        )
-        # Must still be valid Python
-        ast.parse(patched)
+        assert pred == pytest.approx(44.2)
+        assert "-device cuda" in patched
+        assert "-device 0" not in patched
+        assert "resampled_arr = np.asarray(resampled_arr)" in patched
+        assert "np.ascontiguousarray(reoriented_arr)" in patched
