@@ -1,26 +1,40 @@
 # Data files — never commit
-data/simon/
-data/ixi/
-data/*.nii
-data/*.nii.gz
-data/*.mgz
-data/*.npz
-data/*.xls
-data/*.xlsx
+papers/data/simon/
+papers/data/ixi/
+papers/data/*.nii
+papers/data/*.nii.gz
+papers/data/*.mgz
+papers/data/*.npz
+papers/data/*.xls
+papers/data/*.xlsx
 
-# Results — generated outputs (keep directory structure)
-results/figures/*
-results/tables/*
-!results/figures/.gitkeep
-!results/tables/.gitkeep
-results/*.csv
-results/*.json
+# Generated outputs (keep directory structure)
+papers/figures/*
+papers/tables/*
+!papers/figures/.gitkeep
+!papers/tables/.gitkeep
+papers/*.csv
+papers/*.json
 
 # Vendor weights / large binaries
 vendor/FaceAge/models/
 *.pt
 *.pth
 *.h5
+*.ckpt
+*.safetensors
+*.bin
+
+# Rendered images — large, generated
+results/renders/
+data/renders/
+
+# papers/ — only tex/bib/cls/pdf in git, not generated data
+papers/**/*.csv
+papers/**/*.png
+papers/**/*.jpg
+papers/midl2026/figures/*
+!papers/midl2026/figures/.gitkeep
 
 # Python
 __pycache__/
@@ -49,6 +63,9 @@ Thumbs.db
 # IDE
 .vscode/settings.json
 .idea/
+
+# Claude Code local config
+.claude/
 
 # Local machine configs
 config/local/

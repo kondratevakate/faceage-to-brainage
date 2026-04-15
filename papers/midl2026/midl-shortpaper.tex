@@ -3,61 +3,25 @@
 % The following packages will be automatically loaded:
 % jmlr, amsmath, amssymb, natbib, graphicx, url, algorithm2e
 % ifoddpage, relsize and probably more
-% make sure they are installed with your latex distribution
-
-\usepackage{mwe} % to get dummy images
+\usepackage{booktabs}
+\usepackage{siunitx}
 
 % Header for extended abstracts
 \jmlrproceedings{MIDL}{Medical Imaging with Deep Learning}
 \jmlrpages{}
 \jmlryear{2026}
 
-% to be uncommented for submissions under review
 \jmlrworkshop{Short Paper -- MIDL 2026 submission}
 \jmlrvolume{-- Under Review}
 \editors{Under Review for MIDL 2026}
 
-\title[Short Title]{Full Title of Article}
+\title[MRI-derived Face Age vs Brain Age]{MRI-derived Face Age vs Brain Age from the Same T1 Scan: a Proof-of-Concept Pipeline}
 
- % Use \Name{Author Name} to specify the name.
- % If the surname contains spaces, enclose the surname
- % in braces, e.g. \Name{John {Smith Jones}} similarly
- % if the name has a "von" part, e.g \Name{Jane {de Winter}}.
- % If the first letter in the forenames is a diacritic
- % enclose the diacritic in braces, e.g. \Name{{\'E}louise Smith}
-
- % Two authors with the same address
- % \midlauthor{\Name{Author Name1} \Email{abc@sample.edu}\and
- %  \Name{Author Name2} \Email{xyz@sample.edu}\\
- %  \addr Address}
-
- % Three or more authors with the same address:
- % \midlauthor{\Name{Author Name1} \Email{an1@sample.edu}\\
- %  \Name{Author Name2} \Email{an2@sample.edu}\\
- %  \Name{Author Name3} \Email{an3@sample.edu}\\
- %  \addr Address}
-
-
-% Authors with different addresses:
-% \midlauthor{\Name{Author Name1} \Email{abc@sample.edu}\\
-% \addr Address 1
-% \AND
-% \Name{Author Name2} \Email{xyz@sample.edu}\\
-% \addr Address 2
-% }
-
-%\footnotetext[1]{Contributed equally} 
-
-% More complicate cases, e.g. with dual affiliations and joint authorship
-\midlauthor{\Name{Author Name1\midljointauthortext{Contributed equally}\nametag{$^{1,2}$}} \orcid{1111-2222-3333-4444} \Email{abc@sample.edu}\\
-\addr $^{1}$ Address 1 \\
-\addr $^{2}$ Address 2 \AND
-\Name{Author Name2\midlotherjointauthor\nametag{$^{1}$}} \Email{xyz@sample.edu}\\
-\Name{Author Name3\nametag{$^{2}$}} \Email{alphabeta@example.edu}\\
-\Name{Author Name4\midljointauthortext{Contributed equally}\nametag{$^{3}$}} \Email{uvw@foo.ac.uk}\\
-\addr $^{3}$ Address 3 \AND
-\Name{Author Name5\midlotherjointauthor\nametag{$^{4}$}} \Email{fgh@bar.com}\\
-\addr $^{4}$ Address 4
+\midlauthor{%
+  \Name{Ekaterina Kondrateva\nametag{$^{1}$}} \Email{kondratevakate@gmail.com}\\
+  \Name{Ramil Khafizov\nametag{$^{1}$}}\\
+  \Name{Gleb Bobrovskikh\nametag{$^{1}$}}\\
+  \addr $^{1}$ Independent researchers
 }
 
 \begin{document}
@@ -65,75 +29,167 @@
 \maketitle
 
 \begin{abstract}
-This is a great paper and it has a concise abstract.
+  We present a proof-of-concept pipeline for extracting both face age and
+  brain age from the same non-defaced T1-weighted MRI volume. The face branch
+  renders a frontal portrait from the MRI surface and applies an existing
+  FaceAge model; the brain branch estimates age with SynthBA on the same
+  acquisition. Evaluating on the IXI dataset ($N{=}406$ for face age,
+  $N{=}105$ for brain age, $N{=}93$ overlapping), we find that SynthBA
+  achieves MAE~$6.33$ years (Pearson $r{=}0.84$) while calibrated FaceAge
+  reaches MAE~$10.24$ years ($r{=}0.83$). The two aging gaps computed from
+  the same scan show a statistically significant positive correlation
+  ($r{=}0.31$, $\rho{=}0.32$, $p{<}0.01$), suggesting partial but
+  incomplete overlap between facial and cerebral aging signals. Scanner
+  reproducibility on the single-subject SIMON dataset (99 scans, 36 scanners)
+  shows SynthBA brain-age predictions are highly stable (SD~$1.21$ years),
+  though with a systematic negative bias of $-16.16$ years on this subject.
+  The pipeline and all code are openly available.
 \end{abstract}
 
 \begin{keywords}
-List of keywords, comma separated.
+  brain age, face age, MRI, biological age, age gap, reproducibility, IXI, SIMON
 \end{keywords}
 
+% -----------------------------------------------------------------------
 \section{Introduction}
+% -----------------------------------------------------------------------
 
-This is where the content of your paper goes.  Some random notes:
-\begin{itemize}
-\item You should use \LaTeX \cite{Lamport:Book:1989}.
-\item JMLR/PMLR uses natbib for references. For simplicity, here, \verb|\cite|  defaults to
-  parenthetical citations, i.e. \verb|\citep|. You can of course also
-  use \verb|\citet| for textual citations.
-\item You should follow the guidelines provided by the conference.
-\item Read through the JMLR template documentation for specific \LaTeX
-  usage questions.
-\item Note that the JMLR template provides many handy functionalities
-such as \verb|\figureref| to refer to a figure,
-e.g. \figureref{fig:example},  \verb|\tableref| to refer to a table,
-e.g. \tableref{tab:example} and \verb|\equationref| to refer to an equation,
-e.g. \equationref{eq:example}.
-\end{itemize}
+Standard MRI pre-processing pipelines routinely remove facial structure
+(``defacing'') to protect participant identity before data sharing.
+However, non-defaced T1-weighted volumes---common in single-site research
+and legacy datasets such as IXI~\citep{ixi} and
+SIMON~\citep{simon}---contain both a brain and a complete facial surface
+within the same acquisition.  This raises a natural question: do the
+\emph{facial} morphology and the \emph{brain parenchyma} record the same
+aging trajectory, or do they carry partly independent biological information?
+
+Prior work on brain age~\citep{peng2021sfcn, lemaitre2022synthba} and face
+age~\citep{bontempi2025faceage} treats these as entirely separate modalities
+from different instruments.  No existing study compares the two gap
+estimates from a \emph{single scan}.  Such a comparison avoids the
+domain shift of photo-vs-MRI studies and allows a controlled test of
+whether the face and brain age together or drift apart.
+
+We contribute: (1) an open pipeline that renders MRI-derived face images and
+runs both modalities in parallel; (2) a systematic comparison of render
+strategies; and (3) an analysis of face-age/brain-age gap correlation and
+scanner reproducibility on two public datasets.
+
+% -----------------------------------------------------------------------
+\section{Methods}
+% -----------------------------------------------------------------------
+
+\paragraph{Face branch.}
+Given a T1 NIfTI volume, we extract the iso-surface with marching cubes
+(intensity threshold~$t{=}30$) and render a frontal portrait using
+PyVista~\citep{pyvista} with nine viewpoints ($\pm 20°$ yaw/pitch) and
+randomised lighting.  We apply FaceAge~\citep{bontempi2025faceage}, a
+ResNet-50 model trained on 56\,304 curated photographs, to each render and
+average the predictions.  We also tested photorealistic augmentation via
+stable diffusion to close the photo--render domain gap, but found this
+substantially worsened accuracy (see \tableref{tab:face}).
+
+To correct the systematic positive bias of FaceAge on MRI renders, we
+fit a linear calibration $\hat{y}_{\text{chron}} = a \cdot \hat{y}_{\text{face}} + b$
+on a held-out set of 20 subjects and apply it to the remaining 80.
+
+\paragraph{Brain branch.}
+Skull stripping is performed with SynthStrip~\citep{synthstrip}.  We then
+run SynthBA~\citep{lemaitre2022synthba}, a segmentation-based model robust
+to acquisition variability, on the stripped volume.
+
+\paragraph{Datasets.}
+The \textbf{IXI} dataset~\citep{ixi} contains 561 T1 scans of healthy adults
+(age 20--86 years) from three London sites.  After manual quality control of
+frontal renders (removing scans with floating artefacts or missing facial
+structure), 406 subjects were retained for face-age analysis; the brain-age
+model was run on a 105-subject subset.  Both sets share 93 subjects, enabling
+paired gap analysis.
+
+The \textbf{SIMON} dataset~\citep{simon} provides 99 T1 scans of a single
+healthy male (age range 29--46 years) collected across 73 sessions on 36
+different scanners, enabling a direct test of scan-rescan reproducibility.
+
+% -----------------------------------------------------------------------
+\section{Results}
+% -----------------------------------------------------------------------
+
+\paragraph{Face-age accuracy on IXI.}
+\tableref{tab:face} compares render strategies.  Multiview averaging with a
+higher intensity threshold outperforms single-view rendering.  Photorealistic
+augmentation is counterproductive: the generated images shift the appearance
+distribution away from the photographs FaceAge was trained on, causing a
+near-perfect positive bias equal to the MAE.  Post-hoc linear calibration
+(fit on 20 subjects, applied to 80) recovers most accuracy, reaching
+MAE~$10.24$ years and reducing bias to $-2.12$ years.
 
 \begin{table}[htbp]
- % The first argument is the label.
- % The caption goes in the second argument, and the table contents
- % go in the third argument.
-\floatconts
-  {tab:example}%
-  {\caption{An Example Table}}%
-  {\begin{tabular}{ll}
-  \bfseries Dataset & \bfseries Result\\
-  Data1 & 0.12345\\
-  Data2 & 0.67890\\
-  Data3 & 0.54321\\
-  Data4 & 0.09876
+\floatconts{tab:face}
+  {\caption{Face-age prediction accuracy on IXI. Calibration formula:
+    $\hat{y}_{\text{chron}} = 1.010\,\hat{y}_{\text{face}} - 17.049$.}}
+  {\begin{tabular}{lrrr}
+    \toprule
+    \textbf{Method} & \textbf{MAE (yr)} & \textbf{RMSE (yr)} & \textbf{Bias (yr)} \\
+    \midrule
+    Multiview renders ($N{=}406$)              & 11.34 & 13.83 & $+10.04$ \\
+    Photorealistic renders (SD-augmented)      & 19.91 & 21.12 & $+19.91$ \\
+    Multiview + linear calibration             & \textbf{10.24} & --- & $-2.12$ \\
+    \bottomrule
   \end{tabular}}
 \end{table}
 
-\begin{figure}[htbp]
- % Caption and label go in the first argument and the figure contents
- % go in the second argument
-\floatconts
-  {fig:example}
-  {\caption{Example Image}}
-  {\includegraphics[width=0.5\linewidth]{example-image}}
-\end{figure}
+\paragraph{Brain-age accuracy on IXI.}
+SynthBA achieves MAE~$6.33$ years (RMSE~$7.82$, Pearson $r{=}0.84$,
+bias~$-4.15$ years) on the 105-subject IXI subset, outperforming the
+calibrated face-age estimate despite using no demographic priors.
 
-\begin{algorithm2e}
-\caption{Computing Net Activation}
-\label{alg:net}
- % older versions of algorithm2e have \dontprintsemicolon instead
- % of the following:
- %\DontPrintSemicolon
- % older versions of algorithm2e have \linesnumbered instead of the
- % following:
- %\LinesNumbered
-\KwIn{$x_1, \ldots, x_n, w_1, \ldots, w_n$}
-\KwOut{$y$, the net activation}
-$y\leftarrow 0$\;
-\For{$i\leftarrow 1$ \KwTo $n$}{
-  $y \leftarrow y + w_i*x_i$\;
-}
-\end{algorithm2e}
+\paragraph{Gap correlation.}
+On the 93 subjects with both predictions, the face-age gap
+($\hat{y}_{\text{face}} - y_{\text{chron}}$) and brain-age gap
+($\hat{y}_{\text{brain}} - y_{\text{chron}}$) are positively correlated
+(Pearson $r{=}0.31$, Spearman $\rho{=}0.32$, $p{<}0.01$, both).
+The moderate effect size suggests a shared aging signal while leaving
+substantial independent variance---consistent with face and brain aging
+being related but not redundant biomarkers.
+
+\paragraph{Scanner reproducibility on SIMON.}
+Across 99 scans on 36 scanners, SynthBA predicted a nearly constant age
+(mean $27.4$ years, SD~$1.21$ years) despite chronological age ranging
+from 29.6 to 46.4 years (SD~$3.30$ years).  This yields a large
+systematic bias (MAE~$16.2$ years, bias~$-16.2$ years), pointing to a
+subject-level calibration failure rather than scanner sensitivity.
+The very low prediction SD confirms strong scanner-to-scanner reproducibility
+of the model output itself.
+
+% -----------------------------------------------------------------------
+\section{Discussion and Conclusion}
+% -----------------------------------------------------------------------
+
+We presented a proof-of-concept showing that face age and brain age can be
+extracted from a single non-defaced T1 MRI.  The key findings are:
+
+\begin{itemize}
+  \item MRI-rendered face images yield a detectable chronological age signal
+    (MAE~$10.24$ years after calibration, $r{=}0.83$), though less accurate
+    than brain-based estimation.
+  \item Photorealistic domain transfer via diffusion models \emph{hurts}
+    performance, likely due to appearance hallucination conflicting with
+    FaceAge's training distribution.
+  \item The face-age and brain-age gaps from the same scan are modestly but
+    significantly correlated ($r{=}0.31$), suggesting partial shared biology.
+  \item SynthBA is highly reproducible across scanners but shows strong
+    subject-level bias on SIMON, warranting per-subject calibration.
+\end{itemize}
+
+Limitations include the use of a single brain-age model and the lack of
+clinical labels.  Future work will extend to multi-contrast renders
+(T1/T2/PD), additional brain-age models (SFCN, BrainIAC, MIDIBrainAge),
+and datasets with disease labels to test whether face--brain gap discordance
+carries diagnostic information.
 
 % Acknowledgments---Will not appear in anonymized version
-\midlacknowledgments{We thank a bunch of people.}
+\midlacknowledgments{We thank the IXI and SIMON data collection teams for
+making non-defaced MRI datasets publicly available.}
 
 \bibliography{midl-samplebibliography}
 

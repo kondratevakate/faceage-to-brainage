@@ -51,6 +51,16 @@ DOI: 10.1016/S2589-7500(25)00045-4
 
 ---
 
+## SynthBA model weights
+
+SynthBA is installed via pip — no manual weight download needed:
+```bash
+pip install synthba
+```
+Or see `vendor/MODELS.md` for the pinned version used in this paper.
+
+---
+
 ## SFCN pretrained weights (optional, notebook 03)
 
 For SFCN-based brain age (Peng et al. 2021, UK Biobank):

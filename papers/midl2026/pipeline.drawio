@@ -1,0 +1,133 @@
+<mxfile host="app.diagrams.net" modified="2026-04-15" agent="Claude" version="21.0.0">
+  <diagram name="FaceAge-BrainAge Pipeline" id="pipeline">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===== INPUT ===== -->
+        <mxCell id="10" value="T1-weighted MRI&#xa;(non-defaced NIfTI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="620" y="40" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ===== SPLIT ARROW ===== -->
+        <mxCell id="11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="20" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="10" target="50" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ===== FACE BRANCH (left) ===== -->
+        <mxCell id="20" value="Marching Cubes&#xa;(threshold t=30)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="200" y="180" width="190" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="20" target="22" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="22" value="PyVista Render&#xa;9 viewpoints ± 20° + random lighting" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="200" y="300" width="190" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="23" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="22" target="24" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="24" value="Manual QC&#xa;406 / 561 subjects kept" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="200" y="420" width="190" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="25" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="24" target="26" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="26" value="FaceAge&#xa;(ResNet-50, trained on 56k photos)&#xa;→ average over 9 views" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="200" y="540" width="190" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="27" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="26" target="28" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="28" value="Linear Calibration&#xa;(fit on 20, apply to 80)&#xa;true = 1.010·pred − 17.049" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="200" y="670" width="190" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="29" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="28" target="70" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- face_age output label -->
+        <mxCell id="30" value="face_age&#xa;MAE 10.24 yr, r=0.83" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="175" y="750" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Branch label -->
+        <mxCell id="31" value="FACE BRANCH" style="text;html=1;align=center;fontStyle=1;fontSize=12;fontColor=#7d6608;" vertex="1" parent="1">
+          <mxGeometry x="185" y="140" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ===== BRAIN BRANCH (right) ===== -->
+        <mxCell id="50" value="SynthStrip&#xa;(skull stripping)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="180" width="190" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="51" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="50" target="52" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="52" value="SynthBA&#xa;(segmentation-based,&#xa;robust to acquisition)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="300" width="190" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="53" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="52" target="70" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- brain_age output label -->
+        <mxCell id="54" value="brain_age&#xa;MAE 6.33 yr, r=0.84" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="380" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Branch label -->
+        <mxCell id="55" value="BRAIN BRANCH" style="text;html=1;align=center;fontStyle=1;fontSize=12;fontColor=#276821;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="140" width="220" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ===== GAP ANALYSIS ===== -->
+        <mxCell id="70" value="Age Gap Analysis&#xa;face_gap = face_age − chron_age&#xa;brain_gap = brain_age − chron_age" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="580" y="820" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="71" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="70" target="72" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="72" value="Gap Correlation&#xa;Pearson r = 0.31&#xa;Spearman ρ = 0.32, p &lt; 0.01&#xa;(N = 93 paired subjects)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="580" y="960" width="300" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ===== SIMON REPRODUCIBILITY (bottom right) ===== -->
+        <mxCell id="80" value="SIMON Dataset&#xa;(1 subject, 36 scanners, 99 scans)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="820" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="81" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="80" target="82" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="82" value="Reproducibility&#xa;SD pred = 1.21 yr (stable)&#xa;Bias = −16.2 yr (systematic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="960" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ===== DATASETS label ===== -->
+        <mxCell id="90" value="IXI Dataset&#xa;561 subjects (20–86 yr)&#xa;3 sites, London" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#23445d;border=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="130" width="220" height="40" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

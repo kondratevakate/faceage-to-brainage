@@ -2,13 +2,16 @@
 
 **Does the face in your MRI scan know how old your brain is?**
 
-A proof-of-concept research repository on paired face-age and brain-age estimation from the same MRI scan.
+A proof-of-concept pipeline for paired face-age and brain-age estimation from the same non-defaced T1 MRI volume.
 
-Current active implementation status:
-- face rendering and FaceAge wrappers are in place
-- brain-age reproduction starts with `SFCN`
-- cleaned T1 manifests are available for `IXI` and `SIMON`
-- the first GPU workflow is `notebooks/05_sfcn_colab_bootstrap.ipynb`
+**Current status:**
+- Face pipeline: FaceAge on 9-view MRI renders + linear calibration ✅
+- Brain pipeline: SynthBA via SynthStrip ✅
+- Gap correlation (face vs brain, same scan): r = 0.31, p < 0.01 ✅
+- Scanner reproducibility (SIMON, 36 scanners): SynthBA SD = 1.21 yr ✅
+- SFCN, MIDIBrainAge, BrainIAC: in progress 🔄
+
+Paper: [MIDL 2026 Short Paper #99](papers/midl2026/midl-shortpaper.tex) · Pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio)
 
 ---
 
@@ -16,93 +19,81 @@ Current active implementation status:
 
 Standard brain-age models predict age from brain parenchyma: grey and white matter volumes, cortical thickness, and related structural signals. But every non-defaced T1 MRI also contains the full 3D morphology of the face: subcutaneous fat distribution, orbital recession, facial bone structure, and soft-tissue shape.
 
-This project asks: if you extract two age estimates from the same T1 scan, one from the brain and one from the face, do they agree? Do they capture the same underlying aging process, or partially independent biological signals?
+This project asks: if you extract two age estimates from the same T1 scan — one from the brain and one from the face — do they agree? Do they capture the same underlying aging process, or partially independent biological signals?
 
 Why this is interesting:
 - prior work typically paired MRI with photographs taken separately
 - this repo extracts both signals from a single file
-- the face signal here is morphological and MRI-derived, not a standard photo-age setting
+- the face signal is morphological and MRI-derived, not a standard photo-age setting
+
+---
+
+## Results
+
+| Method | Dataset | N | MAE (yr) | r | Bias (yr) |
+|--------|---------|---|----------|---|-----------|
+| FaceAge, 9-view renders | IXI | 406 | 11.34 | 0.83 | +10.04 |
+| FaceAge + linear calibration | IXI | 80 | **10.24** | 0.83 | −2.12 |
+| Photorealistic render (SD) | IXI | — | 19.91 | — | +19.91 |
+| SynthBA | IXI | 105 | **6.33** | 0.84 | −4.15 |
+| SynthBA scan-rescan | SIMON | 99 | 16.16\* | — | −16.16\* |
+| **Gap correlation** (face vs brain) | IXI | 93 | Pearson r = 0.31, Spearman ρ = 0.32, p < 0.01 | | |
+
+\* Large bias on SIMON is subject-specific (model predicts ~27 yr for a 43-yr-old); prediction SD across 36 scanners is only 1.21 yr, showing high reproducibility.
+
+Calibration formula: `true_age = 1.010 × face_pred − 17.049` (fit on 20 subjects, applied to 80).
 
 ---
 
 ## Hypotheses
 
-| ID | Hypothesis | Primary test |
-|----|------------|--------------|
-| H1 | FaceAge applied to MRI-rendered faces detects a monotonic aging signal | Spearman correlation on IXI |
-| H2 | Brain-age gap and face-age gap from the same T1 are positively correlated | Spearman correlation on IXI |
-| H3 | Face-age variability across scanners is lower than brain-age variability | CV comparison on SIMON |
-| H4 | Multi-contrast renderings improve face-age signal versus T1-only renders | Delta correlation on IXI with T1/T2/PD |
-
-The main baseline question comes from prior work showing mixed evidence on whether facial aging and brain aging track together. This repo tests that link with AI-derived MRI face renders rather than subjective ratings.
+| ID | Hypothesis | Status |
+|----|------------|--------|
+| H1 | FaceAge on MRI renders detects a monotonic aging signal | ✅ r = 0.83 on IXI |
+| H2 | Brain-age gap and face-age gap are positively correlated | ✅ r = 0.31, p < 0.01 |
+| H3 | Face-age variability across scanners ≤ brain-age variability | 🔄 SIMON face-age pending |
+| H4 | Multi-contrast renders improve face-age vs T1-only | 🔄 notebook 04 pending |
 
 ---
 
 ## Pipeline
 
 ```text
-T1 MRI (.nii.gz / .mgz)
-        |
-        |-- skull-strip -> brain parenchyma
-        |       `-- SynthSeg / SFCN -> brain_age
-        |
-        `-- marching cubes on face surface
-                `-- PyVista frontal render -> face.png
-                        `-- FaceAge -> face_age
+T1 MRI (.nii.gz)
+    │
+    ├── FACE BRANCH
+    │   marching cubes (t=30) → PyVista 9-view render
+    │   → FaceAge (ResNet-50) → average → linear calibration
+    │   → face_age, face_age_gap
+    │
+    └── BRAIN BRANCH
+        SynthStrip (skull strip) → SynthBA
+        → brain_age, brain_age_gap
 
-Per subject:
-  chron_age
-  brain_age
-  face_age
-  brain_age_gap = brain_age - chron_age
-  face_age_gap  = face_age  - chron_age
+Per subject: chron_age, face_age, brain_age, face_age_gap, brain_age_gap
+Gap analysis: scripts/gap_correlation.py → papers/tables/gap_correlation.csv
 ```
+
+See [papers/midl2026/pipeline.drawio](papers/midl2026/pipeline.drawio) for the full diagram (open in VS Code Draw.io extension or app.diagrams.net).
 
 ---
 
 ## Datasets
 
-### SIMON
-
-Single-subject MRI reliability dataset.
-
-- 1 healthy male
-- 73 sessions
-- 36 scanners
-- 13 MRI models
-- ages 29-46
-- faces present in the non-defaced data
-
-Use in this repo:
-- scanner-variance and repeatability analyses
-- first Colab `SFCN` baseline
-
-Current cleaned working subset:
-- `99` T1 scans
-- `73` sessions
-- age populated from session-level phenotype metadata
-
 ### IXI
-
 Cross-sectional healthy brain MRI from three London sites.
+- ~580 subjects, ages 20–86, sites: Guys, HH, IOP
+- T1, T2, PD modalities; non-defaced
+- Used: 406 subjects (face age), 105 (brain age), 93 (gap correlation)
+- Download: <https://brain-development.org/ixi-dataset/>
 
-- about 580 subjects
-- ages 20-86
-- T1, T2, and PD modalities
-- sites: Guys, HH, IOP
-- non-defaced
+### SIMON
+Single-subject MRI reliability dataset.
+- 1 healthy male, 73 sessions, 36 scanners, ages 29–46
+- 99 T1 scans; non-defaced
+- Used for scanner reproducibility (H3)
 
-Use in this repo:
-- main cross-sectional face-age versus brain-age analysis
-- chronological-age benchmarking
-- multi-contrast render experiments
-
-Current cleaned T1 subset:
-- `581` T1 files inspected
-- `561` T1 subjects with resolved age
-- `20` excluded from automatic age assignment because metadata were missing or conflicting
-
-Download reference: <https://brain-development.org/ixi-dataset/>
+See [papers/data/README.md](papers/data/README.md) for full download instructions.
 
 ---
 
@@ -110,219 +101,153 @@ Download reference: <https://brain-development.org/ixi-dataset/>
 
 ```text
 faceage-to-brainage/
-|-- src/
-|   |-- render.py
-|   |-- face_age.py
-|   |-- brain_age.py
-|   `-- utils.py
-|
-|-- scripts/
-|   |-- batch_render.py
-|   |-- batch_brain_age.py
-|   |-- batch_sfcn.py
-|   `-- batch_face_age.py
-|
-|-- notebooks/
-|   |-- 01_poc_single_scan.ipynb
-|   |-- 02_simon_reliability.ipynb
-|   |-- 03_ixi_main_experiment.ipynb
-|   |-- 04_multicontrast_rgb.ipynb
-|   `-- 05_sfcn_colab_bootstrap.ipynb
-|
-|-- notes/
-|   |-- literature_review.md
-|   `-- brain_age_reproduction.md
-|
-|-- related works/
-|   |-- README.md
-|   |-- face_age.md
-|   |-- brain_age.md
-|   `-- research_questions.md
-|
-|-- config/
-|   `-- brain_age_runtime.example.json
-|
-|-- data/
-|   `-- README.md
-|
-|-- vendor/
-|-- results/
-|-- requirements.txt
-`-- environment.yml
+├── src/
+│   ├── rendering/        ← face render experiments
+│   ├── landmarks/        ← facial keypoint experiments
+│   ├── brain_age.py
+│   ├── face_age.py
+│   ├── render.py
+│   └── utils.py
+│
+├── scripts/
+│   ├── gap_correlation.py   ← compute & save face/brain gap correlation
+│   ├── batch_render.py
+│   ├── batch_face_age.py
+│   ├── batch_brain_age.py
+│   └── batch_sfcn.py
+│
+├── notebooks/
+│   ├── 01_poc_single_scan.ipynb
+│   ├── 02_simon_reliability.ipynb
+│   ├── 03_ixi_main_experiment.ipynb
+│   ├── 04_multicontrast_rgb.ipynb
+│   ├── 05_sfcn_colab_bootstrap.ipynb
+│   ├── 06_brainage_colab.ipynb
+│   ├── 07_synthba_colab.ipynb          ← SynthBA on IXI (main result)
+│   ├── 08_synthba_simon_colab.ipynb    ← SynthBA on SIMON (reproducibility)
+│   ├── 09_midi_simon_colab.ipynb       ← MIDIBrainAge (in progress)
+│   └── 10_brainiac_simon_colab.ipynb   ← BrainIAC (in progress)
+│
+├── papers/
+│   ├── midl2026/         ← LaTeX source + pipeline.drawio
+│   ├── data/             ← dataset download instructions
+│   ├── tables/           ← CSV results (gitignored, .gitkeep tracked)
+│   ├── figures/          ← generated figures (gitignored)
+│   ├── notes/            ← reproduction notes
+│   └── related_works/    ← literature review
+│
+├── vendor/
+│   ├── MODELS.md         ← pinned model versions & commit hashes
+│   └── FaceAge/          ← cloned, weights gitignored
+│
+├── config/
+│   └── brain_age_runtime.example.json
+├── tests/
+├── environment.yml
+└── requirements.txt
 ```
-
-Related docs:
-- `related works/README.md`: current shortlist of testable and promising related works
-- `related works/research_questions.md`: dated memo on face-age versus brain-age questions and future work
-- `notes/brain_age_reproduction.md`: current `SFCN`-first reproduction note
 
 ---
 
 ## Setup
 
 ### Option A: conda
-
 ```bash
 conda env create -f environment.yml
 conda activate faceage
 ```
 
 ### Option B: pip
-
 ```bash
 pip install -r requirements.txt
 ```
 
-### External model repos
+### Model weights
+
+See [vendor/MODELS.md](vendor/MODELS.md) for pinned versions and download links.
 
 ```bash
 # FaceAge
 git clone https://github.com/AIM-Harvard/FaceAge vendor/FaceAge
-# Put FaceAge_weights.pt and age_regressor.pt into vendor/FaceAge/models/
+# Download FaceAge_weights.pt and age_regressor.pt → vendor/FaceAge/models/
 
-# SFCN
+# SynthBA — installed via pip (see requirements.txt)
+# No manual weight download needed
+
+# SFCN (optional)
 git clone https://github.com/ha-ha-ha-han/UKBiobank_deep_pretrain vendor/SFCN
-# Put run_20190719_00_epoch_best_mae.p into vendor/SFCN/brain_age/
+# Download run_20190719_00_epoch_best_mae.p → vendor/SFCN/brain_age/
 ```
 
 ### Runtime config
-
-Paths for `SFCN` inference are intentionally not hardcoded in repo-tracked code.
-
-- tracked example: `config/brain_age_runtime.example.json`
-- local ignored runtime file: `config/local/brain_age_runtime.json`
-
-Copy the example into `config/local/` and fill in your local paths before running `scripts/batch_sfcn.py`.
-
-### FreeSurfer / SynthStrip
-
-- `SynthSeg` still requires a local FreeSurfer installation if you want the volumetric pipeline
-- the Colab `SFCN` path does not use `google.colab.drive.mount()`
-- `notebooks/05_sfcn_colab_bootstrap.ipynb` installs standalone `SynthStrip` inside the Colab runtime and calls it via `mri_synthstrip`
+Copy the example config and fill in local paths:
+```bash
+cp config/brain_age_runtime.example.json config/local/brain_age_runtime.json
+```
 
 ---
 
 ## Quickstart
 
-### Local workflow
+### Reproduce main results (local)
 
 ```bash
-# 1. One-scan proof of concept
+# 1. Proof of concept — single scan
 jupyter notebook notebooks/01_poc_single_scan.ipynb
 
-# 2. Batch render face images
-python scripts/batch_render.py data/simon/ results/simon_renders/ --workers 4
+# 2. Batch render face images from IXI T1 scans
+python scripts/batch_render.py papers/data/ixi/T1/ papers/figures/ixi_renders/ --workers 4
 
 # 3. Run FaceAge on rendered PNGs
-python scripts/batch_face_age.py results/simon_renders/ results/simon_face_ages.csv --faceage vendor/FaceAge --bypass-mtcnn
+python scripts/batch_face_age.py papers/figures/ixi_renders/ papers/tables/face_ages.csv \
+    --faceage vendor/FaceAge --bypass-mtcnn
 
-# 4. Run SynthSeg brain-age branch
-python scripts/batch_brain_age.py data/simon/ results/simon_brain_ages/
+# 4. Run SynthBA brain-age
+python scripts/batch_brain_age.py papers/data/ixi/T1/ papers/tables/brain_ages.csv
 
-# 5. Run SFCN from local config
-python scripts/batch_sfcn.py --dataset simon --limit 3
+# 5. Compute gap correlation
+python scripts/gap_correlation.py
+# → saves papers/tables/gap_correlation.csv
 ```
 
-### Colab `SFCN` quickstart
+### Colab notebooks
 
-The current Colab path is `SIMON`-first and expects one downloadable archive, not a mounted Google Drive folder.
-
-Expected archive layout:
-
-```text
-bundle_root/
-  simon/
-    manifest.csv
-    images/
-    metadata/
-  weights/
-    run_20190719_00_epoch_best_mae.p
-```
-
-Recommended flow:
-
-1. Prepare one archive file such as `simon_bundle.zip` or `simon_bundle.tar.gz`.
-2. Put `simon/manifest.csv`, `simon/images/`, `simon/metadata/`, and the official `SFCN` weight into that archive.
-3. Upload the archive somewhere with a direct downloadable URL.
-4. Open `notebooks/05_sfcn_colab_bootstrap.ipynb` in a GPU-backed Colab runtime.
-5. Set `SIMON_BUNDLE_URL` in the first config cell.
-6. Run the notebook top-to-bottom.
-
-What the notebook does:
-- clones this repo
-- clones the official `SFCN` repo
-- installs standalone `SynthStrip`
-- downloads and extracts the `SIMON` bundle under `/content/brain_assets`
-- rewrites `manifest.csv` into `manifest_colab.csv`
-- writes `config/local/brain_age_runtime.json`
-- runs standalone `SynthStrip` validation
-- runs `python scripts/batch_sfcn.py --dataset simon --limit 3`
-
-Current scope of the notebook:
-- `SIMON` only
-- no `drive.mount()` dependency
-- no hardcoded local data paths in repo-tracked code
-
----
-
-## Brain-Age Reproduction Status
-
-The current brain-age plan is:
-
-1. `SFCN` first
-2. `SynthBA` second
-3. `MIDIconsortium BrainAge` after a stable baseline
-4. `BrainIAC` later, if needed
-
-Why `SFCN` first:
-- public repo and public pretrained weight
-- T1-only baseline matches both `IXI` and `SIMON`
-- already supported by the current wrapper and batch runner
-- lowest-cost first reproduction target
-
-Current local code support is strongest for `FaceAge`, `SFCN`, and the `SynthSeg`-based volumetric pipeline.
-
-Important caution:
-- treat the current `SFCN` wrapper in `src/brain_age.py` as provisional until age-bin decoding is fully validated against the official implementation
+| Notebook | Description | Colab |
+|----------|-------------|-------|
+| [07_synthba_colab.ipynb](notebooks/07_synthba_colab.ipynb) | SynthBA on IXI (main brain-age result) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kondratevakate/faceage-to-brainage/blob/main/notebooks/07_synthba_colab.ipynb) |
+| [08_synthba_simon_colab.ipynb](notebooks/08_synthba_simon_colab.ipynb) | SynthBA on SIMON (reproducibility) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kondratevakate/faceage-to-brainage/blob/main/notebooks/08_synthba_simon_colab.ipynb) |
+| [05_sfcn_colab_bootstrap.ipynb](notebooks/05_sfcn_colab_bootstrap.ipynb) | SFCN baseline on SIMON | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kondratevakate/faceage-to-brainage/blob/main/notebooks/05_sfcn_colab_bootstrap.ipynb) |
 
 ---
 
 ## Key External Tools
 
-| Tool | Paper / source | Use in this project |
-|------|----------------|---------------------|
-| FaceAge | Bontempi et al. 2025 | face age from MRI renders |
-| SynthSeg | Billot et al. 2023 | segmentation-based volumetric branch |
-| SFCN | Peng et al. 2021 | first brain-age baseline |
-| BrainIAC | Tak et al. 2026 | later high-capacity reference baseline |
-
-See `notes/literature_review.md` and the `related works/` folder for the broader literature context.
+| Tool | Reference | Use |
+|------|-----------|-----|
+| FaceAge | Bontempi et al., *Lancet Digital Health* 2025 | Face age from MRI renders |
+| SynthBA | Lemaître et al. 2022 | Primary brain-age model |
+| SynthStrip | Hoopes et al. 2022 | Skull stripping |
+| SFCN | Peng et al., *Med Image Anal* 2021 | Brain-age baseline |
+| MIDIBrainAge | MIDI Consortium | Sequence-specific brain age (in progress) |
+| BrainIAC | Tak et al. 2026 | Foundation brain-age model (in progress) |
+| PyVista | Sullivan & Kaszynski, *JOSS* 2019 | 3D MRI surface rendering |
 
 ---
 
-## Computing
+## Brain-Age Model Status
 
-Experiments can run locally in VS Code. GPU-heavy inference is currently expected to run in Colab.
-
-Current preferred Colab path for brain-age:
-- official `SFCN`
-- standalone `SynthStrip`
-- one downloadable `SIMON` bundle archive
-- no `google.colab.drive.mount()` dependency
-
-All `src/` modules are intended to remain Colab-compatible. PyVista rendering uses offscreen mode where needed.
+| Model | IXI | SIMON | Notes |
+|-------|-----|-------|-------|
+| SynthBA | ✅ MAE 6.33 yr | ✅ SD 1.21 yr | Primary result |
+| SFCN | 🔄 | 🔄 | Age-bin decoding under validation |
+| MIDIBrainAge | 🔄 | 🔄 | Notebook 09 in progress |
+| BrainIAC | 🔄 | 🔄 | Notebook 10 in progress |
 
 ---
 
 ## Contact
 
-Ekaterina Kondrateva - kondratevakate@github
+**Ekaterina Kondrateva** — kondratevakate@gmail.com
+**Ramil Khafizov** · **Gleb Bobrovskikh**
 
-Affiliations:
-- Maastricht University
-- MAASTRO Clinic
-
-Collaboration:
-- AIM-Harvard
-- Mass General Brigham
-
+Code: <https://github.com/kondratevakate/faceage-to-brainage>
