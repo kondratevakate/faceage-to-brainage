@@ -70,3 +70,6 @@ Thumbs.db
 # Local machine configs
 config/local/
 vendor/SFCN/
+
+*.h5
+*renders*/
