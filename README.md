@@ -6,6 +6,7 @@ A proof-of-concept pipeline for paired face-age and brain-age estimation from th
 
 **Current status:**
 - Face pipeline: FaceAge on 9-view MRI renders + linear calibration ✅
+- Face morphometrics: GPA + EDMA on BioFace3D-20 landmarks → Ridge regression ✅  IXI MAE 7.81 yr
 - Brain pipeline: SynthBA via SynthStrip ✅
 - Gap correlation (face vs brain, same scan): r = 0.31, p < 0.01 ✅
 - Scanner reproducibility (SIMON, 36 scanners): SynthBA SD = 1.21 yr ✅
@@ -35,6 +36,7 @@ Why this is interesting:
 | FaceAge, 9-view renders | IXI | 406 | 11.34 | 0.83 | +10.04 |
 | FaceAge + linear calibration | IXI | 80 | **10.24** | 0.83 | −2.12 |
 | Photorealistic render (SD) | IXI | — | 19.91 | — | +19.91 |
+| Face morphometrics (GPA+EDMA, Ridge) | IXI | 72 | **7.81** | 0.775 | −1.83 |
 | SynthBA | IXI | 105 | **6.33** | 0.84 | −4.15 |
 | SynthBA scan-rescan | SIMON | 99 | 16.16\* | — | −16.16\* |
 | **Gap correlation** (face vs brain) | IXI | 93 | Pearson r = 0.31, Spearman ρ = 0.32, p < 0.01 | | |
@@ -102,12 +104,16 @@ See [papers/data/README.md](papers/data/README.md) for full download instruction
 ```text
 faceage-to-brainage/
 ├── src/
-│   ├── rendering/        ← face render experiments
-│   ├── landmarks/        ← facial keypoint experiments
 │   ├── brain_age.py
 │   ├── face_age.py
 │   ├── render.py
-│   └── utils.py
+│   ├── utils.py
+│   ├── faceage/                    ← FaceAge deep-learning pipeline (smileyenot983)
+│   │   └── faceage_mri/FaceAge/   ← MTCNN + ResNet-50 age model, rendering scripts
+│   └── face_age_morphometrics/     ← 3D morphometrics pipeline (BobrG)
+│       ├── bioface3d/              ← BioFace3D-20 MVCNN landmark detector
+│       ├── src/                    ← GPA + EDMA features, Ridge regression
+│       └── scripts/                ← extract_features.py, benchmark_regressors.py
 │
 ├── scripts/
 │   ├── gap_correlation.py   ← compute & save face/brain gap correlation

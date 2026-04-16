@@ -1,5 +1,7 @@
 # Face Age Morphometrics
 
+> **Location:** `src/face_age_morphometrics/` — run all commands below from this directory.
+
 Predict chronological age from MRI-derived 3D facial morphometrics (GPA + EDMA) and evaluate
 how the face-age signal compares with brain-age derived from the same T1 scan.
 
