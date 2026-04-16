@@ -4,15 +4,45 @@
 
 A proof-of-concept pipeline for paired face-age and brain-age estimation from the same non-defaced T1 MRI volume.
 
-**Current status:**
-- Face pipeline: FaceAge on 9-view MRI renders + linear calibration ✅
-- Face morphometrics: GPA + EDMA on BioFace3D-20 landmarks → Ridge regression ✅  IXI MAE 7.81 yr
-- Brain pipeline: SynthBA via SynthStrip ✅
-- Gap correlation (face vs brain, same scan): r = 0.31, p < 0.01 ✅
-- Scanner reproducibility (SIMON, 36 scanners): SynthBA SD = 1.21 yr ✅
-- SFCN, MIDIBrainAge, BrainIAC: in progress 🔄
+Paper: [MIDL 2026 Short Paper #99](papers/midl2026/midl-shortpaper.tex) · Pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio) · Literature: [papers/related_works/literature_review.md](papers/related_works/literature_review.md)
 
-Paper: [MIDL 2026 Short Paper #99](papers/midl2026/midl-shortpaper.tex) · Pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio)
+---
+
+## Global Landscape: Age Estimation from Face and Brain
+
+### Face age estimation
+
+The face is one of the most information-dense age signals available non-invasively. Under controlled conditions, deep models trained on large face-photo datasets achieve around **3 years MAE** for chronological age (Zhang et al. 2023; Rothe/DEX ~3.2 yr on MORPH-II). Among the components that carry most of the age signal:
+
+- **Skin tone, texture, and facial contrast** — account for roughly 25–33% of age-perception accuracy; their removal from older faces collapses judgments toward chance
+- **Periocular region and sclera** — scleral color (darker, redder, yellower) and orbital changes concentrate multiple aging processes in a small area; highly sensitive to rendering artifacts
+- **Facial fat compartments** — MRI evidence shows significant age-related change in cheek fat distribution; muscle volume does not differ significantly across age groups in healthy women
+
+The most important practical distinction: **apparent/perceived age**, **chronological age**, and **biological age** are different targets. FaceAge (Bontempi et al., *Lancet Digital Health* 2025) is a biological-age model — cancer patients look 4.79 years older on average, and the face-age gap predicts survival. It is not a fair chronological-age benchmark. For a direct chronological-age comparison, MiVOLO (face-only checkpoints, MAE ~4.3 yr) is the appropriate open baseline.
+
+### Brain age estimation
+
+Whole-brain structural T1-weighted MRI is one of the strongest non-invasive age signals available. Across large adult lifespan cohorts, realistic expectation is **4–6 years MAE** for healthy adults:
+
+- SFCN (Peng et al. 2021): **2.14 yr MAE** on UK Biobank in-distribution; but 9–10 yr on independent CamCAN (scanner shift). In-distribution performance should not be taken as a universal ceiling.
+- SynthBA: best open protocol-agnostic option; handles T1, T2, and FLAIR without retraining
+- BrainIAC (Tak et al. 2026, *Nature Neuroscience*): foundation model (ViT-B, SSL on ~49k MRIs); brain-age MAE 6.55 yr at 20% fine-tuning; demonstrates few-shot generalization across 7 simultaneous tasks
+- Kim et al. 2025: **2.73 yr MAE** on clinical 2D T1 after bias correction — strongest clinical result, but not openly runnable
+
+Brain vascular markers (WMH, microangiopathic change) are auxiliary biomarkers of aging heterogeneity, not mature standalone age clocks. Healthy aging diverges substantially after ~70 years, particularly in hippocampus, amygdala, and temporal cortex.
+
+### The link — and the gap
+
+| Evidence | Direction | Source |
+|----------|-----------|--------|
+| Twin who looked older died first in 73% of pairs | Face → mortality | Christensen et al., *BMJ* 2009 |
+| Looking 5 yr younger → lower COPD, osteoporosis, cognitive decline risk | Face → health | Rotterdam Study, *BJD* 2023 |
+| Brain-PAD at midlife predicts older facial appearance | Brain → Face | Belsky et al., *Mol Psychiatry* 2019 |
+| Multimodal brain-PAD not significantly associated with facial aging | Null | Cole et al., *NeuroImage* 2020 |
+
+The Cole 2020 null result used **subjective facial age ratings** — imprecise and not scalable. This project replaces that with AI-derived face age from **MRI morphology**: bone structure, subcutaneous fat volume, orbital recession. These are fundamentally different measurements. Our pipeline tests whether the morphological face-age signal from T1 MRI correlates with brain parenchymal aging in the same scan.
+
+**Core tension**: the most age-informative facial cues (skin appearance, scleral color, eye-region detail, fat redistribution) are least grounded in structural MRI and most vulnerable to hallucination by generative models. This makes validation against brain age from the same scan essential.
 
 ---
 
@@ -26,35 +56,6 @@ Why this is interesting:
 - prior work typically paired MRI with photographs taken separately
 - this repo extracts both signals from a single file
 - the face signal is morphological and MRI-derived, not a standard photo-age setting
-
----
-
-## Results
-
-| Method | Dataset | N | MAE (yr) | r | Bias (yr) |
-|--------|---------|---|----------|---|-----------|
-| FaceAge, 9-view renders | IXI | 406 | 11.34 | 0.83 | +10.04 |
-| FaceAge + linear calibration | IXI | 80 | **10.24** | 0.83 | −2.12 |
-| Photorealistic render (SD) | IXI | — | 19.91 | — | +19.91 |
-| Face morphometrics (GPA+EDMA, Ridge) | IXI | 72 | **7.81** | 0.775 | −1.83 |
-| SynthBA | IXI | 105 | **6.33** | 0.84 | −4.15 |
-| SynthBA scan-rescan | SIMON | 99 | 16.16\* | — | −16.16\* |
-| **Gap correlation** (face vs brain) | IXI | 93 | Pearson r = 0.31, Spearman ρ = 0.32, p < 0.01 | | |
-
-\* Large bias on SIMON is subject-specific (model predicts ~27 yr for a 43-yr-old); prediction SD across 36 scanners is only 1.21 yr, showing high reproducibility.
-
-Calibration formula: `true_age = 1.010 × face_pred − 17.049` (fit on 20 subjects, applied to 80).
-
----
-
-## Hypotheses
-
-| ID | Hypothesis | Status |
-|----|------------|--------|
-| H1 | FaceAge on MRI renders detects a monotonic aging signal | ✅ r = 0.83 on IXI |
-| H2 | Brain-age gap and face-age gap are positively correlated | ✅ r = 0.31, p < 0.01 |
-| H3 | Face-age variability across scanners ≤ brain-age variability | 🔄 SIMON face-age pending |
-| H4 | Multi-contrast renders improve face-age vs T1-only | 🔄 notebook 04 pending |
 
 ---
 
@@ -139,8 +140,8 @@ faceage-to-brainage/
 │   ├── data/             ← dataset download instructions
 │   ├── tables/           ← CSV results (gitignored, .gitkeep tracked)
 │   ├── figures/          ← generated figures (gitignored)
-│   ├── notes/            ← reproduction notes
-│   └── related_works/    ← literature review
+│   ├── notes/            ← implementation reproduction notes
+│   └── related_works/    ← literature review (single source of truth)
 │
 ├── vendor/
 │   ├── MODELS.md         ← pinned model versions & commit hashes
