@@ -16,10 +16,10 @@
 \title[MRI-derived Face Age vs Brain Age]{MRI-derived Face Age vs Brain Age from the Same T1 Scan: a Longitudinal Single-Subject Stress Test}
 
 \midlauthor{%
-  \Name{Ekaterina Kondrateva\nametag{$^{1}$}} \Email{kondratevakate@gmail.com}\\
+  \Name{Ekaterina Kondrateva\nametag{$^{1}$}} \orcid{0000-0003-3623-6106} \Email{ekaterina.kondrateva@maastrichtuniversity.nl}\\
   \Name{Ramil Khafizov\nametag{$^{2}$}}\\
   \Name{Gleb Bobrovskikh\nametag{$^{2}$}}\\
-  \addr $^{1}$ Independent researcher\\
+  \addr $^{1}$ Department of Radiation Oncology (Maastro), GROW Research Institute for Oncology and Reproduction, Maastricht University Medical Centre+, Maastricht University, Maastricht, The Netherlands\\
   \addr $^{2}$ Applied AI Institute
 }
 
@@ -72,6 +72,11 @@ acquisition mismatch, and a longitudinal single-subject dataset adds a stricter
 test: can a model follow aging within one person rather than merely produce
 scanner-stable predictions?
 
+More broadly, biological-age estimation may become useful for earlier disease
+detection or risk stratification, not only for age prediction itself.  For
+example, FaceAge suggested that face-derived biological age carries clinically
+relevant signal beyond chronological age in oncology~\citep{bontempi2025faceage}.
+
 We use the SIMON dataset~\citep{simon}, which contains 99 T1 scans of one
 healthy subject acquired across 36 scanners while he ages from 29 to 46
 years, as a controlled stress test.  Our goals are: (1) run face-age and
@@ -93,7 +98,9 @@ curated photographs, to each render and average the predictions.  Second,
 we extract BioFace3D-20 landmarks from the multi-view renders, compute
 GPA+EDMA morphometric features, and regress age with Ridge regression.
 Because this paper focuses on SIMON as a stress test, we report raw
-predictions and do not apply IXI-derived calibration.
+predictions and do not apply IXI-derived calibration.  Figure~\ref{fig:simon}A
+shows a synthetic example of the MRI-derived multi-view render grid used as
+input to the face branch.
 
 \paragraph{Brain branch.}
 Skull stripping is performed with SynthStrip~\citep{synthstrip}.  We then
@@ -135,13 +142,23 @@ the model.
 
 \begin{figure}[htbp]
 \floatconts{fig:simon}
-  {\caption{Chronological vs predicted age on SIMON (one subject, 36 scanners,
-    99 scans). Dashed line: perfect prediction. Dotted horizontal lines: mean
-    predicted age per method. SynthBA predicts a near-constant age regardless
-    of the subject's actual age at scan, a clear out-of-distribution failure.
-    Face morphometrics show a positive trend with chronological age despite
-    positive bias.}}
-  {\includegraphics[width=0.92\linewidth]{simon_chron_vs_predicted.pdf}}
+  {\caption{(A) Synthetic example of the MRI-derived multi-view face render
+    grid used as input to the face branch. (B) Chronological vs predicted age
+    on SIMON (one subject, 36 scanners, 99 scans). Dashed line: perfect
+    prediction. Dotted horizontal lines: mean predicted age per method.
+    SynthBA predicts a near-constant age regardless of the subject's actual
+    age at scan, a clear out-of-distribution failure. Face morphometrics show
+    a positive trend with chronological age despite positive bias.}}
+  {\begin{minipage}[t]{0.34\linewidth}
+    \centering
+    \textbf{A}\\[2pt]
+    \includegraphics[width=\linewidth]{ex_render.png}
+   \end{minipage}\hfill
+   \begin{minipage}[t]{0.62\linewidth}
+    \centering
+    \textbf{B}\\[2pt]
+    \includegraphics[width=\linewidth]{simon_chron_vs_predicted.pdf}
+   \end{minipage}}
 \end{figure}
 
 % -----------------------------------------------------------------------
@@ -161,12 +178,13 @@ longitudinal trend, suggesting that facial geometry from T1 MRI may retain
 aging information that current brain-age predictions miss.
 
 \paragraph{Limitations.}
-This version intentionally excludes IXI brain-age results because a potential
-train/test leakage concern makes them unsuitable as main evidence.
-Accordingly, the paper should be read as a controlled single-subject stress
-test rather than a population benchmark.  A leak-free cross-sectional
-evaluation, additional brain-age baselines, and external longitudinal cohorts
-remain future work.
+This work is only a first step.  We have not yet fully reproduced several of
+the most interesting recent papers in face age and brain age, so the current
+comparison is still incomplete.  We also have not yet looked at other
+biomarkers or additional datasets that could test whether the observed
+face--brain mismatch generalises beyond SIMON.  Finally, IXI brain-age
+results are intentionally excluded here because a potential train/test leakage
+concern makes them unsuitable as main evidence.
 
 % Acknowledgments---Will not appear in anonymized version
 \midlacknowledgments{We thank the SIMON data collection team for making a
