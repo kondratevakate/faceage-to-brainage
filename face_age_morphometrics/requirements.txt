@@ -1,0 +1,33 @@
+# Core scientific stack
+numpy>=1.24
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.7
+
+# MRI I/O
+nibabel>=5.1
+
+# Image processing / surface extraction
+scikit-image>=0.21
+
+# 3D rendering (offscreen-capable)
+pyvista>=0.42
+vtk>=9.2
+
+# Deep learning (FaceAge, SFCN)
+torch>=2.0
+torchvision>=0.15
+
+# Face detection (FaceAge dependency)
+facenet-pytorch>=2.5.3
+
+# Utilities
+tqdm>=4.65
+Pillow>=10.0
+
+# Stats / plotting
+pingouin>=0.5
+seaborn>=0.12
+
+# Notebook / Colab
+ipywidgets>=8.0

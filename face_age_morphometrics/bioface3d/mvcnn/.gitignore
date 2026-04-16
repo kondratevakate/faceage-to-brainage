@@ -1,0 +1,18 @@
+# Notepad++
+*.bak
+
+# VSCode
+.vscode
+
+# Python Cache
+*.py[cod]
+__pychache__
+
+# Local Data
+__saved
+
+# Matlab data
+__matlab/vs
+__matlab/datasets
+__matlab/datasets_guide/*.txt
+*.asv
