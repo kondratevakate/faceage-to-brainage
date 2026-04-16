@@ -97,9 +97,9 @@ ax.tick_params(labelsize=9)
 ax.grid(True, lw=0.4, alpha=0.4)
 
 fig.tight_layout()
-out = "../figures/simon_chron_vs_predicted.pdf"
+out = "simon_chron_vs_predicted.pdf"
 fig.savefig(out, dpi=300, bbox_inches='tight')
-out_png = "../figures/simon_chron_vs_predicted.png"
+out_png = "simon_chron_vs_predicted.png"
 fig.savefig(out_png, dpi=200, bbox_inches='tight')
 print(f"Saved: {out}")
 print(f"Saved: {out_png}")

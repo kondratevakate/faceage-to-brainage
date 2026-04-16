@@ -3,8 +3,6 @@
 % The following packages will be automatically loaded:
 % jmlr, amsmath, amssymb, natbib, graphicx, url, algorithm2e
 % ifoddpage, relsize and probably more
-\usepackage{booktabs}
-\usepackage{siunitx}
 
 % Header for extended abstracts
 \jmlrproceedings{MIDL}{Medical Imaging with Deep Learning}
@@ -15,13 +13,14 @@
 \jmlrvolume{-- Under Review}
 \editors{Under Review for MIDL 2026}
 
-\title[MRI-derived Face Age vs Brain Age]{MRI-derived Face Age vs Brain Age from the Same T1 Scan: a Proof-of-Concept Pipeline}
+\title[MRI-derived Face Age vs Brain Age]{MRI-derived Face Age vs Brain Age from the Same T1 Scan: a Longitudinal Single-Subject Stress Test}
 
 \midlauthor{%
   \Name{Ekaterina Kondrateva\nametag{$^{1}$}} \Email{kondratevakate@gmail.com}\\
-  \Name{Ramil Khafizov\nametag{$^{1}$}}\\
-  \Name{Gleb Bobrovskikh\nametag{$^{1}$}}\\
-  \addr $^{1}$ Independent researchers
+  \Name{Ramil Khafizov\nametag{$^{2}$}}\\
+  \Name{Gleb Bobrovskikh\nametag{$^{2}$}}\\
+  \addr $^{1}$ Independent researcher\\
+  \addr $^{2}$ Applied AI Institute
 }
 
 \begin{document}
@@ -36,26 +35,23 @@
   FaceAge, and morphometric features from BioFace3D-20 landmarks---in
   parallel on the same volume.
   %
-  On the cross-sectional IXI dataset ($N{=}406$ face, $N{=}105$ brain,
-  $N{=}93$ overlapping), SynthBA achieves MAE~$6.33$ yr ($r{=}0.84$) and
-  face morphometrics achieve MAE~$7.81$ yr ($r{=}0.78$); the two aging gaps
-  are positively correlated ($r{=}0.31$, $p{<}0.01$).
-  %
   The SIMON single-subject dataset (99 scans, 36 scanners, age 29--46 yr)
   reveals a critical failure mode: SynthBA predicts a near-constant age of
-  $27.4\,\pm\,1.26$ yr regardless of the subject's actual age
-  (MAE~$16.2$ yr), demonstrating that high scanner reproducibility and
+  $27.4 \pm 1.26$ yr regardless of the subject's actual age
+  (MAE $16.2$ yr), demonstrating that high scanner reproducibility and
   severe out-of-distribution bias can coexist.
-  Face morphometrics, by contrast, show a detectable positive trend with
-  chronological age despite positive bias.
+  Face morphometrics, by contrast, remain biased ($+5.1$ yr) but show a
+  detectable positive trend with chronological age, while FaceAge renders
+  show a larger positive bias ($+8.5$ yr) consistent with the MRI-to-photo
+  domain gap.
   %
-  Together, these results highlight both the untapped information available
-  in non-defaced MRI and the readiness gap of current models for
-  out-of-distribution subjects.
+  The main result is methodological: reproducibility alone is not evidence
+  of validity, and same-scan facial geometry may retain longitudinal aging
+  information missed by current brain-age models.
 \end{abstract}
 
 \begin{keywords}
-  brain age, face age, MRI, biological age, age gap, reproducibility, IXI, SIMON
+  brain age, face age, MRI, longitudinal, reproducibility, out-of-distribution, SIMON
 \end{keywords}
 
 % -----------------------------------------------------------------------
@@ -64,24 +60,24 @@
 
 Standard MRI pre-processing pipelines routinely remove facial structure
 (``defacing'') to protect participant identity before data sharing.
-However, non-defaced T1-weighted volumes---common in single-site research
-and legacy datasets such as IXI~\citep{ixi} and
-SIMON~\citep{simon}---contain both a brain and a complete facial surface
-within the same acquisition.  This raises a natural question: do the
-\emph{facial} morphology and the \emph{brain parenchyma} record the same
-aging trajectory, or do they carry partly independent biological information?
+However, non-defaced T1-weighted volumes still contain both a brain and a
+complete facial surface within the same acquisition.  This makes it possible
+to estimate two age signals from one file and ask whether they behave
+similarly under repeated scanning.
 
 Prior work on brain age~\citep{peng2021sfcn, lemaitre2022synthba} and face
-age~\citep{bontempi2025faceage} treats these as entirely separate modalities
-from different instruments.  No existing study compares the two gap
-estimates from a \emph{single scan}.  Such a comparison avoids the
-domain shift of photo-vs-MRI studies and allows a controlled test of
-whether the face and brain age together or drift apart.
+age~\citep{bontempi2025faceage} usually treats these as separate modalities
+acquired by different instruments.  A same-scan comparison removes that
+acquisition mismatch, and a longitudinal single-subject dataset adds a stricter
+test: can a model follow aging within one person rather than merely produce
+scanner-stable predictions?
 
-We contribute: (1) an open pipeline that renders MRI-derived face images and
-runs both modalities in parallel; (2) a systematic comparison of render
-strategies; and (3) an analysis of face-age/brain-age gap correlation and
-scanner reproducibility on two public datasets.
+We use the SIMON dataset~\citep{simon}, which contains 99 T1 scans of one
+healthy subject acquired across 36 scanners while he ages from 29 to 46
+years, as a controlled stress test.  Our goals are: (1) run face-age and
+brain-age estimation on the same T1 volume; and (2) measure whether each
+branch tracks longitudinal aging or collapses to a reproducible but incorrect
+age estimate.
 
 % -----------------------------------------------------------------------
 \section{Methods}
@@ -89,179 +85,92 @@ scanner reproducibility on two public datasets.
 
 \paragraph{Face branch.}
 Given a T1 NIfTI volume, we extract the iso-surface with marching cubes
-(intensity threshold~$t{=}30$) and render a frontal portrait using
-PyVista~\citep{pyvista} with nine viewpoints ($\pm 20°$ yaw/pitch) and
-randomised lighting.  We apply FaceAge~\citep{bontempi2025faceage}, a
-ResNet-50 model trained on 56\,304 curated photographs, to each render and
-average the predictions.  We also tested photorealistic augmentation via
-stable diffusion to close the photo--render domain gap, but found this
-substantially worsened accuracy (see Table~\ref{tab:ixi}).
-
-To correct the systematic positive bias of FaceAge on MRI renders, we
-fit a linear calibration $\hat{y}_{\text{chron}} = a \cdot \hat{y}_{\text{face}} + b$
-on a held-out set of 20 subjects and apply it to the remaining 80.
+(intensity threshold $t{=}30$) and render the face with PyVista~\citep{pyvista}
+from nine viewpoints ($\pm 20^\circ$ yaw/pitch) under randomized lighting.
+We evaluate two face estimators.  First, we apply
+FaceAge~\citep{bontempi2025faceage}, a ResNet-50 model trained on 56\,304
+curated photographs, to each render and average the predictions.  Second,
+we extract BioFace3D-20 landmarks from the multi-view renders, compute
+GPA+EDMA morphometric features, and regress age with Ridge regression.
+Because this paper focuses on SIMON as a stress test, we report raw
+predictions and do not apply IXI-derived calibration.
 
 \paragraph{Brain branch.}
 Skull stripping is performed with SynthStrip~\citep{synthstrip}.  We then
-run SynthBA~\citep{lemaitre2022synthba}, a segmentation-based model robust
-to acquisition variability, on the stripped volume.
+run SynthBA~\citep{lemaitre2022synthba}, a segmentation-based model designed
+to be robust to acquisition variability, on the stripped volume.
 
-\paragraph{Datasets.}
-The \textbf{IXI} dataset~\citep{ixi} contains 561 T1 scans of healthy adults
-(age 20--86 years) from three London sites.  After manual quality control of
-frontal renders (removing scans with floating artefacts or missing facial
-structure), 406 subjects were retained for face-age analysis; the brain-age
-model was run on a 105-subject subset.  Both sets share 93 subjects, enabling
-paired gap analysis.
-
+\paragraph{Dataset and evaluation setting.}
 The \textbf{SIMON} dataset~\citep{simon} provides 99 T1 scans of a single
-healthy male (age range 29--46 years) collected across 73 sessions on 36
-different scanners, enabling a direct test of scan-rescan reproducibility.
+healthy male collected across 73 sessions on 36 scanners (age range
+29.6--46.4 years).  Because identity is fixed, between-scan spread reflects
+scanner sensitivity rather than subject heterogeneity, while the slope of
+predictions over time provides a direct readout of longitudinal validity.
 
 % -----------------------------------------------------------------------
 \section{Results}
 % -----------------------------------------------------------------------
 
-\paragraph{IXI: proof-of-concept accuracy.}
-On the IXI cross-sectional cohort ($N{=}406$ face, $N{=}105$ brain,
-$N{=}93$ overlapping), the pipeline extracts detectable age signals from
-both modalities of the same scan (Table~\ref{tab:ixi}).
-The brain branch (SynthBA) outperforms all face variants.
-Among face methods, morphometric features derived from BioFace3D-20
-landmarks achieve the lowest MAE ($7.81$ yr) and are the most calibrated.
-FaceAge applied to multi-view MRI renders shows a large systematic positive
-bias: the model was trained on photographs, and MRI surface renders
-constitute a clear out-of-distribution input.
-Photorealistic augmentation via stable diffusion worsens this further,
-suggesting the generated skin texture conflicts with, rather than bridges,
-the domain gap.
-On the 93 overlapping subjects the face-age gap and brain-age gap are
-modestly but significantly correlated (Pearson $r{=}0.31$,
-Spearman $\rho{=}0.32$, $p{<}0.01$).
-
-\begin{table}[htbp]
-\floatconts{tab:ixi}
-  {\caption{Age prediction on IXI. \textsuperscript{$\dagger$}Calibration
-    $\hat{y} = 1.010\,\hat{y}_{\mathrm{face}} - 17.049$ fit on 20 subjects,
-    applied to 80.}}
-  {\begin{tabular}{lrrrr}
-    \toprule
-    \textbf{Method} & $N$ & \textbf{MAE} & $r$ & \textbf{Bias} \\
-    \midrule
-    SynthBA (brain)                            & 105 & \textbf{6.33} & 0.84 & $-4.15$ \\
-    Face morphometrics (GPA+EDMA, Ridge)       &  72 & \textbf{7.81} & 0.78 & $-1.83$ \\
-    FaceAge multi-view renders                 & 406 & 11.34         & 0.83 & $+10.04$ \\
-    FaceAge + linear calibration\textsuperscript{$\dagger$} & 80 & 10.24 & 0.83 & $-2.12$ \\
-    Photorealistic renders (SD-augmented)      & ---  & 19.91        & ---  & $+19.91$ \\
-    \bottomrule
-  \end{tabular}}
-\end{table}
-
-\paragraph{SIMON: out-of-distribution stress test.}
-The SIMON dataset provides a unique controlled experiment: one healthy male
-subject scanned on 36 different scanners across 73 sessions (age at scan:
-29.6--46.4 years).  Because there is only a single subject, any
-\emph{between-scan} variance reflects scanner variability rather than
-biology, and the model's ability to track the subject's \emph{longitudinal}
-aging can be read directly from the slope of predictions over time.
-
-Figure~\ref{fig:simon} plots chronological age against predicted age for
-all three methods.  Three patterns stand out.
+Figure~\ref{fig:simon} plots chronological age against predicted age for all
+three methods.  Three patterns stand out.
 
 \textbf{SynthBA (brain)} produces a nearly flat response: mean predicted age
-$27.4\,\pm\,1.26$ years across all 99 scans despite the subject aging from
-$\approx30$ to $\approx46$ years.  Scanner-to-scanner reproducibility is
-excellent (SD~$1.26$ yr), but absolute accuracy is poor
-(MAE~$16.2$ yr, bias $-16.2$ yr).  The model is effectively frozen at a
-value determined during training-distribution fitting and cannot track
-longitudinal change in this subject.  This is a textbook out-of-distribution
-failure: the model is highly confident and highly wrong.
+$27.4 \pm 1.26$ years across all 99 scans despite the subject aging from
+approximately $30$ to $46$ years.  Scanner-to-scanner reproducibility is
+excellent (SD $1.26$ yr), but absolute accuracy is poor
+(MAE $16.2$ yr, bias $-16.2$ yr).  The model is effectively frozen near a
+training-distribution anchor and does not track longitudinal change in this
+subject.
 
 \textbf{Face morphometrics} (GPA+EDMA features, Ridge regression) show a
-positive bias of $+5.1$ yr and a scatter of SD~$5.6$ yr, but crucially
-\emph{a visible positive trend} with chronological age, suggesting that the
-3D morphometric representation captures some longitudinal aging signal even
-without task-specific retraining.
+positive bias of $+5.1$ yr and a spread of SD $5.6$ yr, but they also show
+a visible positive trend with chronological age.  The geometric
+representation therefore appears to retain some longitudinal aging signal
+even without subject-specific retraining.
 
 \textbf{FaceAge multi-view renders} show the largest bias ($+8.5$ yr,
-SD~$5.7$ yr) and the widest scatter, consistent with the domain gap between
-MRI surface renders and the photographic training distribution.
+SD $5.7$ yr) and the widest scatter.  This is consistent with the domain gap
+between MRI surface renders and the photographic training distribution of
+the model.
 
 \begin{figure}[htbp]
 \floatconts{fig:simon}
   {\caption{Chronological vs predicted age on SIMON (one subject, 36 scanners,
     99 scans). Dashed line: perfect prediction. Dotted horizontal lines: mean
     predicted age per method. SynthBA predicts a near-constant age regardless
-    of the subject's actual age at scan---a clear OOD failure.
+    of the subject's actual age at scan, a clear out-of-distribution failure.
     Face morphometrics show a positive trend with chronological age despite
     positive bias.}}
-  {\includegraphics[width=0.92\linewidth]{../figures/simon_chron_vs_predicted.pdf}}
+  {\includegraphics[width=0.92\linewidth]{simon_chron_vs_predicted.pdf}}
 \end{figure}
 
 % -----------------------------------------------------------------------
 \section{Discussion and Conclusion}
 % -----------------------------------------------------------------------
 
-A non-defaced T1 MRI volume contains two aging clocks in a single file:
-the brain parenchyma and the facial anatomy.  Our pipeline demonstrates
-that both can be read with existing open-source models, and that the
-resulting aging gaps are modestly but significantly correlated ($r{=}0.31$).
+A non-defaced T1 MRI still contains two age-sensitive anatomical signals,
+but the SIMON stress test shows that extracting them reliably is harder than
+running pretrained models on the same file.  The main lesson is that low
+scanner variance can mask severe biological error: SynthBA is reproducible
+across hardware yet fails to follow the subject's aging trajectory.
 
-The SIMON experiment makes the central limitation of the field visible.
-State-of-the-art brain-age models are highly reproducible across hardware
-but fail to generalise beyond the population distribution seen during
-training: a healthy subject in his 30s--40s receives predictions anchored
-near the model's training-set mean regardless of his actual age.
-Face-based models face a different but equally severe domain shift: they
-were trained on colour photographs, not MRI surface renders.
-Together, these failures reveal that \emph{current models are not ready
-for deployment outside their training distribution}---a finding that is
-obscured when evaluation is limited to cross-sectional in-distribution
-cohorts.
-
-At the same time, the morphometric face branch---which encodes only
-geometry, not colour or texture---shows a positive longitudinal trend
-that the brain model entirely misses.  This suggests that T1 MRI facial
-structure contains aging information complementary to brain parenchymal
-signals, motivating the joint pipeline proposed here.
+The face branches fail differently.  FaceAge is strongly biased on MRI
+surface renders, consistent with the photo-to-MRI domain gap.  The
+morphometric branch discards color and texture yet preserves a visible
+longitudinal trend, suggesting that facial geometry from T1 MRI may retain
+aging information that current brain-age predictions miss.
 
 \paragraph{Limitations.}
-Several planned components were not completed in this work.
-
-\begin{itemize}
-  \item \textbf{Additional brain-age models.}  SFCN~\citep{peng2021sfcn},
-    MIDIBrainAge, and BrainIAC were integrated only partially; wrappers
-    exist but age-bin decoding and full evaluation on IXI and SIMON
-    remain in progress.
-
-  \item \textbf{Multi-contrast face renders.}  The pipeline currently
-    uses T1-only surface renders.  T2 and PD modalities available in IXI
-    could add complementary tissue contrast to the face branch but have
-    not been evaluated.
-
-  \item \textbf{No longitudinal face-age reliability.}  Scanner
-    reproducibility was assessed for the brain branch only.  The SD of
-    face-age predictions across the 36 SIMON scanners was not formally
-    compared to the brain-age SD.
-
-  \item \textbf{No clinical or disease labels.}  Both IXI and SIMON
-    contain healthy subjects.  Testing whether face--brain gap discordance
-    carries diagnostic information (e.g.\ in neurodegeneration or
-    inflammatory disease) requires a labelled clinical cohort not included
-    here.
-
-  \item \textbf{No per-subject calibration.}  The large subject-level bias
-    of SynthBA on SIMON ($-16.2$ yr) calls for a per-subject or
-    longitudinal recalibration strategy, which was not implemented.
-\end{itemize}
-
-Future work will address these gaps and extend the pipeline to datasets
-with disease labels to test whether face--brain age discordance carries
-diagnostic information beyond standard brain-age gap models.
+This version intentionally excludes IXI brain-age results because a potential
+train/test leakage concern makes them unsuitable as main evidence.
+Accordingly, the paper should be read as a controlled single-subject stress
+test rather than a population benchmark.  A leak-free cross-sectional
+evaluation, additional brain-age baselines, and external longitudinal cohorts
+remain future work.
 
 % Acknowledgments---Will not appear in anonymized version
-\midlacknowledgments{We thank the IXI and SIMON data collection teams for
-making non-defaced MRI datasets publicly available.}
+\midlacknowledgments{We thank the SIMON data collection team for making a
+rare non-defaced longitudinal MRI dataset publicly available.}
 
 \bibliography{midl-samplebibliography}
 
