@@ -149,21 +149,19 @@ the model.
     SynthBA predicts a near-constant age regardless of the subject's actual
     age at scan, a clear out-of-distribution failure. Face morphometrics show
     a positive trend with chronological age despite positive bias.}}
-  {\begin{minipage}[t]{0.34\linewidth}
+  {\begin{minipage}[t]{0.5\linewidth}
     \centering
     \textbf{A}\\[2pt]
     \includegraphics[width=\linewidth]{ex_render.png}
    \end{minipage}\hfill
-   \begin{minipage}[t]{0.62\linewidth}
+   \begin{minipage}[t]{0.5\linewidth}
     \centering
     \textbf{B}\\[2pt]
     \includegraphics[width=\linewidth]{simon_chron_vs_predicted.pdf}
    \end{minipage}}
 \end{figure}
 
-% -----------------------------------------------------------------------
 \section{Discussion and Conclusion}
-% -----------------------------------------------------------------------
 
 A non-defaced T1 MRI still contains two age-sensitive anatomical signals,
 but the SIMON stress test shows that extracting them reliably is harder than
@@ -182,13 +180,13 @@ This work is only a first step.  We have not yet fully reproduced several of
 the most interesting recent papers in face age and brain age, so the current
 comparison is still incomplete.  We also have not yet looked at other
 biomarkers or additional datasets that could test whether the observed
-face--brain mismatch generalises beyond SIMON.  Finally, IXI brain-age
+face--brain mismatch generalises beyond SIMON. Finally, IXI brain-age
 results are intentionally excluded here because a potential train/test leakage
 concern makes them unsuitable as main evidence.
 
 % Acknowledgments---Will not appear in anonymized version
-\midlacknowledgments{We thank the SIMON data collection team for making a
-rare non-defaced longitudinal MRI dataset publicly available.}
+% \midlacknowledgments{We thank the SIMON data collection team for making a
+% rare non-defaced longitudinal MRI dataset publicly available.}
 
 \bibliography{midl-samplebibliography}
 
