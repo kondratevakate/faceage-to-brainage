@@ -5,7 +5,7 @@
 A proof-of-concept pipeline for paired face-age and brain-age estimation from the same non-defaced T1 MRI volume.
 
 <p align="center">
-  <img src="papers/figures/ex_render.png" alt="Multi-view MRI-derived face renders" width="540"/>
+  <img src="papers/midl2026/ex_render.png" alt="Multi-view MRI-derived face renders" width="540"/>
 </p>
 <p align="center"><em>Nine-view frontal renders extracted from a single T1 MRI via marching cubes. These are the inputs to the face branch.</em></p>
 
