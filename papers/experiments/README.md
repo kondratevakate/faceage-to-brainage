@@ -65,6 +65,23 @@ notebooks.
 | AH-5 | Confound check (E11) replicates on a SIMON-disjoint cohort | KK | dataset access — see [`test_retest_datasets.md`](../related_works/test_retest_datasets.md) |
 | AH-6 | Geometry-only (E04) tracks longitudinal aging in a 5-yr+ cohort, not in SIMON's 17-yr-1-subject window | GB | larger longitudinal cohort |
 
+## Methodology actions (from [`ai_experiment_planning.md`](../related_works/ai_experiment_planning.md))
+
+These are not hypotheses but process upgrades blocking the MIDL revision:
+
+| # | Action | Owner | Concrete deliverable |
+|---|---|---|---|
+| MA-1 | Adopt TRIPOD+AI 2024 + CLAIM 2024 as primary reporting standard | KK | `papers/midl2026/checklists/{TRIPOD+AI,CLAIM2024}.md` mapped item-by-item to manuscript |
+| MA-2 | PROBAST+AI 2025 as pre-submission self-audit | KK | one pass before resubmission |
+| MA-3 | W&B as sole experiment tracker | KK | `WANDB_PROJECT=faceage-to-brainage`, runs named `{YYYYMMDD}_{model}_{seed}_{cohort}`. Subject IDs only, never PHI |
+| MA-4 | OSF pre-registration with local mirror | KK | `prereg/H1_shared_variance.md` + `prereg/H2_test_retest_icc.md` — lock test split before filling OSF form |
+| MA-5 | Subject-disjoint k-fold CV per Paplhám CVPR 2024 — required ablation | RK | rerun face-age with proper splits, report MAE delta |
+| MA-6 | Bootstrap CIs on every reported MAE / r | KK | 10k bootstrap, log to `RESULTS.tsv` |
+| MA-7 | Smoke test before every Colab loop — 1 scan, ETA print, GPU check, abort on fail | KK | already in `CLAUDE.md` global rule, enforce in `00_EXPERIMENT_JOURNAL.ipynb` template |
+| MA-8 | Per-experiment `manifest.json`: git SHA, dataset hash, seed, hardware, wall-time | KK | required for any figure that goes into a paper |
+| MA-9 | Apptainer `.sif` for the submission, recipe in repo + `.sif` to Zenodo on acceptance | KK | reproducibility-checklist credit |
+| MA-10 | First read this week: Lipton & Steinhardt 2018, "Troubling Trends in ML Scholarship" | all | 8 pages — read before drafting MIDL revision |
+
 ## Notebook reality check (2026-04-25)
 
 | Notebook | Code cells | Executed | Errors | Status |

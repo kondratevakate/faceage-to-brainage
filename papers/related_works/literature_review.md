@@ -1,7 +1,8 @@
 # Literature Review: Face Age & Brain Age — Are They the Same Clock?
 
-> **Companion specs in this folder** (datasets and design — kept separate so this file stays a *literature* review):
-> - [`sota_design.md`](sota_design.md) — SOTA experimental-design brief 2024–2026
+> **Companion specs in this folder** (datasets, design, methodology — kept separate so this file stays a *literature* review):
+> - [`ai_experiment_planning.md`](ai_experiment_planning.md) — SOTA practices for AI experiment planning: hypothesis-driven frameworks, TRIPOD+AI/CLAIM/PROBAST+AI reporting standards, statistical rigor, tools, top-5 ranked actions for this project
+> - [`sota_design.md`](sota_design.md) — SOTA face-age & brain-age experimental design 2024–2026
 > - [`data_audit.md`](data_audit.md) — current IXI/SIMON cohort coverage audit
 > - [`test_retest_datasets.md`](test_retest_datasets.md) — small/obscure open T1 test–retest cohorts (Cao 2015, Huang 2016, Maclaren ds000239, B-Q MINDED, GSP retest) for OOD validation, deliberately avoiding HCP/IXI/OASIS/ADNI/UKBB
 > - [`avatar_3d_datasets.md`](avatar_3d_datasets.md) — public 2D+3D face datasets, "no-hair + closed-eyes" match analysis, internal anatomy modeling

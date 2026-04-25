@@ -4,6 +4,7 @@ Single source of truth for literature, model landscape, and research questions.
 
 ## Contents
 
+- [**ai_experiment_planning.md**](ai_experiment_planning.md) — SOTA practices for planning AI/ML experiments (2024–2026): hypothesis-driven frameworks (Karpathy autoresearch, Sakana AI Scientist, AI Co-Scientist), medical imaging reporting standards (TRIPOD+AI, CLAIM, PROBAST+AI), statistical rigor, tooling, top-5 ranked actions for our project
 - [**sota_design.md**](sota_design.md) — SOTA face-age and brain-age experimental design (2024–2026): training/evaluation protocols, harmonization standards, OOD evaluation, minimum sample sizes, recommendations for a competitive paper
 - [**data_audit.md**](data_audit.md) — current IXI/SIMON data coverage audit: where the subjects are being lost (IOP site gone, brain-age only 18% of cohort), per-stage failure counts, ranked action items
 - [avatar_3d_datasets.md](avatar_3d_datasets.md) — public 2D+3D face datasets, match analysis to "no hair + closed eyes" (MRI iso-surface), internal anatomy modeling (muscles/fascia/fat pads) for surgery
