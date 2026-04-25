@@ -4,6 +4,8 @@ Single source of truth for literature, model landscape, and research questions.
 
 ## Contents
 
+- [**sota_design.md**](sota_design.md) — SOTA face-age and brain-age experimental design (2024–2026): training/evaluation protocols, harmonization standards, OOD evaluation, minimum sample sizes, recommendations for a competitive paper
+- [**data_audit.md**](data_audit.md) — current IXI/SIMON data coverage audit: where the subjects are being lost (IOP site gone, brain-age only 18% of cohort), per-stage failure counts, ranked action items
 - [avatar_3d_datasets.md](avatar_3d_datasets.md) — public 2D+3D face datasets, match analysis to "no hair + closed eyes" (MRI iso-surface), internal anatomy modeling (muscles/fascia/fat pads) for surgery
 - [clinical_facial_datasets.md](clinical_facial_datasets.md) — clinical facial datasets across cosmetology/dermatology, dental/orthodontic, and facial/craniofacial surgery; top-5 recommendation for our use case
 - [literature_review.md](literature_review.md) — comprehensive review covering:
