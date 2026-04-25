@@ -1,5 +1,12 @@
 # Literature Review: Face Age & Brain Age — Are They the Same Clock?
 
+> **Companion specs in this folder** (datasets and design — kept separate so this file stays a *literature* review):
+> - [`sota_design.md`](sota_design.md) — SOTA experimental-design brief 2024–2026
+> - [`data_audit.md`](data_audit.md) — current IXI/SIMON cohort coverage audit
+> - [`test_retest_datasets.md`](test_retest_datasets.md) — small/obscure open T1 test–retest cohorts (Cao 2015, Huang 2016, Maclaren ds000239, B-Q MINDED, GSP retest) for OOD validation, deliberately avoiding HCP/IXI/OASIS/ADNI/UKBB
+> - [`avatar_3d_datasets.md`](avatar_3d_datasets.md) — public 2D+3D face datasets, "no-hair + closed-eyes" match analysis, internal anatomy modeling
+> - [`clinical_facial_datasets.md`](clinical_facial_datasets.md) — clinical face datasets (cosmetology / dental / facial surgery)
+
 ## 1. Face Age Estimation
 
 ### FaceAge — Bontempi et al., *Lancet Digital Health*, 2025
@@ -379,6 +386,20 @@ Likely advantages of a 3D avatar branch: better pose control, cleaner geometry/t
 | ABIDE / ABIDE II | Contributors removed PHI including faces; ears also removed | Pediatric/young-adult autism/control | Structural MRI, rs-fMRI, some DWI | Brain-side benchmarking only |
 
 Practical ranking: IXI → OASIS (with DUA verification) → legacy ADNI (release-level verification) → ABIDE (brain only).
+
+### 9.4b Open test–retest T1 cohorts for OOD validation
+
+For SIMON-like reproducibility evaluation, deliberately picking small/obscure cohorts that are unlikely to be in foundation-model pretraining (i.e. not HCP/IXI/OASIS/ADNI/UKBB). Full table and access notes in [`test_retest_datasets.md`](test_retest_datasets.md).
+
+| Dataset | N | Sessions | Interval | License |
+|---|---|---|---|---|
+| **Cao 2015 (BNU1)** | 57 | 2 | ~6 weeks | CC-BY-4.0 |
+| **Huang 2016 (BNU2)** | 61 | 2 | 103–189 d | CC-BY-4.0 |
+| Maclaren ds000239 (OpenNeuro) | 3 | 40 each across 20 sessions | 31 d | CC0 |
+| B-Q MINDED / TRCSMM (Zenodo) | ~20 | 2 (Skyra + PrismaFit) | same day | open |
+| GSP retest (Harvard Dataverse) | 69 | 2 | ~77 d | DUA |
+
+Top picks for our project: **Cao 2015 + Huang 2016** combined give 118 subjects across short and long retest intervals on CC-BY-4.0 (no DUA friction). Maclaren is the right cohort to report intra-subject prediction SD with ~40 scans per subject. B-Q MINDED isolates pure scanner variance via same-day cross-scanner pairing.
 
 ### 9.5 Future experiments
 
