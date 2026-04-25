@@ -5,6 +5,10 @@ result, and what is still unfinished. **Cards exist only for
 experiments that produced data** (table or analysis output).
 Everything else is a row in the "started but did not finish" section.
 
+> 📖 For the chronological narrative — what hypotheses we started with,
+> what surprised us, what each phase saw — read
+> **[`TIMELINE.md`](TIMELINE.md)** first.
+
 For the **interactive** entry point, open
 [`../../notebooks/00_EXPERIMENT_JOURNAL.ipynb`](../../notebooks/00_EXPERIMENT_JOURNAL.ipynb).
 That notebook is the only one we should keep editing — the older
