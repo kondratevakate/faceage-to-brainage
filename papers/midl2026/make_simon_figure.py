@@ -103,3 +103,109 @@ out_png = "simon_chron_vs_predicted.png"
 fig.savefig(out_png, dpi=200, bbox_inches='tight')
 print(f"Saved: {out}")
 print(f"Saved: {out_png}")
+
+# ── Figure 2: SynthBA training distribution vs SIMON predictions ─────────────
+#
+# Reconstruction of the SynthBA training-age distribution as a weighted
+# mixture of dataset-level Gaussians.  Per-dataset N is taken directly
+# from Table I of Puglisi et al. 2024 (arXiv:2406.00365).  The Gaussian
+# parameters per dataset are approximate, derived from each cohort's
+# publicly reported age statistics:
+#
+#   ADNI  — Alzheimer's Disease Neuroimaging Initiative, elderly cohort
+#   AIBL  — Australian Imaging, Biomarkers and Lifestyle, elderly cohort
+#   HCP   — Human Connectome Project Young Adults (HCP-YA), 22–35 yr
+#   IXI   — Information eXtraction from Images, broad healthy adults
+#   CoRR  — Consortium for Reliability and Reproducibility, broad lifespan
+#
+# The sum reproduces the bimodal shape with peaks at ~25 and ~74 yr that
+# Puglisi et al. 2024 report textually.
+
+SYNTHBA_TRAIN = {
+    # name      (mu,  sigma,  n,     color,     ls)
+    'HCP':      (28.5, 3.7,  1105, '#9B59B6', '-'),   # young adults, tight
+    'CoRR':     (25.0, 15.0, 1461, '#3498DB', '-'),   # broad lifespan, peak young
+    'IXI':      (48.0, 16.0,  563, '#1ABC9C', '-'),   # broad healthy adults
+    'ADNI':     (75.0,  7.0,  784, '#E67E22', '-'),   # AD-research, elderly
+    'AIBL':     (73.0,  7.0,  192, '#E74C3C', '--'),  # overlaps ADNI -> dashed
+}
+N_TOTAL = sum(v[2] for v in SYNTHBA_TRAIN.values())
+assert N_TOTAL == 4105, f"per-dataset N must sum to 4105 (got {N_TOTAL})"
+
+def gauss(x, mu, sigma):
+    return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))
+
+age_grid = np.linspace(0, 100, 1000)
+train_density = np.zeros_like(age_grid)
+per_dataset_curves = {}
+for name, (mu, sigma, n, color, ls) in SYNTHBA_TRAIN.items():
+    g = (n / N_TOTAL) * gauss(age_grid, mu, sigma)
+    per_dataset_curves[name] = (g, color, n, ls)
+    train_density += g
+
+# Sanity check: find peaks of the reconstructed mixture.
+from scipy.signal import find_peaks
+peak_idx, _ = find_peaks(train_density, distance=20)
+peak_ages = age_grid[peak_idx]
+print(f"reconstructed peaks at: {[f'{a:.1f}' for a in peak_ages]} yr (paper reports 25 & 74)")
+
+fig2, (ax2_top, ax2_bot) = plt.subplots(
+    2, 1, figsize=(6.2, 4.4), sharex=True,
+    gridspec_kw={'height_ratios': [2.2, 1.0], 'hspace': 0.08},
+)
+
+# ── Top panel: training distribution ────────────────────────────────────────
+# SIMON age band first so it sits behind everything else.
+ax2_top.axvspan(29.6, 46.4, color=C_BRAIN, alpha=0.10,
+                label='SIMON chronological age (29.6–46.4 yr)')
+
+# Per-dataset Gaussian components.
+for name, (g, color, n, ls) in per_dataset_curves.items():
+    ax2_top.plot(age_grid, g, color=color, lw=1.0, alpha=0.85, ls=ls,
+                 label=f"{name}  (n={n})")
+
+# Weighted sum.
+ax2_top.fill_between(age_grid, train_density, color='#444444', alpha=0.18,
+                     zorder=1)
+ax2_top.plot(age_grid, train_density, color='#222222', lw=1.5,
+             label=f"SynthBA training mixture  "
+                   f"(n={N_TOTAL}, peaks {peak_ages[0]:.0f} & {peak_ages[-1]:.0f} yr)")
+
+ax2_top.set_ylabel('Training density', fontsize=10)
+ax2_top.set_ylim(bottom=0)
+ax2_top.tick_params(labelsize=9)
+ax2_top.grid(True, lw=0.4, alpha=0.4)
+ax2_top.legend(fontsize=6.8, loc='upper right', framealpha=0.92,
+               edgecolor='#cccccc', ncol=1)
+
+# ── Bottom panel: predictions ───────────────────────────────────────────────
+ax2_bot.axvspan(29.6, 46.4, color=C_BRAIN, alpha=0.10)
+brain_pred = merged['brain_pred'].dropna().values
+ax2_bot.hist(brain_pred, bins=np.arange(15, 75, 1.0), density=True,
+             color=C_BRAIN, alpha=0.70, edgecolor='white', linewidth=0.4,
+             label=f"SynthBA predictions on SIMON  "
+                   f"(n={len(brain_pred)}, {brain_pred.mean():.1f}±{brain_pred.std():.2f} yr)")
+# Annotate the gap between predictions and SIMON age band.
+ax2_bot.annotate(
+    '', xy=(brain_pred.mean(), 0.18), xytext=(36, 0.18),
+    arrowprops=dict(arrowstyle='->', color='#444444', lw=1.0),
+)
+ax2_bot.text(31.5, 0.20, f"{36 - brain_pred.mean():.0f}-yr offset\nfrom SIMON mid-range",
+             fontsize=7.5, color='#444444', ha='left', va='bottom')
+
+ax2_bot.set_xlabel('Age (years)', fontsize=11)
+ax2_bot.set_ylabel('Prediction density', fontsize=10)
+ax2_bot.set_xlim(0, 100)
+ax2_bot.set_ylim(0, 0.42)
+ax2_bot.tick_params(labelsize=9)
+ax2_bot.grid(True, lw=0.4, alpha=0.4)
+ax2_bot.legend(fontsize=7.0, loc='upper right', framealpha=0.92,
+               edgecolor='#cccccc')
+
+fig2.tight_layout()
+out_c = "synthba_training_vs_predictions.pdf"
+fig2.savefig(out_c, dpi=300, bbox_inches='tight')
+out_c_png = "synthba_training_vs_predictions.png"
+fig2.savefig(out_c_png, dpi=200, bbox_inches='tight')
+print(f"Saved: {out_c}")
+print(f"Saved: {out_c_png}")
