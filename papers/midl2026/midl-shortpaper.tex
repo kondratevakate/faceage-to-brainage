@@ -68,7 +68,7 @@ complete facial surface within the same acquisition.  This makes it possible
 to estimate two age signals from one file and ask whether they behave
 similarly under repeated scanning.
 
-Prior work on brain age~\citep{peng2021sfcn, lemaitre2022synthba} and face
+Prior work on brain age~\citep{peng2021sfcn, puglisi2024synthba} and face
 age~\citep{bontempi2025faceage} usually treats these as separate modalities
 acquired by different instruments.  A same-scan comparison removes that
 acquisition mismatch, and a longitudinal single-subject dataset adds a stricter
@@ -107,7 +107,7 @@ input to the face branch.
 
 \paragraph{Brain branch.}
 Skull stripping is performed with SynthStrip~\citep{synthstrip}.  We then
-run SynthBA~\citep{lemaitre2022synthba}, a segmentation-based model designed
+run SynthBA~\citep{puglisi2024synthba}, a segmentation-based model designed
 to be robust to acquisition variability, on the stripped volume.
 
 \paragraph{Dataset and evaluation setting.}
