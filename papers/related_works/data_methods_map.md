@@ -125,6 +125,37 @@ Sketch of how each dataset is used in the experimental design.
 
 ---
 
+## 4.1 Face-usable dataset triage
+
+This section separates "brain-age useful" from "face-render useful". A dataset only counts as face-usable if the distributed image retains enough scalp/face anatomy to render the subject-specific outer surface.
+
+| Resource | N | Face usability | Ground truth | Access | Decision |
+|---|---:|---|---|---|---|
+| **IXI** | 561 curated T1 locally; 584 raw subjects locally | **High** — non-defaced T1, face render already works | Chronological age, sex, site; no manual face labels | Local | Main real cohort |
+| **SIMON** | 99 curated T1 locally; 73 full BIDS sessions locally | **High** — non-defaced repeated scans | Chronological age/session/scanner; no manual face labels | Local | Scanner/retest probe |
+| **MIDA v1.0** | 1 | **High anatomical phantom**, not population cohort | 116 manual labels + 115 tissue STL surfaces | Local | EXP-0 / phantom perturbations |
+| **IXI Heads** | 4 | **High if accessible** — segmented full heads including eyes/scalp layers | 60-tissue segmentation, age/sex | IT'IS / Sim4Life license unclear | Email IT'IS; qualitative GT |
+| **Full-head abnormal MRI segmentation dataset** | 61 | **Likely high** — full-head labels include skin/scalp, skull, CSF, GM/WM, air | 7-class manually corrected whole-head labels | Public model/data release | Add to acquisition shortlist |
+| **GRACE older-adult whole-head segmentations** | 177 | **High if data released** — labels include eyes, skin, fat, muscle, skull, CSF, GM/WM | 11-tissue manually corrected labels | Access unclear from paper | Contact/check data availability |
+| **SHARM** | Reference models from IXI | **Potentially high** — segmented head anatomical reference models | 15 tissues incl. skin/fat/muscle/skull/eyes/brain | Access/download to verify | Check availability; may duplicate IXI |
+| **SRPBS Traveling Subjects** | TBD | **Unknown** — archive local, defacing not checked | Multi-site repeated-subject metadata if intact | Local tarball | Unpack and inspect |
+| **Kirby-21 / Multi-Modal MRI Reproducibility Resource** | 21 | **Unknown** — used in defacing studies; face retention must be inspected | Scan-rescan | Public-ish | Candidate retest resource |
+| **Edinburgh Slices-to-Faces defacing dataset** | Tiny/demo | **Useful as citation/demo**, not a cohort | Face-render/defacing examples | Public | Cite for re-identification/defacing context |
+| **Zenodo normal male head MRI** | 1 | **Single-subject sanity resource** | DICOM head MRI; limited metadata | Public | Optional rendering smoke test |
+| **HCP Young Adult / test-retest** | 41 test-retest subset; 1200 full | **Low for face** — public structural release is defaced/de-eared | Age/sex/retest; brain outputs | DUA | Brain-age/retest only, not face-render |
+| **ADNI / OASIS-3** | Large | **Uncertain to low for face** — modern releases use defacing/refacing workflows; original-face access policy must be checked | Age/diagnosis/longitudinal | Application | Brain-age/dementia; inspect before face claims |
+| **Cam-CAN / AOMIC / OpenNeuro datasets** | Large / variable | **Unknown** — must inspect dataset-specific defacing/skull stripping | Demographics vary | Public/application | Do not count as face-usable until inspected |
+| **Photo / 3D-face datasets**: FaceBase, UEA 3D Face, UoY, FaceScape, SP-6M | 100s-1000s | **No MRI**, but useful photo/mesh priors | 2D/3D face GT, sometimes age/landmarks | Varies | Baseline/prior only, not paired MRI evidence |
+
+**Current count after triage**:
+- Local real MRI cohorts with renderable faces: **2** (`IXI`, `SIMON`).
+- Local anatomical face/head phantom: **1** (`MIDA`).
+- Local unverified face candidate: **1** (`SRPBS_TS_traveling_subjects.tar.gz`).
+- Strong external face/head GT candidates: **4** (`IXI Heads`, full-head abnormal MRI segmentation, GRACE, SHARM).
+- Public paired real-photo + MRI cohorts found so far: **0 convincing candidates**. This is why the planned 5-subject personal cohort is strategically valuable.
+
+---
+
 ## 5. Open decisions
 
 > **Strategy reframe 2026-05-20.** With MIDA acquired, the project pivots from "external test cohorts validate the IXI correlation" to **"a single in-silico phantom dissociates the two predictors"**. Decisions 1–4 below are now *secondary* to the four strategic decisions in `papers/midl2026/STRATEGY_2026-05-20_post_mida.md`. Public eval cohorts in §6 fall in priority — we no longer need them to validate dissociation, only to position the IXI confound finding.
@@ -181,3 +212,12 @@ Drafts live in [`papers/outreach/`](../outreach/) — one file per recipient. Ea
 - NeuroFM input requirements, model sizes, synthetic LDM100k training note, and caveats checked against the Hugging Face model card: <https://huggingface.co/NeuroAI-UofG/NeuroFM>
 - NeuroFM real-cohort overlap checked against medRxiv v2 full text: <https://www.medrxiv.org/content/10.64898/2026.03.27.26349489v2.full-text>
 - MIDA v1.0/v1.1 and FDA tool description checked against IT'IS/FDA pages linked above.
+- Face-usable dataset triage sources checked 2026-05-26:
+  - Full-head abnormal MRI segmentation dataset: <https://pmc.ncbi.nlm.nih.gov/articles/PMC12442731/>
+  - GRACE whole-head segmentation: <https://pmc.ncbi.nlm.nih.gov/articles/PMC10922731/>
+  - SHARM segmented head anatomical reference models: <https://arxiv.org/abs/2309.06677>
+  - Edinburgh structural MRI-to-face / defacing demo: <https://datashare.ed.ac.uk/handle/10283/3698>
+  - Zenodo normal male head MRI DICOM: <https://zenodo.org/records/16956>
+  - HCP defacing QC reference manual appendix: <https://humanconnectome.org/storage/app/media/documentation/s1200/HCP_S1200_Release_Appendix_IV.pdf>
+  - ADNI4 defacing policy: <https://pmc.ncbi.nlm.nih.gov/articles/PMC11567833/>
+  - OpenNeuro privacy / face-removal context: <https://pmc.ncbi.nlm.nih.gov/articles/PMC8550750/>
