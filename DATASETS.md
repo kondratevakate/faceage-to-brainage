@@ -301,6 +301,8 @@ The US / Western Europe / Russia / UAE bias in the lists above is real. These ar
 | [**FinnGen (Finland)**](https://www.finngen.fi/en) | 500k Finnish genome + EHR; imaging arm via THL | Application |
 | [**CARTaGENE (Quebec)**](https://www.cartagene.qc.ca/en) | 43k Quebec adults with imaging subset | Application |
 | [**MRi-Share (Bordeaux, France)**](https://www.biorxiv.org/content/10.1101/2020.06.17.154666.full.pdf) | 1870 university students, multimodal MRI cross-sectional | [BIL&GIN portal](https://www.gin.cnrs.fr/) |
+| [**Czech Brain Aging Study (CBAS)**](http://www.cbas.cz/) | Multi-site Prague longitudinal MRI for atrophy + WM + diffusivity; rsfMRI subset | Application via Charles University / Motol |
+| [**PolSenior 2 / PolSenior**](https://pubmed.ncbi.nlm.nih.gov/21979452/) | 5695 Polish elderly (55–90+); MRI substudy at participating sites | Application |
 
 ### How to read this list
 
