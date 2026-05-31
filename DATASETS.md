@@ -225,6 +225,83 @@ These exist as public-facing labs but their raw clinical photo + biomarker archi
 | [**Tally Health**](https://www.tallyhealth.com/) | Consumer epigenetic age tests + cohort growth |
 | [**Elysium Health**](https://www.elysiumhealth.com/) | Biomarker product company + research arm |
 
+### Global coverage — regional cohorts and consortia
+
+The US / Western Europe / Russia / UAE bias in the lists above is real. These are the visible regional initiatives that are either already open or actively building toward release across the rest of the world.
+
+#### Latin America
+
+| Holder | What | Access |
+|---|---|---|
+| [**BrainLat (Latin American Brain Health Institute)**](https://www.nature.com/articles/s41597-023-02806-8) | **780 participants** from 5 Latin American countries; T1 + rsfMRI + DWI + high-density EEG; 530 patients (AD, bvFTD, MS, PD) + 250 HC | Open (Sci Data 2023); housed at Universidad Adolfo Ibáñez, Chile |
+| [**ReDLat (Multi-Partner Consortium to Expand Dementia Research in Latin America)**](https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2021.631722/full) | Argentina + Chile + Colombia + Brazil + Mexico + Peru + US; dementia + cognitive aging | Application via GBHI / Trinity College Dublin |
+| [**PARDoS (Pathology, AD & Related Dementias Study, Brazil)**](https://www.medrxiv.org/content/10.1101/2025.04.12.25325490.full.pdf) | 4700+ Brazilian participants, IAMSPE São Paulo, autopsy + brain MRI | Restricted, growing |
+| [**SANDS (Study of Ancestry, Neurodegenerative Diseases and Stroke, USP São Paulo)**](https://pmc.ncbi.nlm.nih.gov/articles/PMC12843527/) | Multi-ancestry Brazilian autopsy + imaging | Restricted |
+| [**LAC-CD (Latin America and Caribbean Consortium on Dementia)**](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8293660/) | Regional dementia network | Consortium |
+
+#### Africa
+
+| Holder | What | Access |
+|---|---|---|
+| [**Nigerian Clinical-MRI dataset (Ogbole et al., Sci Data 2025)**](https://www.nature.com/articles/s41597-025-04743-0) | 88 subjects: 35 HC, 31 dementia, 22 PD; T1/T2/FLAIR | Open (Sci Data) |
+| [**African Dementia Consortium**](https://www.gbhi.org/profiles/godwin-ogbole) | Multi-country research capacity; aiming at low-cost / portable MRI protocols | Building (network, not single dataset) |
+| [**Rural South Africa portable MRI (DPHRU + Hyperfine)**](https://www.newswise.com/articles/low-field-portable-mri-enables-new-insights-into-brain-ageing-in-rural-south-africa) | Low-field Hyperfine brain aging in rural cohorts | Restricted |
+| [**H3Africa (Human Heredity and Health in Africa)**](https://h3africa.org/) | Multi-site African genomics + clinical; imaging component growing | Application |
+| [**DRC AD cohort (Kinshasa)**](https://pmc.ncbi.nlm.nih.gov/articles/PMC10903367/) | Hippocampal MRI + neuropsych in Congolese AD | Limited |
+
+#### Oceania
+
+| Holder | What | Access |
+|---|---|---|
+| [**AIBL (Australian Imaging, Biomarkers & Lifestyle)**](https://aibl.csiro.au/) | 3000+ Australians, 15+ years longitudinal MRI + PET + cognition; AD-focused | Application |
+| [**Dunedin Multidisciplinary Health & Development Study (NZ)**](https://dunedinstudy.otago.ac.nz/) | 1000+ birth cohort (1972–73), MRI added ~2021 at age ~45; basis for [**DunedinPACNI**](https://dunedinstudy.otago.ac.nz/files/1753058611779.pdf) pace-of-aging biomarker | Application via Otago |
+| [**Murdoch Children's Research Institute / Generation Victoria**](https://www.mcri.edu.au/) | Pediatric Australian cohort | Restricted |
+| [**Brain Research New Zealand**](https://www.brainresearch.co.nz/) | Multi-site NZ neuroscience consortium | Network |
+
+#### South Asia
+
+| Holder | What | Access |
+|---|---|---|
+| [**NIMHANS Bangalore aging cohort**](https://www.biorxiv.org/content/10.1101/2024.02.04.578829.full.pdf) | 301 participants (CN/MCI/AD), Indian dementia imaging | Restricted, published-derived |
+| [**AIIMS Delhi neuroimaging**](https://www.aiims.edu/) | National Indian apex; clinical archives | Institutional |
+| [**GenomeIndia**](https://genomeindia.cdac.in/) | 10k+ Indian genomes, imaging arm planned | Application |
+| [**Indian Stroke Genetics Consortium**](https://www.indianstrokegeneticsconsortium.com/) | Multi-site stroke imaging + genetics | Consortium |
+
+#### Middle East (beyond UAE / Israel / Qatar)
+
+| Holder | What | Access |
+|---|---|---|
+| [**Iranian Brain Imaging Database (IBID), NBML Tehran**](https://pmc.ncbi.nlm.nih.gov/articles/PMC8114860/) | 300 healthy (20–70 yr, balanced), multimodal MRI; member of ENIGMA | Application via NBML |
+| [**Saudi Human Genome Program**](https://shgp.kacst.edu.sa/) | 100k+ Saudi genomes; imaging arm under M42 partnership | Restricted |
+
+#### Southeast Asia
+
+| Holder | What | Access |
+|---|---|---|
+| [**SG10K (Singapore Genome Project)**](https://www.npm.sg/) | 10k → 100k Singaporean multi-ethnic | Application |
+| [**EDIS (Epidemiology of Dementia in Singapore)**](https://www.duke-nus.edu.sg/research/EDIS/) | ~500 elderly Singaporean longitudinal MRI | Restricted (NUS) |
+| [**GUSTO (Growing Up in Singapore Towards healthy Outcomes)**](https://www.gusto.sg/) | 1200 children, pediatric longitudinal | Restricted |
+| [**THBP (Thai Health Behavioral Programme)**](https://www.medicine.swu.ac.th/) | Thai cohorts | Limited |
+
+#### East Asia (covered in earlier sections, for completeness)
+
+- 🇨🇳 China: CHIMGEN, CCNP/devCCNP, SLIM, SALD, BNU/IPCAS (all flagged in `brain-encoder-datasets/datasets.csv`)
+- 🇯🇵 Japan: SRPBS family, J-ADNI, 10K Japan expansion (Segal)
+- 🇰🇷 Korea: KBASE, KoGES, Korean Brain Aging single-scanner cohort
+
+#### Europe (beyond NAKO / UK Biobank / Lothian)
+
+| Holder | What | Access |
+|---|---|---|
+| [**Rotterdam Study**](https://www.epib.nl/research/ergo.htm) | 17 000+ longitudinal Dutch, dense imaging arm | Application |
+| [**Whitehall II Imaging Substudy (Oxford)**](https://www.ndcn.ox.ac.uk/research/whitehall-imaging-study/) | 800 civil servants with MRI follow-up | Application |
+| [**Lifelines (Northern Netherlands)**](https://www.lifelines.nl/) | 167k three-generation, imaging substudy | Application |
+| [**HUNT (Trøndelag, Norway)**](https://www.ntnu.edu/hunt) | 240k, imaging arm growing | Application |
+| [**Estonian Biobank**](https://genomics.ut.ee/en/content/estonian-biobank) | 200k, imaging subset | Application |
+| [**FinnGen (Finland)**](https://www.finngen.fi/en) | 500k Finnish genome + EHR; imaging arm via THL | Application |
+| [**CARTaGENE (Quebec)**](https://www.cartagene.qc.ca/en) | 43k Quebec adults with imaging subset | Application |
+| [**MRi-Share (Bordeaux, France)**](https://www.biorxiv.org/content/10.1101/2020.06.17.154666.full.pdf) | 1870 university students, multimodal MRI cross-sectional | [BIL&GIN portal](https://www.gin.cnrs.fr/) |
+
 ### How to read this list
 
 Pick by what you want and what timeline fits:
