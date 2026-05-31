@@ -156,6 +156,88 @@ Items 2 and 3 are the ones that would most directly extend this project beyond M
 
 ---
 
+## 7. Adjacent holders — publicly known, mostly non-public data
+
+These organisations are confirmed (via published papers, press releases, or institutional pages) to be sitting on data that would be directly relevant to this project. The raw data is not openly accessible, but each listing is a known collaboration / employment / grant pathway. Pursuing one of these is usually the fastest way to scale beyond IXI / OASIS / SHARM.
+
+### Face + biomarker / aging cohorts (the closest fit)
+
+| Holder | What they have | Public anchor | Pathway |
+|---|---|---|---|
+| [**FaceAge @ AIM, Mass General Brigham / Dana-Farber**](https://aim.hms.harvard.edu/) | 58k photo training + 6196 cancer patients with routine pre-radiotherapy photos and survival outcomes | [Lancet Digital Health 2025](https://www.thelancet.com/journals/landig/article/PIIS2589-7500%2825%2900042-7); [press release](https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/faceage-tool-face-aging-rate-cancer-biomarker) | Research collaboration with AIM lab; weights released, data closed |
+| [**Buck Institute — iAge / Verdin lab**](https://www.buckinstitute.org/lab/verdin-lab/) | 1001-person immunome (1KIP) with cytokine panels + cardiac echo + frailty; PhotoAgeClock collaboration | [iAge press release](https://www.buckinstitute.org/news/first-actionable-clock-that-predicts-immunological-health-and-chronic-diseases-of-aging/); [PhotoAgeClock paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6286834/) | Postdoc / collaboration with Verdin/Furman; aging-focused funders (Buck, NIA) |
+| [**Weizmann 10K / Human Phenotype Project (Eran Segal lab)**](https://www.weizmann.ac.il/math/segal/research/personalized-medicine) | 10 000 Israelis × 20 years: genome + metabolome + microbiome + CGM + sleep + DXA + brain MRI + 3D face + retinal. Expanding to Japan. | [Project page](https://wis-wander.weizmann.ac.il/math-computer-science/new-clinical-study-being-launched-weizmann-institute-science); [Eur J Epidem 2021](https://weizmann.elsevierpure.com/ws/files/111303216/es_EuroJourOfEpidem_10K_AM2021.pdf) | Weizmann research collaboration or via spin-out [Pheno.AI](https://pheno.ai/) |
+| [**Verily Project Baseline**](https://www.projectbaseline.com/) | 10k 4-year deep-phenotype (Alphabet/Verily) with imaging, wearables, multi-omics, lifestyle | [Project Baseline overview](https://www.projectbaseline.com/) | Industry research role at Verily; published collaborations |
+| [**Hevolution Foundation (Saudi-funded longevity)**](https://hevolution.com/) | Not a dataset holder itself but funds many longevity cohorts globally; currently the largest pool of public longevity research grants | [Open calls](https://hevolution.com/funding/) | Grant application |
+
+### Population biobanks with imaging + photo arms (build-out in progress, restricted)
+
+| Holder | N (target) | What's relevant for face/age | Access path |
+|---|---|---|---|
+| [**UK Biobank**](https://www.ukbiobank.ac.uk/) | 100k MRI target | Brain MRI (defaced) + DXA + retinal photos + body composition + repeat imaging visit | Standard application, modest cost |
+| [**NAKO Health Study (Germany)**](https://nako.de/) | 200k → 30k whole-body MRI | Largest European whole-body MRI cohort | Application via [transfer office](https://transfer.nako.de/); German collaboration usually needed |
+| [**Generation Scotland / STRADL**](https://www.ed.ac.uk/generation-scotland) | 24k + ~1000 imaging | Brain MRI + extensive phenotype | Application |
+| [**TwinsUK (KCL)**](https://twinsuk.ac.uk/) | 14k twins | Multi-modal longitudinal incl. MRI, DXA, skin imaging | Application |
+| [**Lifelines (Netherlands)**](https://www.lifelines.nl/) | 167k three-generation | Imaging substudy | Application |
+| [**HUNT (Norway)**](https://www.ntnu.edu/hunt) | 240k | Imaging arm growing | Application |
+| [**Estonian Biobank**](https://genomics.ut.ee/en/content/estonian-biobank) | 200k | Genome + imaging subset | Application |
+| [**All of Us (US, NIH)**](https://www.researchallofus.org/) | 1M+ enrolled | EHR + biospecimens + imaging arm growing | Open registered-researcher tier |
+| [**Qatar Biobank**](https://www.qatarbiobank.org.qa/) | 60k | Brain MRI subset | Application |
+| [**Lothian Birth Cohort 1936**](https://www.ed.ac.uk/lothian-birth-cohorts/studies/the-lothian-birth-cohort-1936) | ~1000 | T1 MRI at ages 73, 76, 79, 82, 86, 88 (6 waves) — gold standard for late-life longitudinal | Application via Edinburgh |
+
+### Active institutional MRI clusters (career pathway = the data path)
+
+| Holder | Why it matters | Public anchor |
+|---|---|---|
+| [**Hertie Institute for AI in Brain Health (Tübingen)**](https://hertie.ai/) | Recently published 46 381-subject UK Biobank brain-age analysis; large Tübingen-area clinical MRI archive in pipeline | [Hertie AI](https://hertie.ai/) |
+| [**MPI for Biological Cybernetics (Tübingen)**](https://www.kyb.tuebingen.mpg.de/) | Decades of high-res research MRI | [MPI Cybernetics](https://www.kyb.tuebingen.mpg.de/) |
+| [**DZNE (German Center for Neurodegenerative Diseases)**](https://www.dzne.de/en/) | DELCODE + AgeWell longitudinal MRI across German sites | [DZNE data sharing](https://www.dzne.de/en/about-us/sites/) |
+| [**PICRIB — Platform for Imaging in Clinical Research in Brussels (ULB / Hôpital Erasme)**](https://cvchercheurs.ulb.ac.be/Site/projet/5603UK.php) | Multi-modal multi-vendor whole-body MRI protocol with repeatability cohort | [PICRIB](https://cvchercheurs.ulb.ac.be/Site/projet/5603UK.php) |
+| [**ASPIRE Brain Health Dataset (NYU Abu Dhabi + UAEU)**](https://nyuad.nyu.edu/en/news/latest-news/science-and-technology/2026/february/brain-dataset-adds-research-potential.html) | 2000-participant target (1000 Emirati + 1000 expat), 41 first-batch already public | [PMC12887056](https://pmc.ncbi.nlm.nih.gov/articles/PMC12887056/) — Open via OSF |
+| [**M42 / Emirati Genome / Abu Dhabi Biobank**](https://m42.ae/what-we-do/integrated-health-solutions/emirati-genome-program/) | Largest MENA imaging network (480+ facilities) + Emirati genomes | [M42](https://m42.ae/); [Abu Dhabi Biobank](https://abudhabibiobank.ae/) |
+| [**Mohammed Bin Rashid University**](https://www.mbru.ac.ae/) | UAE clinical MRI cluster collaborating with M42 | [MBRU](https://www.mbru.ac.ae/) |
+| [**MGH Athinoula A. Martinos Center**](https://www.martinos.org/) | Connectome 2.0 scanner cohorts in phased release | [Martinos](https://www.martinos.org/) |
+| [**Stanford AIMI Institute**](https://aimi.stanford.edu/) | Hospital-scale radiology archives + ground truth | [AIMI](https://aimi.stanford.edu/) |
+| [**NYU Langone fastMRI**](https://fastmri.med.nyu.edu/) | Expanding beyond knee/brain — anatomy MRI | [fastMRI](https://fastmri.med.nyu.edu/) |
+
+### Cosmetology / beauty R&D — vertically integrated, almost zero release
+
+These exist as public-facing labs but their raw clinical photo + biomarker archives are **IP, not data**. Listed because the work is real and they hire researchers who want to work on face/aging at industrial scale.
+
+| Holder | Public anchor |
+|---|---|
+| [**L'Oréal Research & Innovation**](https://www.loreal.com/en/research-and-innovation/) — global VISIA/3dMD archives at multiple sites | [Loreal R&I](https://www.loreal.com/en/research-and-innovation/) |
+| [**P&G Beauty / SK-II Skin Lab**](https://us.pg.com/blogs/decades-of-skin-research-by-pg-beauty/) — Asian longitudinal skin photo + biophysics | [P&G Beauty research](https://us.pg.com/blogs/decades-of-skin-research-by-pg-beauty/) |
+| [**Shiseido Global Innovation Center**](https://corp.shiseido.com/en/rd/) — Japanese skin aging dense longitudinal | [Shiseido R&D](https://corp.shiseido.com/en/rd/) |
+| [**Estée Lauder Research Labs**](https://www.elcompanies.com/en/who-we-are/our-history/research-development) — skin biomarkers + multi-ethnic photo | [ELC R&D](https://www.elcompanies.com/en/who-we-are/our-history/research-development) |
+| [**Unilever R&D Port Sunlight**](https://www.unilever.com/our-company/our-locations/port-sunlight/) — skin biophysics + lifestyle | [Unilever Port Sunlight](https://www.unilever.com/our-company/our-locations/port-sunlight/) |
+| [**Quantificare**](https://www.quantificare.com/) — French aesthetic 3D LifeViz pre/post archives at partner clinics | [Quantificare](https://www.quantificare.com/) |
+| [**Canfield Scientific**](https://www.canfieldsci.com/) — VISIA vendor; distributed clinic archives | [Canfield](https://www.canfieldsci.com/) |
+| [**3dMD**](https://3dmd.com/) — 3D stereophotogrammetry vendor; distributed clinic archives | [3dMD](https://3dmd.com/) |
+
+### Longevity industry holders
+
+| Holder | What's known publicly |
+|---|---|
+| [**Calico Life Sciences (Alphabet)**](https://www.calicolabs.com/) | Aging multi-omics, naked mole rat, in-house cohorts |
+| [**Altos Labs**](https://altoslabs.com/) | Cellular reprogramming + biomarkers across multiple research institutes |
+| [**Insilico Medicine**](https://insilico.com/) | Drug discovery + aging clocks; partial publication |
+| [**Tally Health**](https://www.tallyhealth.com/) | Consumer epigenetic age tests + cohort growth |
+| [**Elysium Health**](https://www.elysiumhealth.com/) | Biomarker product company + research arm |
+
+### How to read this list
+
+Pick by what you want and what timeline fits:
+
+- **Need it tomorrow** → UK Biobank, NAKO, All of Us, Lothian, TwinsUK (application, weeks–months)
+- **Doing a PhD/postdoc** → MGB AIM, Buck, Weizmann 10K, Hertie AI, ASPIRE/NYUAD, Martinos, AIMI (collaboration or hire)
+- **Industry path** → L'Oréal/P&G/Shiseido research grants, Verily, M42, Calico/Altos research roles
+- **Grant-funded multi-site** → Hevolution Foundation, NIA U01s, EU Horizon longevity calls
+
+The *worst* outcome is to spend a year applying for data that will never come. Pick from this list with eyes open about which row matches which timeline.
+
+---
+
 ## How this catalog ties back to the paper
 
 For each section of the paper, the relevant rows here are:
