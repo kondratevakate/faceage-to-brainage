@@ -14,8 +14,8 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 
-ROOT = Path(r"D:\YandexDisk\kondratevakate\01_insidekatesbrain\01_my_brain_years\faceage_brainage\avatar_2026")
-PAGE = ROOT / "project_page"
+ROOT = Path(__file__).resolve().parents[1]
+PAGE = Path(__file__).resolve().parent
 ASSETS = PAGE / "assets"
 
 CROPS = ROOT / "photo_crops_3subjects_3ddfa_1024"
@@ -353,7 +353,8 @@ def html_page(assets: dict[str, str]) -> str:
     .hero {{
       max-width: 1180px;
       margin: 0 auto;
-      padding: 58px 22px 26px;
+      padding: 58px 22px 22px;
+      text-align: center;
     }}
     .eyebrow {{
       display: inline-flex;
@@ -367,18 +368,30 @@ def html_page(assets: dict[str, str]) -> str:
     }}
     h1 {{
       margin: 10px 0 12px;
-      font-size: clamp(44px, 7vw, 86px);
+      font-size: clamp(42px, 6.2vw, 78px);
       line-height: .95;
       letter-spacing: 0;
-      max-width: 980px;
+      max-width: 1040px;
+      margin-left: auto;
+      margin-right: auto;
     }}
     .subtitle {{
       max-width: 860px;
       font-size: 21px;
       color: #334155;
-      margin: 0 0 26px;
+      margin: 0 auto 18px;
     }}
-    .button-row {{ display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0 30px; }}
+    .authors {{
+      color: #334155;
+      font-size: 17px;
+      margin: 10px auto 6px;
+    }}
+    .affil {{
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }}
+    .button-row {{ display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0 30px; justify-content: center; }}
     .button {{
       border: 1px solid #cbd5e1;
       color: #0f172a;
@@ -390,6 +403,12 @@ def html_page(assets: dict[str, str]) -> str:
       font-size: 14px;
     }}
     .button.primary {{ background: #0f172a; color: #fff; border-color: #0f172a; }}
+    .paper-note {{
+      max-width: 920px;
+      margin: 0 auto 28px;
+      color: #475569;
+      font-size: 15px;
+    }}
     .hero-media {{
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -447,6 +466,16 @@ def html_page(assets: dict[str, str]) -> str:
       margin-top: 22px;
       color: #334155;
     }}
+    .abstract {{
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: left;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 24px 0;
+    }}
+    .abstract h2 {{ font-size: 28px; text-align: center; }}
+    .abstract p {{ color: #334155; font-size: 17px; }}
     .three {{
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -503,14 +532,19 @@ def html_page(assets: dict[str, str]) -> str:
   </nav>
 
   <header class="hero">
-    <div class="eyebrow">Private research page / visual draft</div>
-    <h1>One-photo face avatars meet MRI-grounded biological age.</h1>
-    <p class="subtitle">A visual project page for the current FaceAge-to-BrainAge experiment: face crops, one-photo 3D baselines, MRI alignment, and identity-consistency checks across known folders.</p>
+    <div class="eyebrow">Research project page / private draft</div>
+    <h1>FaceAge-to-BrainAge: MRI-grounded evaluation of one-photo human avatars</h1>
+    <div class="authors">Kondrateva K. and collaborators</div>
+    <div class="affil">Personal longitudinal face/MRI pilot / Avatar reconstruction / Biological-age biomarkers</div>
+    <p class="subtitle">A Gaussian-splatting-style visual article page for face crops, one-photo 3D baselines, MRI alignment, and identity-consistency checks across known folders.</p>
     <div class="button-row">
-      <a class="button primary" href="#metrics">Current result</a>
-      <a class="button" href="../reports/METRICS_AND_LABELS.md">Metrics note</a>
-      <a class="button" href="../reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md">Twin/FaceAge context</a>
+      <a class="button primary" href="#abstract">Abstract</a>
+      <a class="button" href="#geometry">Visual Results</a>
+      <a class="button" href="#metrics">Metrics</a>
+      <a class="button" href="../reports/METRICS_AND_LABELS.md">Report</a>
+      <a class="button" href="../../../../scripts/photo_mri_avatar/">Code</a>
     </div>
+    <p class="paper-note">This page is intentionally formatted as a paper/project page: title, authors, teaser, abstract, method, visual results, quantitative diagnostics, limitations, and next baselines.</p>
     <div class="hero-media">
       <img src="{assets['teaser']}" alt="Animated pipeline from crop to 3D face fitting overlays">
     </div>
@@ -521,6 +555,14 @@ def html_page(assets: dict[str, str]) -> str:
       <div class="metric"><div class="num">0</div><div class="label">strict identity-separation metrics passed</div></div>
     </div>
   </header>
+
+  <section id="abstract">
+    <div class="abstract">
+      <h2>Abstract</h2>
+      <p>Single-image avatar methods can produce visually plausible faces, but visual plausibility alone is not enough for biological-age or identity-sensitive research. This pilot defines a practical evaluation scaffold for comparing one-photo face avatars against repeated photos and an MRI-derived outer-head surface. The current snapshot uses three known folder labels, two lightweight geometry baselines, and a supervised same-person versus different-person consistency test.</p>
+      <p>The main finding is negative but useful: MediaPipe and 3DDFA provide reliable preprocessing and visualization, yet they do not pass a strict identity-separation criterion. The page therefore treats them as lower-bound baselines before stronger avatar methods such as MeshLAM/LAM, MICA, DECA, EMOCA, or Gaussian-splatting-based reconstructions.</p>
+    </div>
+  </section>
 
   <section id="data">
     <h2>Known-folder photo cohort</h2>
@@ -599,8 +641,37 @@ def html_page(assets: dict[str, str]) -> str:
   </section>
 
   <section>
-    <h2>Next visual upgrade</h2>
-    <p class="lead">The next page iteration should replace the baseline mesh with a stronger one-photo avatar method such as MICA/DECA/EMOCA or MeshLAM-style textured mesh reconstruction, then repeat the same consistency and MRI checks.</p>
+    <h2>Limitations</h2>
+    <p class="lead">This is an evaluation scaffold, not a finished avatar system. Current MRI alignment uses automatic proxy landmarks and therefore cannot yet support clinical or biometric accuracy claims. Current meshes do not model hair, ears, full skull, or scanner-related MRI artifacts.</p>
+    <table>
+      <tr><th>Risk</th><th>Control planned in the next iteration</th></tr>
+      <tr><td>Supine MRI versus upright photo posture</td><td>Separate rigid alignment error from soft-tissue/posture deformation.</td></tr>
+      <tr><td>One-photo avatar hallucination</td><td>Compare repeat photos, stronger baselines, and same-folder consistency.</td></tr>
+      <tr><td>Surface distance overfitting</td><td>Add anatomical landmarks, HD95/Hausdorff, ASSD, Chamfer, and masked facial regions.</td></tr>
+      <tr><td>Biological-age overclaiming</td><td>Keep FaceAge, MRI geometry, and methylation/twin evidence as related but distinct axes.</td></tr>
+    </table>
+  </section>
+
+  <section class="band">
+    <div class="inner">
+      <h2>Roadmap</h2>
+      <div class="three">
+        <div class="mini"><h3>1. Better avatars</h3><p>Run MeshLAM/LAM, MICA, DECA, or EMOCA once model assets and compute are available.</p></div>
+        <div class="mini"><h3>2. Better MRI target</h3><p>Build scanner-artifact-resistant MRI face masks and add manual or semi-automatic landmarks.</p></div>
+        <div class="mini"><h3>3. Better metrics</h3><p>Report robust surface distances, perceptual review, identity separation, and cross-year consistency.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>References and related pages</h2>
+    <p class="lead">The visual format follows modern neural-rendering project pages: a compact title block, animated teaser, method figure, qualitative panels, quantitative diagnostics, and limitations.</p>
+    <table>
+      <tr><th>Reference</th><th>Why it matters here</th></tr>
+      <tr><td><a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">3D Gaussian Splatting project page</a></td><td>Canonical visual article layout for neural rendering results.</td></tr>
+      <tr><td><a href="https://malteprinzler.github.io/projects/match/">MATCH</a></td><td>Avatar/reconstruction page structure with strong qualitative visuals.</td></tr>
+      <tr><td><a href="https://meshlam.github.io/">MeshLAM</a></td><td>Relevant high-quality one-image mesh/avatar baseline candidate.</td></tr>
+    </table>
   </section>
 
   <footer class="footer">
