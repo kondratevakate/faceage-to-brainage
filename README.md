@@ -9,7 +9,7 @@ A proof-of-concept pipeline for paired face-age and brain-age estimation from th
 </p>
 <p align="center"><em>Nine-view frontal renders extracted from a single T1 MRI via marching cubes. These are the inputs to the face branch.</em></p>
 
-Article draft: [papers/midl2026/midl-shortpaper.tex](papers/midl2026/midl-shortpaper.tex) · Pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio) · Literature: [papers/related_works/literature_review.md](papers/related_works/literature_review.md) · Datasets catalog: [DATASETS.md](DATASETS.md)
+Project page: [experiments/avatar_2026/project_page/index.html](experiments/avatar_2026/project_page/index.html) · Article draft: [papers/midl2026/midl-shortpaper.tex](papers/midl2026/midl-shortpaper.tex) · Pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio) · Literature: [papers/related_works/literature_review.md](papers/related_works/literature_review.md) · Datasets catalog: [DATASETS.md](DATASETS.md)
 
 ---
 
