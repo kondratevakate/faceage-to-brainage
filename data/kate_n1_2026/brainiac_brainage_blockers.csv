@@ -1,0 +1,2 @@
+dataset,branch,status,blocker,checked_paths,next_action
+SIMON,raw_direct_no_preprocessing,blocked,No local SIMON raw T1 NIfTI/BIDS source was found; /mnt/mydisk is not mounted and D:/data contains derivatives.,/mnt/mydisk; /mnt/d/data; /mnt/d/data/fastserfer_simon; /mnt/d/data/freesurfer8_simon,"Mount or provide raw SIMON sourcedata, then add a direct raw manifest branch."

@@ -1,0 +1,10 @@
+contrast,n_pairs,min_cosine_distance,median_cosine_distance,max_cosine_distance,interpretation_guardrail
+all_pairs,55,0.012553747,0.074258036,0.188394872,Distribution of BrainFM feature distances only; not anatomical accuracy.
+same_session_same_family,3,0.033447688,0.043883070,0.105310687,Closest expected technical/protocol-near contrasts; still not a repeatability proof.
+same_session_cross_family,18,0.012553747,0.061542804,0.188394872,Within-session modality/protocol sensitivity.
+cross_session_same_family,10,0.023172567,0.089281473,0.185205257,Cross-session feature shift among broad modality families.
+primary_2018_2022_2024_probe,3,0.085569299,0.175863450,0.185205257,"Primary/probe trio mixes biological time, scanner, contrast, and slice protocol."
+2024_ffe_401_vs_601,1,0.043883070,0.043883070,0.043883070,Same-session alternative T1w FFE contrast check.
+2024_3di_vs_2024_ffe,2,0.051096982,0.057413098,0.063729214,"2024 3DI versus alternative 2024 T1w FFE candidates; a QC contrast, not rescue validation."
+2024_t2_501_vs_801,1,0.033447688,0.033447688,0.033447688,Same-session T2 TSE alternative check.
+2022_t1_vs_secondary,3,0.145400286,0.187545834,0.188394872,2022 thick-slice T1 versus secondary modalities.

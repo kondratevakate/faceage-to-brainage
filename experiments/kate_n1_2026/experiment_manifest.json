@@ -1,0 +1,88 @@
+{
+  "experiment_id": "kate_n1_2026",
+  "created": "2026-06-16",
+  "study_type": "single-subject brain MRI segmentation reproducibility and failure-mode study",
+  "scientific_interpretation_rule": "stability and consistency metrics do not prove anatomical accuracy; visual QC and acquisition metadata remain required",
+  "local_data_root_windows": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years",
+  "local_data_root_wsl": "/mnt/d/YandexDisk/kondratevakate/01_insidekatesbrain/01_my_brain_years",
+  "tracked_artifact_policy": {
+    "include": [
+      "reproducible scripts",
+      "small derived CSV summaries",
+      "markdown research notes",
+      "experiment manifests"
+    ],
+    "exclude": [
+      "raw MRI images",
+      "DICOM",
+      "NIfTI volumes",
+      "MGZ/MGH volumes",
+      "FreeSurfer/FastSurfer subject folders",
+      "runtime logs",
+      "Docker caches"
+    ]
+  },
+  "inputs": [
+    {
+      "session": "2018",
+      "scanner_protocol_label": "GE 3T FSPGR/BRAVO, 1 mm-like",
+      "relative_path": "images/2018/nifti/3_fspgr_bravo_10mm_ax.nii.gz"
+    },
+    {
+      "session": "2022",
+      "scanner_protocol_label": "Siemens 1.5T T1 SE sagittal, thick slices",
+      "relative_path": "images/2022/nifti/4_t1_se_sag.nii.gz"
+    },
+    {
+      "session": "2024",
+      "scanner_protocol_label": "Philips 1.5T 3DI / inversion-recovery-like contrast",
+      "relative_path": "images/2024/nifti/901_3di_mc_hr.nii.gz"
+    }
+  ],
+  "method_branches": [
+    "SynthSeg native cross-scanner",
+    "SynthSeg rotation and TTA",
+    "FastSurfer rotation",
+    "FastSurfer Long rotation",
+    "FreeSurfer 7.4.1 longitudinal",
+    "FreeSurfer 8.2.0 cross + long",
+    "ReconAny",
+    "recon-all-clinical",
+    "harmonized preprocessing",
+    "BrainFM foundation-model feature/output branch",
+    "BrainIAC foundation-model embedding branch",
+    "TIGERBx Asian morphometry branch",
+    "OpenMAP-T1 Asian morphometry branch",
+    "TTA label ensemble execution schema"
+  ],
+  "foundation_model_inputs_manifest": "experiments/kate_n1_2026/foundation_model_inputs.csv",
+  "foundation_model_sources_manifest": "experiments/kate_n1_2026/foundation_model_sources.json",
+  "sota_segmenter_sources_manifest": "experiments/kate_n1_2026/sota_segmenter_sources.json",
+  "asian_mri_tools_inputs_manifest": "experiments/kate_n1_2026/asian_mri_tools_inputs.csv",
+  "asian_mri_tools_sources_manifest": "experiments/kate_n1_2026/asian_mri_tools_sources.json",
+  "foundation_model_status": [
+    {
+      "method": "BrainFM",
+      "status": "done_feature_qc_summary",
+      "output": "reprocessed_2026/foundation_models/brainfm",
+      "summary": "Official checkpoint verified; feature-only CPU run completed with WRITE_VOLUMES=0 and compact feature QC summaries tracked under data/kate_n1_2026."
+    },
+    {
+      "method": "BrainIAC",
+      "status": "pipeline_added_not_run",
+      "blocker": "BrainIAC.ckpt or backbone.safetensors not found locally"
+    }
+  ],
+  "asian_mri_tools_status": [
+    {
+      "method": "TIGERBx",
+      "status": "pipeline_added_not_run",
+      "blocker": "FS8 still active, D: free space below guard threshold, dedicated tigerbx environment not installed"
+    },
+    {
+      "method": "OpenMAP-T1",
+      "status": "pipeline_added_not_run",
+      "blocker": "OpenMAP-T1 v3 model folder not present; FS8 still active; D: free space below guard threshold"
+    }
+  ]
+}

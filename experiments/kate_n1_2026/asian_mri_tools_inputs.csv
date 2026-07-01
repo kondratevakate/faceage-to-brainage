@@ -1,0 +1,12 @@
+scan_id,session,relative_path,modality_hint,tigerbx_candidate,openmap_t1_candidate,analysis_role,notes
+kate_2018_t1,2018,images/2018/nifti/3_fspgr_bravo_10mm_ax.nii.gz,T1w_FSPGR_BRAVO,1,1,primary_longitudinal_t1,Primary 2018 structural T1-like input used in FS/FastSurfer comparisons.
+kate_2022_t1,2022,images/2022/nifti/4_t1_se_sag.nii.gz,T1w_SE_sagittal,1,1,primary_longitudinal_t1,Primary 2022 T1 input; thick-slice protocol limits anatomical recovery.
+kate_2024_3di,2024,images/2024/nifti/901_3di_mc_hr.nii.gz,3D_inversion_recovery_like,1,1,primary_2024_probe,Primary 2024 probe input used for FS8 cross-run stress test.
+kate_2022_flair,2022,images/2022/nifti/2_t2_flair_tra.nii.gz,T2_FLAIR,0,0,secondary_modality,Not a primary FreeSurfer-like T1 morphometry input; keep for future lesion/contrast robustness checks.
+kate_2022_t2_cor,2022,images/2022/nifti/3_t2_tse_cor.nii.gz,T2_TSE_coronal,0,0,secondary_modality,Not a primary FreeSurfer-like T1 morphometry input.
+kate_2022_t2_tra,2022,images/2022/nifti/7_t2_tse_tra.nii.gz,T2_TSE_axial,0,0,secondary_modality,Not a primary FreeSurfer-like T1 morphometry input.
+kate_2024_flair,2024,images/2024/nifti/301_t2w_flair.nii.gz,T2_FLAIR,0,0,secondary_modality,Not a primary FreeSurfer-like T1 morphometry input; may be relevant for commercial WMH tools but not this local branch.
+kate_2024_t1_ffe_401,2024,images/2024/nifti/401_t1w_ffe.nii.gz,T1w_FFE,1,1,alternative_2024_t1,Alternative 2024 T1-like candidate; compare against 901_3di_mc_hr before accepting.
+kate_2024_t1_ffe_601,2024,images/2024/nifti/601_t1w_ffe.nii.gz,T1w_FFE,1,1,alternative_2024_t1,Alternative 2024 T1-like candidate; compare against 901_3di_mc_hr before accepting.
+kate_2024_t2_501,2024,images/2024/nifti/501_t2w_tse.nii.gz,T2_TSE,0,0,secondary_modality,Not a primary FreeSurfer-like T1 morphometry input.
+kate_2024_t2_801,2024,images/2024/nifti/801_t2w_tse.nii.gz,T2_TSE,0,0,secondary_modality,Not a primary FreeSurfer-like T1 morphometry input.

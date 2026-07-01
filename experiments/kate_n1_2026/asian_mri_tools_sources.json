@@ -1,0 +1,77 @@
+{
+  "created": "2026-06-18",
+  "purpose": "Pinned source manifest for Asian or Asia-affiliated structural brain MRI segmentation/morphometry tools considered for Kate n=1.",
+  "critical_interpretation_rule": "A tool being faster or regionally developed does not imply higher anatomical validity. Evaluate failure modes, input contrast assumptions, label definitions, and cross-scan stability separately.",
+  "tools": [
+    {
+      "method": "TIGERBx",
+      "category": "open_source_runnable",
+      "origin_note": "HTY lab / Taiwan-affiliated authorship; research-only package.",
+      "official_repo": "https://github.com/htylab/tigerbx",
+      "local_reference_commit": "f117a45ed1ba8936127eea4c1f078ea446457e3c",
+      "license": "CC BY-NC 4.0",
+      "local_pipeline": "experiments/kate_n1_2026/run_tigerbx_local.sh",
+      "main_outputs": [
+        "brain mask",
+        "brain-extracted image",
+        "ASEG-like 43-region tissue segmentation",
+        "deep gray matter 12-structure mask",
+        "HLC parcellation",
+        "cortical thickness and CSF/GM/WM probability maps"
+      ],
+      "current_status": "pipeline_added_not_run",
+      "blockers": [
+        "FS8 2024 topology correction is still consuming CPU",
+        "D: free space is below the default TIGERBx guard",
+        "TigerBx package is not yet installed in a dedicated environment"
+      ]
+    },
+    {
+      "method": "OpenMAP-T1",
+      "category": "open_source_code_manual_model_download",
+      "origin_note": "Japan/Hosei University and Johns Hopkins/OishiLab collaboration.",
+      "official_repo": "https://github.com/OishiLab/OpenMAP-T1",
+      "local_reference_commit": "80907b6ec68f4e4cb50b71925c3fa37543b57431",
+      "paper": "https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.70063",
+      "local_pipeline": "experiments/kate_n1_2026/run_openmap_t1_local.sh",
+      "main_outputs": [
+        "280-region whole-brain T1 parcellation",
+        "regional volume CSV"
+      ],
+      "current_status": "pipeline_added_not_run",
+      "blockers": [
+        "OpenMAP-T1 v3 pretrained model requires manual application/download",
+        "dependency stack is Python 3.11+ and recent PyTorch",
+        "D: free space is below the default OpenMAP guard"
+      ]
+    },
+    {
+      "method": "Neurophet AQUA",
+      "category": "commercial_not_locally_reproducible_without_license",
+      "origin_note": "Republic of Korea; published FreeSurfer comparisons exist.",
+      "evidence_url": "https://www.nature.com/articles/s41598-024-74622-y",
+      "current_status": "review_only"
+    },
+    {
+      "method": "VUNO Med-DeepBrain",
+      "category": "commercial_not_locally_reproducible_without_license",
+      "origin_note": "Republic of Korea; clinical product for volumetry/WMH/cortical thickness.",
+      "official_url": "https://www.vuno.co/en/deepbrain",
+      "current_status": "review_only"
+    },
+    {
+      "method": "Inbrain / MIDAS IT",
+      "category": "commercial_not_locally_reproducible_without_license",
+      "origin_note": "Republic of Korea; published reproducibility comparison with FreeSurfer.",
+      "evidence_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8053534/",
+      "current_status": "review_only"
+    },
+    {
+      "method": "AccuBrain",
+      "category": "commercial_cloud_not_locally_reproducible_without_license",
+      "origin_note": "Hong Kong / Chinese University of Hong Kong ecosystem.",
+      "evidence_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9252062/",
+      "current_status": "review_only"
+    }
+  ]
+}

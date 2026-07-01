@@ -1,0 +1,6 @@
+scan_id,session,relative_path,modality_hint,brainchop_candidate,analysis_role,notes
+kate_2018_t1,2018,images/2018/nifti/3_fspgr_bravo_10mm_ax.nii.gz,T1w_FSPGR_BRAVO,1,primary_longitudinal_t1,Primary 2018 structural T1-like input used in FS and FastSurfer comparisons.
+kate_2022_t1,2022,images/2022/nifti/4_t1_se_sag.nii.gz,T1w_SE_sagittal,1,primary_longitudinal_t1,Primary 2022 T1 input; thick-slice protocol limits anatomical recovery.
+kate_2024_3di,2024,images/2024/nifti/901_3di_mc_hr.nii.gz,3D_inversion_recovery_like,1,primary_2024_probe,Primary 2024 probe input used for failure and rescue testing.
+kate_2024_t1_ffe_401,2024,images/2024/nifti/401_t1w_ffe.nii.gz,T1w_FFE,1,alternative_2024_t1,Alternative 2024 T1-like candidate and current registered pseudo-GT fixed space.
+kate_2024_t1_ffe_601,2024,images/2024/nifti/601_t1w_ffe.nii.gz,T1w_FFE,1,alternative_2024_t1,Alternative 2024 T1-like candidate for consistency checks.

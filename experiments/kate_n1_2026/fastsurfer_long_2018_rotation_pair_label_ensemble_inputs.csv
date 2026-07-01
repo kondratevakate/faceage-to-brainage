@@ -1,0 +1,3 @@
+augmentation_id,method,scan_id,label_path,include_in_vote,transform_id,transform_family,angle_deg,notes
+rotneg,FastSurfer_Long_v2,kate_2018_t1,reprocessed_2026/symmetry/fastsurfer_long_v2/sym_rotneg/mri/aparc.DKTatlas+aseg.deep.mgz,1,yaw_m03,rotation_yaw,-3,Existing FastSurfer Long v2 rotation-pair DKT+ASEG label map; common shape and affine verified.
+rotpos,FastSurfer_Long_v2,kate_2018_t1,reprocessed_2026/symmetry/fastsurfer_long_v2/sym_rotpos/mri/aparc.DKTatlas+aseg.deep.mgz,1,yaw_p03,rotation_yaw,3,Existing FastSurfer Long v2 rotation-pair DKT+ASEG label map; common shape and affine verified.

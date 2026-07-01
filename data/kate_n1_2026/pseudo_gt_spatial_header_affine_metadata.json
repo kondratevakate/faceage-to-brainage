@@ -1,0 +1,21 @@
+{
+  "analysis": "header-affine spatial pseudo-GT pilot",
+  "input_manifest": "/mnt/d/projects/02_academia/brain-mri-segmentation/experiments/kate_n1_2026/pseudo_gt_spatial_inputs.csv",
+  "data_root": "/mnt/d/YandexDisk/kondratevakate/01_insidekatesbrain/01_my_brain_years/reprocessed_2026",
+  "target_grid_source_id": "synthseg_2024_t1ffe_ax",
+  "target_shape": [
+    201,
+    200,
+    139
+  ],
+  "min_votes": 2,
+  "min_reference_voxels": 50,
+  "n_sources": 6,
+  "n_trusted_sources": 4,
+  "n_metric_rows": 320,
+  "limitations": [
+    "Uses only NIfTI header-affine resampling; no deformable registration.",
+    "Hard-vote pseudo-GT is not anatomical truth.",
+    "Surface distances are not computed in this pilot."
+  ]
+}

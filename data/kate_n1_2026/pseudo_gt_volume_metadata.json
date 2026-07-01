@@ -1,0 +1,15 @@
+{
+  "analysis": "volume-level pseudo-GT segmentation accuracy",
+  "input_manifest": "D:\\projects\\02_academia\\brain-mri-segmentation\\experiments\\kate_n1_2026\\pseudo_gt_volume_inputs.csv",
+  "data_root": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\reprocessed_2026",
+  "min_sources": 2,
+  "n_sources": 10,
+  "n_volume_rows": 315,
+  "n_reference_rows": 276,
+  "n_accuracy_rows": 1281,
+  "limitations": [
+    "Volume-level only; no spatial Dice/HD95/surface Dice without registration.",
+    "Pseudo-GT is an operational consensus reference, not anatomical ground truth.",
+    "Leave-one-method/source-out variants reduce but do not remove shared model bias."
+  ]
+}

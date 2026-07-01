@@ -1,0 +1,2 @@
+method,scan_id,n_augments,shape,n_labels_including_background,foreground_union_voxels,hard_vote_foreground_voxels,mean_foreground_vote_fraction,mean_foreground_entropy_bits,augmentation_ids
+SynthSeg,kate_2018_t1,9,240x240x150,33,1521297,1255086,0.694545,0.906881,rotn12;rotn09;rotn06;rotn03;rotp00;rotp03;rotp06;rotp09;rotp12

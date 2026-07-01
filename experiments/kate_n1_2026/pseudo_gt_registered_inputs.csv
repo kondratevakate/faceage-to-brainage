@@ -1,0 +1,7 @@
+source_id,method,session_group,scan_id,image_path,label_path,include_in_reference,reference_grid,notes
+synthseg_2024_3di,SynthSeg,2024_t1like,2024_phi_3di,../images/2024/nifti/901_3di_mc_hr.nii.gz,seg/seg_2024_phi_3di.nii.gz,0,0,2024 3DI stress input; score but do not use in trusted registered pseudo-GT.
+tigerbx_2024_3di,TIGERBx,2024_t1like,kate_2024_3di,../images/2024/nifti/901_3di_mc_hr.nii.gz,asian_mri_tools/tigerbx/bx/kate_2024_3di_aseg.nii.gz,0,0,TIGERBx 2024 3DI suspicious by volume; score but do not use in trusted registered pseudo-GT.
+synthseg_2024_t1ffe_ax,SynthSeg,2024_t1like,2024_phi_t1ffe_ax,../images/2024/nifti/401_t1w_ffe.nii.gz,seg/seg_2024_phi_t1ffe_ax.nii.gz,1,1,Trusted 2024 T1 FFE axial; fixed registration image and fixed label grid.
+tigerbx_2024_t1ffe_401,TIGERBx,2024_t1like,kate_2024_t1_ffe_401,../images/2024/nifti/401_t1w_ffe.nii.gz,asian_mri_tools/tigerbx/bx/kate_2024_t1_ffe_401_aseg.nii.gz,1,0,Trusted TIGERBx 2024 T1 FFE 401.
+synthseg_2024_t1ffe_sag,SynthSeg,2024_t1like,2024_phi_t1ffe_sag,../images/2024/nifti/601_t1w_ffe.nii.gz,seg/seg_2024_phi_t1ffe_sag.nii.gz,1,0,Trusted 2024 T1 FFE sagittal.
+tigerbx_2024_t1ffe_601,TIGERBx,2024_t1like,kate_2024_t1_ffe_601,../images/2024/nifti/601_t1w_ffe.nii.gz,asian_mri_tools/tigerbx/bx/kate_2024_t1_ffe_601_aseg.nii.gz,1,0,Trusted TIGERBx 2024 T1 FFE 601.
