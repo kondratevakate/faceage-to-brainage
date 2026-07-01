@@ -1,0 +1,27 @@
+[
+  {
+    "method": "mediapipe",
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_3subjects_mediapipe\\faceage3_3_1_IMG_20190814_110411_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "orientation": "lr_swapped",
+    "scale": 0.10511060121451617,
+    "fit_landmarks": [
+      "nose_tip",
+      "chin",
+      "left_cheek",
+      "right_cheek"
+    ],
+    "landmark_residuals_json": "{\"nose_tip\": 19.679864266698196, \"chin\": 12.1863838294732, \"brow_center\": 35.74663591639766, \"left_cheek\": 9.238881098184624, \"right_cheek\": 10.307994835461143}",
+    "landmark_rmse_mm": 20.026176216186098,
+    "landmark_median_mm": 12.1863838294732,
+    "landmark_p90_mm": 29.319927256517875,
+    "landmark_max_mm": 35.74663591639766,
+    "score": 20.467321295910185,
+    "mean_mm": 9.654105684673553,
+    "median_mm": 9.509556523075176,
+    "p75_mm": 12.255360941650697,
+    "p90_mm": 14.343732487923335,
+    "max_mm": 18.831143256739765,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\auto_mri_overlay_v0\\align_mediapipe_selected\\faceage3_3_1_IMG_20190814_110411_facecrop_mediapipe_facemesh_landmark_constrained_alignment.png"
+  }
+]

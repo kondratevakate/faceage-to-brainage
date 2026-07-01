@@ -1,0 +1,18 @@
+{
+  "input": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\1_1\\photo\\photo_2026-04-09_19-36-57.jpg",
+  "model": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\models\\face_landmarker.task",
+  "output_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_1_1_photo_2026_04_09_19_36_57_mediapipe_facemesh.ply",
+  "overlay": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_1_1_photo_2026_04_09_19_36_57_landmarks_overlay.jpg",
+  "preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_1_1_photo_2026_04_09_19_36_57_facemesh_preview.png",
+  "subject": "kate",
+  "session": "batch_1_1_photo_2026_04_09_19_36_57",
+  "image_shape": [
+    1280,
+    960,
+    3
+  ],
+  "landmarks": 478,
+  "mesh_vertices": 478,
+  "mesh_faces": 916,
+  "warning": "MediaPipe FaceMesh is a lightweight single-photo baseline, not metric 3D ground truth."
+}

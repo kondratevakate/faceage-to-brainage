@@ -1,0 +1,38 @@
+[
+  {
+    "image": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_manifest\\selected\\kate_1_1_frontal_2026-04-09.jpg",
+    "status": "ok",
+    "faces": 1,
+    "outputs": [
+      {
+        "ply": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_1_1_frontal_2026-04-09_3ddfa_v2_face1.ply",
+        "overlay": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_1_1_frontal_2026-04-09_3ddfa_v2_face1_overlay.jpg",
+        "metadata": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_1_1_frontal_2026-04-09_3ddfa_v2_face1_metadata.json"
+      }
+    ]
+  },
+  {
+    "image": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_manifest\\selected\\kate_2_1_frontal_low_2026-04-09.jpg",
+    "status": "ok",
+    "faces": 1,
+    "outputs": [
+      {
+        "ply": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_2_1_frontal_low_2026-04-09_3ddfa_v2_face1.ply",
+        "overlay": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_2_1_frontal_low_2026-04-09_3ddfa_v2_face1_overlay.jpg",
+        "metadata": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_2_1_frontal_low_2026-04-09_3ddfa_v2_face1_metadata.json"
+      }
+    ]
+  },
+  {
+    "image": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_manifest\\selected\\kate_2_1_gaze_side_2026-04-09.jpg",
+    "status": "ok",
+    "faces": 1,
+    "outputs": [
+      {
+        "ply": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_2_1_gaze_side_2026-04-09_3ddfa_v2_face1.ply",
+        "overlay": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_2_1_gaze_side_2026-04-09_3ddfa_v2_face1_overlay.jpg",
+        "metadata": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_3ddfa_v2\\kate_selected_2026_04_09_kate_2_1_gaze_side_2026-04-09_3ddfa_v2_face1_metadata.json"
+      }
+    ]
+  }
+]

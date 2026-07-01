@@ -1,0 +1,59 @@
+[
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar\\kate_frontal_2026_04_09_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      1,
+      -1
+    ],
+    "score": 3.4792264127255126,
+    "mean_mm": 3.018948209620544,
+    "median_mm": 1.9402863763989469,
+    "p75_mm": 3.0984764601341683,
+    "p90_mm": 6.155760145306263,
+    "max_mm": 24.72186865442476,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y\\kate_frontal_2026_04_09_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar\\kate_frontal_low_2026_04_09_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      -1,
+      1
+    ],
+    "score": 3.4712422109200562,
+    "mean_mm": 2.97117351538471,
+    "median_mm": 2.057152363810772,
+    "p75_mm": 3.2776159847354456,
+    "p90_mm": 5.656359388437137,
+    "max_mm": 23.619863185294662,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y\\kate_frontal_low_2026_04_09_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar\\kate_gaze_side_2026_04_09_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      -1,
+      1
+    ],
+    "score": 3.4590254089028285,
+    "mean_mm": 2.9341416887577583,
+    "median_mm": 2.0558490546319774,
+    "p75_mm": 3.085279382880016,
+    "p90_mm": 5.612705417083405,
+    "max_mm": 20.838179805200067,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y\\kate_gaze_side_2026_04_09_mediapipe_facemesh_to_mri_alignment.png"
+  }
+]

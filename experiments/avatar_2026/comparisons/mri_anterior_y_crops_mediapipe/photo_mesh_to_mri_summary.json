@@ -1,0 +1,173 @@
+[
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_36_57_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      -1,
+      -1
+    ],
+    "score": 3.362825116487139,
+    "mean_mm": 3.1980511338323505,
+    "median_mm": 1.9472836483534879,
+    "p75_mm": 3.3470391799443173,
+    "p90_mm": 5.662165872534604,
+    "max_mm": 26.127223609439937,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_36_57_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_37_48_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      -1,
+      -1
+    ],
+    "score": 3.420998654497798,
+    "mean_mm": 2.898074243012157,
+    "median_mm": 2.0490170724176116,
+    "p75_mm": 3.1375442636784348,
+    "p90_mm": 5.4879263283207464,
+    "max_mm": 23.60325355228125,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_37_48_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_37_56_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      1,
+      1
+    ],
+    "score": 3.6964334095224185,
+    "mean_mm": 3.05280217498787,
+    "median_mm": 2.121702182471938,
+    "p75_mm": 3.337388739138026,
+    "p90_mm": 6.298924908201923,
+    "max_mm": 18.562069434973495,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_37_56_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_38_04_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      1,
+      -1
+    ],
+    "score": 3.3854679643479697,
+    "mean_mm": 3.123386859124609,
+    "median_mm": 2.007592208417511,
+    "p75_mm": 3.2428887667703337,
+    "p90_mm": 5.511503023721834,
+    "max_mm": 25.536165296759776,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_1_1_photo_2026_04_09_19_38_04_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_2_1_photo_2026_04_09_20_37_59_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      1,
+      1
+    ],
+    "score": 3.4377484294604925,
+    "mean_mm": 2.9117699902462695,
+    "median_mm": 2.0661518150029563,
+    "p75_mm": 3.212287382672386,
+    "p90_mm": 5.486386457830145,
+    "max_mm": 23.699253736084717,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_2_1_photo_2026_04_09_20_37_59_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_2_1_photo_2_2026_04_09_20_38_32_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      1,
+      1
+    ],
+    "score": 3.511058475351833,
+    "mean_mm": 3.0733812814392882,
+    "median_mm": 2.087562211897985,
+    "p75_mm": 3.4040468926305625,
+    "p90_mm": 5.693985053815392,
+    "max_mm": 18.68035968637782,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_2_1_photo_2_2026_04_09_20_38_32_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_2_1_photo_3_2026_04_09_20_38_32_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      -1,
+      1
+    ],
+    "score": 3.438201567678316,
+    "mean_mm": 2.823030241266538,
+    "median_mm": 2.062303594854866,
+    "p75_mm": 3.1390334846660566,
+    "p90_mm": 5.5035918912938016,
+    "max_mm": 19.658363254626703,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_2_1_photo_3_2026_04_09_20_38_32_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_2_1_photo_4_2026_04_09_20_38_32_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      -1,
+      -1
+    ],
+    "score": 3.5105995900194955,
+    "mean_mm": 3.1867696772158878,
+    "median_mm": 2.009321263812618,
+    "p75_mm": 3.49150009827102,
+    "p90_mm": 6.005113304827511,
+    "max_mm": 27.86202830911597,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_2_1_photo_4_2026_04_09_20_38_32_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_crops_mediapipe\\kate_crop_2_1_photo_5_2026_04_09_20_38_32_facecrop_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      1,
+      -1
+    ],
+    "score": 3.604158986451874,
+    "mean_mm": 3.0440037881567457,
+    "median_mm": 2.082361114568117,
+    "p75_mm": 3.3566339913446246,
+    "p90_mm": 6.087191487535027,
+    "max_mm": 28.508624721355787,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_crops_mediapipe\\kate_crop_2_1_photo_5_2026_04_09_20_38_32_facecrop_mediapipe_facemesh_to_mri_alignment.png"
+  }
+]

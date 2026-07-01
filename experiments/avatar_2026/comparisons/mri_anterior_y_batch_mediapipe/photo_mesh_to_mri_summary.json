@@ -1,0 +1,97 @@
+[
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_1_1_photo_2026_04_09_19_36_57_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      1,
+      -1
+    ],
+    "score": 3.4792264127255126,
+    "mean_mm": 3.018948209620544,
+    "median_mm": 1.9402863763989469,
+    "p75_mm": 3.0984764601341683,
+    "p90_mm": 6.155760145306263,
+    "max_mm": 24.72186865442476,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_batch_mediapipe\\kate_batch_1_1_photo_2026_04_09_19_36_57_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_2_1_photo_2026_04_09_20_37_59_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      1,
+      1
+    ],
+    "score": 3.4159316319592454,
+    "mean_mm": 2.7654976122067927,
+    "median_mm": 2.0395798041159514,
+    "p75_mm": 3.2423383030888977,
+    "p90_mm": 5.505407311373177,
+    "max_mm": 23.226679006549304,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_batch_mediapipe\\kate_batch_2_1_photo_2026_04_09_20_37_59_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_2_1_photo_2_2026_04_09_20_38_32_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      -1,
+      1
+    ],
+    "score": 3.4712422109200562,
+    "mean_mm": 2.97117351538471,
+    "median_mm": 2.057152363810772,
+    "p75_mm": 3.2776159847354456,
+    "p90_mm": 5.656359388437137,
+    "max_mm": 23.619863185294662,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_batch_mediapipe\\kate_batch_2_1_photo_2_2026_04_09_20_38_32_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_2_1_photo_3_2026_04_09_20_38_32_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      -1,
+      -1,
+      1
+    ],
+    "score": 3.4590254089028285,
+    "mean_mm": 2.9341416887577583,
+    "median_mm": 2.0558490546319774,
+    "p75_mm": 3.085279382880016,
+    "p90_mm": 5.612705417083405,
+    "max_mm": 20.838179805200067,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_batch_mediapipe\\kate_batch_2_1_photo_3_2026_04_09_20_38_32_mediapipe_facemesh_to_mri_alignment.png"
+  },
+  {
+    "photo_mesh": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_avatar_batch_mediapipe\\kate_batch_2_1_photo_5_2026_04_09_20_38_32_mediapipe_facemesh.ply",
+    "source_vertices": 478,
+    "target_cap_vertices": 30712,
+    "front_axis": 1,
+    "front_sign": 1,
+    "pca_signs": [
+      1,
+      -1,
+      -1
+    ],
+    "score": 3.5231142674281513,
+    "mean_mm": 3.026601339343414,
+    "median_mm": 2.081820875287451,
+    "p75_mm": 3.2700007160870097,
+    "p90_mm": 5.765173568562802,
+    "max_mm": 28.78560741198386,
+    "alignment_preview": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\comparisons\\mri_anterior_y_batch_mediapipe\\kate_batch_2_1_photo_5_2026_04_09_20_38_32_mediapipe_facemesh_to_mri_alignment.png"
+  }
+]

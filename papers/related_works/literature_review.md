@@ -6,6 +6,7 @@
 > - [`data_audit.md`](data_audit.md) — current IXI/SIMON cohort coverage audit
 > - [`test_retest_datasets.md`](test_retest_datasets.md) — small/obscure open T1 test–retest cohorts (Cao 2015, Huang 2016, Maclaren ds000239, B-Q MINDED, GSP retest) for OOD validation, deliberately avoiding HCP/IXI/OASIS/ADNI/UKBB
 > - [`avatar_3d_datasets.md`](avatar_3d_datasets.md) — public 2D+3D face datasets, "no-hair + closed-eyes" match analysis, internal anatomy modeling
+> - [`avatar_quality_2026.md`](avatar_quality_2026.md) — Gaussian/hybrid avatar quality, one-shot reconstruction limits, and why perceptual realism is not anatomical or age-signal fidelity
 > - [`clinical_facial_datasets.md`](clinical_facial_datasets.md) — clinical face datasets (cosmetology / dental / facial surgery)
 
 ## 1. Face Age Estimation

@@ -1,0 +1,21 @@
+{
+  "method": "3DDFA_V2",
+  "source_image": "D:\\YandexDisk\\kondratevakate\\01_insidekatesbrain\\01_my_brain_years\\faceage_brainage\\avatar_2026\\photo_crops_3ddfa_1024\\1_1_photo_2026-04-09_19-38-04_facecrop.jpg",
+  "config": "D:\\projects\\02_academia\\_external\\avatars\\3DDFA_V2\\configs\\mb1_120x120.yml",
+  "detected_box_xyxy_score": [
+    327.4241943359375,
+    228.96681213378906,
+    712.68408203125,
+    762.7454833984375,
+    0.9998807907104492
+  ],
+  "roi_box_xyxy": [
+    157.05413818359375,
+    197.1888427734375,
+    883.0541381835938,
+    923.1888427734375
+  ],
+  "vertex_count": 38365,
+  "face_count": 76073,
+  "coordinate_note": "PLY is in image-pixel-like 3DDFA coordinates; y is flipped to match upstream serialization."
+}
