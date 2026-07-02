@@ -13,7 +13,7 @@ A proof-of-concept project for linking facial aging signals, brain-age estimatio
 
 The active project page is:
 
-**[FaceAge-to-BrainAge: MRI-grounded evaluation of one-photo human avatars](experiments/avatar_2026/project_page/index.html)**
+**[FaceAge-to-BrainAge: MRI-grounded evaluation of one-photo human avatars](https://kondratevakate.github.io/faceage-to-brainage/)**
 
 This page is the clearest current artifact of the project. It frames a single-subject photo/MRI case study and asks whether one-photo facial avatars can be evaluated against an MRI-derived face surface rather than judged only by visual plausibility.
 
@@ -26,7 +26,8 @@ Current contribution:
 
 Primary entry points:
 
-- Project page: [experiments/avatar_2026/project_page/index.html](experiments/avatar_2026/project_page/index.html)
+- Project page: [https://kondratevakate.github.io/faceage-to-brainage/](https://kondratevakate.github.io/faceage-to-brainage/)
+- Local project-page source: [experiments/avatar_2026/project_page/index.html](experiments/avatar_2026/project_page/index.html)
 - Avatar experiment status: [experiments/avatar_2026/STATUS.md](experiments/avatar_2026/STATUS.md)
 - Metrics and label definitions: [experiments/avatar_2026/reports/METRICS_AND_LABELS.md](experiments/avatar_2026/reports/METRICS_AND_LABELS.md)
 - Twin/FaceAge literature context: [experiments/avatar_2026/reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md](experiments/avatar_2026/reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md)
