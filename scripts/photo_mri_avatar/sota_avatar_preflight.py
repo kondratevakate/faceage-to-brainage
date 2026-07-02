@@ -115,7 +115,7 @@ def check_3ddfa(external: Path, work: Path, py: str) -> MethodStatus:
     cmd = (
         f"{py} scripts/photo_mri_avatar/run_3ddfa_v2.py "
         f"--repo \"{repo}\" --input-dir \"{work / 'photo_crops_3subjects_3ddfa_1024'}\" "
-        f"--output-dir \"{outputs}\" --prefix faceage3_crops_3subjects_1024"
+        f"--output-dir \"{outputs}\" --subject faceage3 --session crops_3subjects_1024"
     )
     return status_from_blockers("3DDFA_V2", "dense BFM face mesh calibration baseline", blockers, evidence, cmd)
 
@@ -143,29 +143,59 @@ def check_deca(external: Path, work: Path, py: str, torch_info: dict[str, Any]) 
         },
     }
     cmd = (
-        f"cd /d \"{repo}\" && {py} demos/demo_reconstruct.py "
-        f"-i \"{work / 'photo_crops_3subjects_3ddfa_1024'}\" "
-        f"-s \"{work / 'photo_avatar_deca'}\" --device cpu --saveObj True --saveVis True"
+        f"{py} scripts/photo_mri_avatar/run_deca_cpu_geometry.py "
+        f"--deca-repo \"{repo}\" --input-dir \"{work / 'photo_crops_3subjects_3ddfa_1024'}\" "
+        f"--pattern \"1_1*\" --output-dir \"{work / 'photo_avatar_deca_cpu_case_a'}\" "
+        f"--device cpu --subject case_a --session crops_1024"
     )
-    return status_from_blockers("DECA", "FLAME mesh plus detail-map reconstruction", blockers, evidence, cmd)
+    return status_from_blockers("DECA", "FLAME mesh geometry baseline via CPU geometry-only runner", blockers, evidence, cmd)
 
 
 def check_mica(external: Path, work: Path, torch_info: dict[str, Any]) -> MethodStatus:
     repo = external / "MICA"
+    flame = repo / "data" / "FLAME2020"
+    pretrained = repo / "data" / "pretrained" / "mica.tar"
     blockers: list[str] = []
     if not repo.exists():
         blockers.append(f"missing repo: {repo}")
     if not torch_info.get("installed"):
         blockers.append("torch is not installed in the active Python environment")
+    if not pretrained.exists():
+        blockers.append("missing MICA data/pretrained/mica.tar")
+    if not (flame / "generic_model.pkl").exists():
+        blockers.append("missing MICA FLAME2020/generic_model.pkl; requires FLAME license download")
+    if not (flame / "landmark_embedding.npy").exists():
+        blockers.append("missing MICA FLAME2020/landmark_embedding.npy")
+    if not (flame / "head_template.obj").exists():
+        blockers.append("missing MICA FLAME2020/head_template.obj")
+    if not import_available("insightface"):
+        blockers.append("missing insightface Python package for MICA preprocessing")
+    insight_root = Path.home() / ".insightface" / "models"
+    if not (insight_root / "antelopev2").exists():
+        blockers.append("missing InsightFace antelopev2 model directory")
+    if not (insight_root / "buffalo_l").exists():
+        blockers.append("missing InsightFace buffalo_l model directory")
     candidates = has_any(repo, ["**/*.tar", "**/*.pth", "**/*.ckpt", "**/*.pt"])
-    if not candidates:
-        blockers.append("missing MICA checkpoint/model assets")
     evidence = {
         "repo": str(repo),
+        "has_mica_tar": pretrained.exists(),
+        "has_flame2020": {
+            "generic_model": (flame / "generic_model.pkl").exists(),
+            "landmark_embedding": (flame / "landmark_embedding.npy").exists(),
+            "head_template": (flame / "head_template.obj").exists(),
+        },
+        "insightface_installed": import_available("insightface"),
+        "insightface_model_root": str(insight_root),
         "candidate_weight_files": candidates[:10],
         "expected_output": str(work / "photo_avatar_mica"),
     }
-    return status_from_blockers("MICA", "metrical FLAME face shape baseline", blockers, evidence, None)
+    cmd = (
+        f"{sys.executable} scripts/photo_mri_avatar/run_mica_cpu_geometry.py "
+        f"--mica-repo \"{repo}\" --input-dir \"{work / 'photo_crops_3subjects_3ddfa_1024'}\" "
+        f"--pattern \"1_1*\" --output-dir \"{work / 'photo_avatar_mica_cpu_case_a'}\" "
+        f"--subject case_a --session crops_1024"
+    )
+    return status_from_blockers("MICA", "metric FLAME mesh geometry baseline via CPU runner", blockers, evidence, cmd)
 
 
 def check_emoca(external: Path, work: Path, torch_info: dict[str, Any]) -> MethodStatus:

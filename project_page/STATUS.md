@@ -33,12 +33,14 @@ masks, anatomical landmarks, and posture-aware interpretation before any
 anatomical accuracy claim is made.
 
 SOTA avatar preflight was added on 2026-07-02. The current local machine does
-not expose an NVIDIA/CUDA runtime and the project environment does not yet have
-`torch`, so LAM/GAGAvatar-style Gaussian-avatar methods are not locally runnable
-here. DECA is the most realistic next geometry baseline once FLAME
-`generic_model.pkl` and `deca_model.tar` are provided. MeshLAM is the strongest
-conceptual target for a mesh+texture baseline, but no separate runnable MeshLAM
-checkout/weights are available locally yet.
+not expose an NVIDIA/CUDA runtime, so LAM/GAGAvatar-style Gaussian-avatar
+methods are not locally runnable here. A separate CPU-only avatar environment is
+available at `D:\projects\02_academia\_external\.venvs\avatar_cpu_py311`.
+DECA `deca_model.tar`, MICA `mica.tar`, and MICA InsightFace assets are local
+external assets. DECA and MICA now have project runners for CPU geometry-only
+FLAME export, but both still require the licensed FLAME `generic_model.pkl`.
+MeshLAM is the strongest conceptual target for a mesh+texture baseline, but no
+separate runnable MeshLAM checkout/weights are available locally yet.
 
 A privacy-minimal cloud bundle path is available locally:
 `data/avatar_2026_work/cloud_bundles/avatar_case_1_1_latest.zip`. It contains
@@ -49,8 +51,9 @@ only the primary case crops, no internal controls and no MRI surfaces.
 1. Add robust surface metrics: directed Hausdorff, HD95, ASSD, Chamfer, and
    regional masked distances.
 2. Add a stronger reconstruction baseline under the same metric contract:
-   DECA/MICA/EMOCA for MRI geometry first, then LAM/GAGAvatar/MeshLAM for
-   perceptual avatar quality on a CUDA machine.
+   DECA CPU geometry first after the licensed FLAME model is placed locally,
+   then MICA CPU geometry as the metric-FLAME baseline, then
+   LAM/GAGAvatar/MeshLAM for perceptual avatar quality on a CUDA machine.
 3. Use `scripts/photo_mri_avatar/CLOUD_RUNBOOK.md` for Colab/AWS transfer and
    return outputs into `data/avatar_2026_work/photo_avatar_<method>/`.
 4. Keep public visuals case-only; keep internal controls non-public unless
