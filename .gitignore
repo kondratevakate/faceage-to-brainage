@@ -78,3 +78,23 @@ vendor/SFCN/
 data/kate_n1_2026/
 docs/kate_n1_2026/
 experiments/kate_n1_2026/
+
+# Exploratory notebooks are local working state unless curated for release.
+notebooks/
+
+# Avatar experiment private/generated artifacts.
+# Keep public project-page assets and markdown reports in git; keep raw crops,
+# meshes, per-subject outputs, CSV manifests, model binaries, and alignment
+# dumps local.
+experiments/avatar_2026/auto_mri_overlay_v0/
+experiments/avatar_2026/comparisons/
+experiments/avatar_2026/landmark_alignment/
+experiments/avatar_2026/models/
+experiments/avatar_2026/mri_surfaces/
+experiments/avatar_2026/photo_avatar*/
+experiments/avatar_2026/photo_crops*/
+experiments/avatar_2026/photo_manifest/
+experiments/avatar_2026/stability/
+experiments/avatar_2026/subject_consistency/
+experiments/avatar_2026/reports/*.csv
+experiments/avatar_2026/reports/*.jpg

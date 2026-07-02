@@ -1,50 +1,45 @@
-# Avatar 2026 Experiment Snapshot
+# Avatar 2026 Case Study
 
-This folder is a private experiment snapshot for the FaceAge-to-BrainAge avatar
-workstream. It contains face images, face-derived avatar meshes, MRI-derived
-outer-head surfaces, visual QC pages, and metric outputs.
+This folder contains the public, claim-facing part of the 2026
+FaceAge-to-BrainAge avatar workstream.
 
-## Active Dataset
+The scientific question is deliberately narrow:
 
-`dataset_v0_three_people` uses three known folder labels:
+> Can a one-photo facial avatar be evaluated against the same subject's
+> MRI-derived face surface instead of being judged only by visual plausibility?
 
-- `1_1/photo`: 4 photos;
-- `2_1/photos`: 5 photos;
-- `3_1/photo`: 5 photos.
+## What Belongs In Git
 
-`1_2` and `1_3/photos` are deferred because they were empty locally at the time
-of this snapshot.
-
-Folder labels are treated as supervised labels. The pipeline does not infer
-identity from face appearance.
-
-## Key Entry Points
-
-- `STATUS.md` - current experiment status.
-- `reports/dataset_v0_three_people_manifest.csv` - active manifest.
-- `reports/METRICS_AND_LABELS.md` - metric definitions and current results.
+- `project_page/` - the public visual article page and its generated assets.
+- `reports/METRICS_AND_LABELS.md` - metric definitions and interpretation rules.
 - `reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md` - FaceAge/twin-study context.
-- `project_page/index.html` - visual project page with GIFs and results.
-- `auto_mri_overlay_v0/auto_mri_overlay_v0_contact_sheet.jpg` - automatic
-  MRI/avatar overlay visual QC.
-- `subject_consistency/crops_3subjects_3ddfa_1024/` - supervised
-  same-folder vs different-folder consistency metrics.
+- `README.md` and `STATUS.md` - current scope and limitations.
 
-## Main Outputs
+## What Stays Local/Ignored
 
-- `photo_crops_3subjects_3ddfa_1024/` - standardized 1024 px face crops.
-- `photo_avatar_crops_3subjects_3ddfa_v2/` - 3DDFA_V2 meshes and overlays.
-- `photo_avatar_crops_3subjects_mediapipe/` - MediaPipe meshes and overlays.
-- `mri_surfaces/` - MRI-derived outer-head surface and QC image.
-- `landmark_alignment/` - automatic landmark-constrained MRI alignment previews.
-- `project_page/assets/` - generated visual assets for the project page.
+Raw or generated face/MRI artifacts are intentionally not tracked:
+
+- face crops and photo inventories;
+- MediaPipe/3DDFA meshes and overlays;
+- MRI-derived PLY surfaces and proxy landmarks;
+- per-photo alignment dumps;
+- CSV manifests and batch/stability outputs;
+- internal multi-subject validation artifacts.
+
+Those files are useful for local reproduction, but they are not the public
+scientific surface of the project.
 
 ## Interpretation
 
-The current 3DDFA/MediaPipe outputs are detector/QC baselines. They do not pass
-the strict identity-separation criterion `genuine_p90 < impostor_p10`, so they
-should not be described as identity-grade avatars.
+Current outputs are calibration baselines. They establish detection, alignment,
+masking, and reporting conventions. They should not be described as
+identity-grade avatars or validated biological-age measurements.
 
-The next experimental step is to add a stronger one-shot avatar method
-(MeshLAM/LAM or MICA/DECA/EMOCA), rerun the same metrics, and compare against
-this baseline.
+The project page separates four claims that must not be collapsed:
+
+1. geometric agreement with MRI-derived surface;
+2. perceptual/avatar plausibility;
+3. identity consistency under controlled labels;
+4. biological-age validity.
+
+That separation is the main methodological contribution of this snapshot.

@@ -40,6 +40,22 @@ Older/adjacent material:
 - General literature review: [papers/related_works/literature_review.md](papers/related_works/literature_review.md)
 - Datasets catalog: [DATASETS.md](DATASETS.md)
 
+## Repository Policy
+
+The repository separates reusable methods from experiment-specific evidence:
+
+- `scripts/` contains reusable pipeline code.
+- `papers/` contains manuscript and literature context.
+- `experiments/avatar_2026/` contains the current claim-facing avatar case
+  study: public project page, status notes, and metric definitions.
+- `notebooks/` is ignored by git. Notebooks are useful for exploration, but
+  they are not treated as the scientific record unless explicitly curated.
+
+Raw data, face crops, meshes, per-photo overlays, MRI surfaces, CSV manifests,
+and internal control-subject outputs are intentionally local/ignored. This keeps
+the public repository focused on claims, methods, and curated evidence rather
+than intermediate working state.
+
 ---
 
 ## Global Landscape: Age Estimation from Face and Brain
@@ -138,55 +154,43 @@ See [papers/data/README.md](papers/data/README.md) for full download instruction
 
 ```text
 faceage-to-brainage/
+|-- experiments/
+|   `-- avatar_2026/       <- curated avatar case study: page, status, metrics
+|-- scripts/
+|   |-- photo_mri_avatar/  <- reusable photo/MRI avatar utilities
+|   |-- gap_correlation.py
+|   |-- batch_render.py
+|   |-- batch_face_age.py
+|   |-- batch_brain_age.py
+|   `-- batch_sfcn.py
 |-- src/
 |   |-- brain_age.py
 |   |-- face_age.py
 |   |-- render.py
 |   |-- utils.py
-|   |-- faceage/                    <- FaceAge deep-learning pipeline (smileyenot983)
-|   |   `-- faceage_mri/FaceAge/   <- MTCNN + ResNet-50 age model, rendering scripts
-|   `-- face_age_morphometrics/    <- 3D morphometrics pipeline (BobrG)
-|       |-- bioface3d/             <- BioFace3D-20 MVCNN landmark detector
-|       |-- src/                   <- GPA + EDMA features, Ridge regression
-|       `-- scripts/               <- extract_features.py, benchmark_regressors.py
-|
-|-- scripts/
-|   |-- gap_correlation.py         <- compute and save face/brain gap correlation
-|   |-- batch_render.py
-|   |-- batch_face_age.py
-|   |-- batch_brain_age.py
-|   `-- batch_sfcn.py
-|
-|-- notebooks/
-|   |-- 01_poc_single_scan.ipynb
-|   |-- 02_simon_reliability.ipynb
-|   |-- 03_ixi_main_experiment.ipynb
-|   |-- 04_multicontrast_rgb.ipynb
-|   |-- 05_sfcn_colab_bootstrap.ipynb
-|   |-- 06_brainage_colab.ipynb
-|   |-- 07_synthba_colab.ipynb          <- SynthBA on IXI (main result)
-|   |-- 08_synthba_simon_colab.ipynb    <- SynthBA on SIMON (reproducibility)
-|   |-- 09_midi_simon_colab.ipynb       <- MIDIBrainAge (in progress)
-|   `-- 10_brainiac_simon_colab.ipynb   <- BrainIAC (in progress)
-|
+|   |-- faceage/
+|   `-- face_age_morphometrics/
 |-- papers/
-|   |-- midl2026/         <- article draft source + pipeline.drawio
-|   |-- data/             <- dataset download instructions
-|   |-- tables/           <- CSV results (gitignored, .gitkeep tracked)
-|   |-- figures/          <- generated figures (gitignored)
-|   |-- notes/            <- implementation reproduction notes
-|   `-- related_works/    <- literature review (single source of truth)
-|
-|-- vendor/
-|   |-- MODELS.md         <- pinned model versions and commit hashes
-|   `-- FaceAge/          <- cloned, weights gitignored
-|
+|   |-- midl2026/          <- article draft source + pipeline.drawio
+|   |-- data/              <- dataset download instructions
+|   |-- tables/            <- generated CSV results, gitignored except markers
+|   |-- figures/           <- generated figures, gitignored except curated assets
+|   |-- notes/             <- implementation notes
+|   `-- related_works/     <- literature review
 |-- config/
-|   `-- brain_age_runtime.example.json
 |-- tests/
+|-- vendor/                <- external models/code; weights ignored
+|-- DATASETS.md
 |-- environment.yml
 `-- requirements.txt
 ```
+
+`experiments/` is reserved for named studies with a README, status file, and
+claim-facing outputs. It is scientific when it acts as an experiment ledger:
+scope, inputs, metrics, limitations, and public evidence are explicit.
+Intermediate crops, meshes, CSV dumps, MRI surfaces, notebooks, and internal
+control-subject artifacts stay local/ignored unless they are deliberately
+curated for release.
 
 ---
 
