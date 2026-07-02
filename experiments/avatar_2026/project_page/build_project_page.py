@@ -25,6 +25,7 @@ MRI = ROOT / "mri_surfaces"
 ALIGN = ROOT / "landmark_alignment" / "crops_3ddfa_v2"
 REPORTS = ROOT / "reports"
 CONSISTENCY = ROOT / "subject_consistency" / "crops_3subjects_3ddfa_1024"
+PUBLIC_GROUP = "1_1"
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
@@ -88,10 +89,7 @@ def copy_asset(src: Path, name: str) -> str:
 
 def make_pipeline_gif() -> str:
     groups = grouped_crops()
-    selected: list[Path] = []
-    for group in ["1_1", "2_1", "3_1"]:
-        if groups.get(group):
-            selected.append(groups[group][min(1, len(groups[group]) - 1)])
+    selected = groups.get(PUBLIC_GROUP, [])[:3]
 
     frames: list[Image.Image] = []
     w, h = 360, 360
@@ -102,8 +100,7 @@ def make_pipeline_gif() -> str:
     for crop in selected:
         canvas = Image.new("RGB", canvas_size, "#f8fafc")
         draw = ImageDraw.Draw(canvas)
-        group = subject_group(crop)
-        title = f"known folder {group}: crop -> dense face fit -> landmarks"
+        title = "single-subject case study: crop -> dense face fit -> landmarks"
         draw.text((pad, 16), title, fill="#111827", font=FONT_28_B)
         items = [
             ("Input crop", crop),
@@ -126,6 +123,7 @@ def make_pipeline_gif() -> str:
 
 def make_subject_mosaic() -> str:
     groups = grouped_crops()
+    groups = {PUBLIC_GROUP: groups.get(PUBLIC_GROUP, [])}
     thumb = (170, 170)
     pad = 16
     max_cols = max(len(v) for v in groups.values())
@@ -136,31 +134,31 @@ def make_subject_mosaic() -> str:
 
     y = pad
     for group in sorted(groups):
-        draw.text((pad, y + 44), group, fill="#111827", font=FONT_28_B)
+        draw.text((pad, y + 44), "case A", fill="#111827", font=FONT_28_B)
         draw.text((pad, y + 76), f"{len(groups[group])} photos", fill="#64748b", font=FONT_18)
         for idx, crop in enumerate(groups[group]):
             x = pad + 150 + idx * (thumb[0] + pad)
             img = fit_image(crop, thumb)
             canvas.paste(img, (x, y))
             draw.rounded_rectangle((x, y, x + thumb[0], y + thumb[1]), radius=8, outline="#cbd5e1", width=2)
-            badge = f"{group}.{idx + 1}"
+            badge = f"A.{idx + 1}"
             draw.rounded_rectangle((x + 8, y + 8, x + 66, y + 34), radius=6, fill="#ffffff", outline="#cbd5e1")
             draw.text((x + 16, y + 11), badge, fill="#111827", font=FONT_16)
         y += thumb[1] + pad
 
-    out = ASSETS / "known_folder_mosaic.jpg"
+    out = ASSETS / "kate_case_mosaic.jpg"
     canvas.save(out, quality=92)
-    return "assets/known_folder_mosaic.jpg"
+    return "assets/kate_case_mosaic.jpg"
 
 
 def make_alignment_strip() -> str | None:
-    paths = sorted(ALIGN.glob("*_landmark_constrained_alignment.png"))[:6]
+    paths = sorted(ALIGN.glob(f"*_{PUBLIC_GROUP}_*_landmark_constrained_alignment.png"))[:1]
     if not paths:
         return None
-    thumb = (300, 230)
-    pad = 14
-    cols = 3
-    rows = math.ceil(len(paths) / cols)
+    thumb = (1060, 720)
+    pad = 18
+    cols = 1
+    rows = 1
     canvas = Image.new("RGB", (pad + cols * (thumb[0] + pad), pad + rows * (thumb[1] + pad)), "#ffffff")
     draw = ImageDraw.Draw(canvas)
     for i, path in enumerate(paths):
@@ -171,6 +169,23 @@ def make_alignment_strip() -> str | None:
     out = ASSETS / "mri_alignment_strip.jpg"
     canvas.save(out, quality=92)
     return "assets/mri_alignment_strip.jpg"
+
+
+def make_alignment_gif() -> str | None:
+    paths = sorted(ALIGN.glob(f"*_{PUBLIC_GROUP}_*_landmark_constrained_alignment.png"))[:4]
+    if not paths:
+        return None
+    frames = []
+    size = (900, 620)
+    for i, path in enumerate(paths, start=1):
+        frame = Image.new("RGB", (size[0], size[1] + 54), "#f8fafc")
+        draw = ImageDraw.Draw(frame)
+        draw.text((22, 16), f"case A alignment preview {i}/{len(paths)}", fill="#111827", font=FONT_22_B)
+        frame.paste(fit_image(path, size, "#ffffff"), (0, 54))
+        frames.extend([frame] * 5)
+    out = ASSETS / "mri_alignment_case_a.gif"
+    frames[0].save(out, save_all=True, append_images=frames[1:], duration=320, loop=0, optimize=True)
+    return "assets/mri_alignment_case_a.gif"
 
 
 def read_ascii_ply_vertices(path: Path) -> np.ndarray:
@@ -206,8 +221,8 @@ def normalize_points(points: np.ndarray) -> np.ndarray:
 def make_mesh_turntable() -> str:
     rng = np.random.default_rng(42)
     meshes = []
-    colors = ["#2563eb", "#16a34a", "#db2777"]
-    for group, color in zip(["1_1", "2_1", "3_1"], colors):
+    colors = ["#2563eb"]
+    for group, color in zip([PUBLIC_GROUP], colors):
         points = normalize_points(read_ascii_ply_vertices(first_ply_for_group(group)))
         if len(points) > 2600:
             points = points[rng.choice(len(points), size=2600, replace=False)]
@@ -215,14 +230,14 @@ def make_mesh_turntable() -> str:
 
     frames: list[Image.Image] = []
     for angle in range(0, 360, 18):
-        fig = plt.figure(figsize=(9, 3.2), dpi=120)
+        fig = plt.figure(figsize=(6.2, 4.2), dpi=120)
         fig.patch.set_facecolor("#0b1020")
         for i, (group, points, color) in enumerate(meshes, start=1):
-            ax = fig.add_subplot(1, 3, i, projection="3d")
+            ax = fig.add_subplot(1, 1, i, projection="3d")
             ax.set_facecolor("#0b1020")
             ax.scatter(points[:, 0], points[:, 1], points[:, 2], s=0.7, c=color, alpha=0.72)
             ax.view_init(elev=8, azim=angle)
-            ax.set_title(f"folder {group}", color="white", fontsize=11, pad=0)
+            ax.set_title("single-subject 3DDFA face surface", color="white", fontsize=12, pad=0)
             ax.set_axis_off()
             ax.set_xlim(-0.28, 0.28)
             ax.set_ylim(-0.28, 0.28)
@@ -233,9 +248,9 @@ def make_mesh_turntable() -> str:
         frames.append(Image.fromarray(buf[:, :, :3]).convert("P", palette=Image.Palette.ADAPTIVE))
         plt.close(fig)
 
-    out = ASSETS / "mesh_turntable_3folders.gif"
+    out = ASSETS / "kate_mesh_turntable.gif"
     frames[0].save(out, save_all=True, append_images=frames[1:], duration=95, loop=0, optimize=True)
-    return "assets/mesh_turntable_3folders.gif"
+    return "assets/kate_mesh_turntable.gif"
 
 
 def make_consistency_chart() -> str:
@@ -273,7 +288,7 @@ def make_methods_diagram() -> str:
     canvas = Image.new("RGB", (w, h), "#f8fafc")
     draw = ImageDraw.Draw(canvas)
     boxes = [
-        ("Known folders", "1_1 / 2_1 / 3_1\nlabels only", "#2563eb"),
+        ("Single case", "1_1 longitudinal\nphoto/MRI subject", "#2563eb"),
         ("Face crops", "3DDFA detector\n1024 px crops", "#16a34a"),
         ("One-photo meshes", "MediaPipe + 3DDFA\nrough geometry", "#db2777"),
         ("MRI bridge", "outer-head surface\nlandmark alignment", "#f97316"),
@@ -295,7 +310,7 @@ def make_methods_diagram() -> str:
             draw.line((ax, ay, ax + gap - 12, ay), fill="#64748b", width=3)
             draw.polygon([(ax + gap - 12, ay - 7), (ax + gap - 12, ay + 7), (ax + gap, ay)], fill="#64748b")
     draw.text((36, 32), "Current evaluation pipeline", fill="#0f172a", font=FONT_28_B)
-    draw.text((36, 348), "The page separates visual plausibility, identity consistency, and biological-age validity.", fill="#334155", font=FONT_20)
+    draw.text((36, 348), "The page separates visual plausibility, geometric agreement, and biological-age validity.", fill="#334155", font=FONT_20)
     out = ASSETS / "method_pipeline_diagram.png"
     canvas.save(out, quality=94)
     return "assets/method_pipeline_diagram.png"
@@ -536,7 +551,7 @@ def html_page(assets: dict[str, str]) -> str:
     <h1>FaceAge-to-BrainAge: MRI-grounded evaluation of one-photo human avatars</h1>
     <div class="authors">Kondrateva K. and collaborators</div>
     <div class="affil">Personal longitudinal face/MRI pilot / Avatar reconstruction / Biological-age biomarkers</div>
-    <p class="subtitle">A Gaussian-splatting-style visual article page for face crops, one-photo 3D baselines, MRI alignment, and identity-consistency checks across known folders.</p>
+    <p class="subtitle">A visual article page for a single-subject photo/MRI case study: one-photo facial geometry, MRI alignment, surface-distance evaluation, and biological-age framing.</p>
     <div class="button-row">
       <a class="button primary" href="#abstract">Abstract</a>
       <a class="button" href="#geometry">Visual Results</a>
@@ -549,8 +564,8 @@ def html_page(assets: dict[str, str]) -> str:
       <img src="{assets['teaser']}" alt="Animated pipeline from crop to 3D face fitting overlays">
     </div>
     <div class="metrics">
-      <div class="metric"><div class="num">14</div><div class="label">local face photos currently visible</div></div>
-      <div class="metric"><div class="num">3</div><div class="label">known folders used as supervised labels</div></div>
+      <div class="metric"><div class="num">4</div><div class="label">public case-study photos shown</div></div>
+      <div class="metric"><div class="num">1</div><div class="label">single subject with paired MRI context</div></div>
       <div class="metric"><div class="num">2</div><div class="label">one-photo geometry baselines</div></div>
       <div class="metric"><div class="num">0</div><div class="label">strict identity-separation metrics passed</div></div>
     </div>
@@ -559,15 +574,15 @@ def html_page(assets: dict[str, str]) -> str:
   <section id="abstract">
     <div class="abstract">
       <h2>Abstract</h2>
-      <p>Single-image avatar methods can produce visually plausible faces, but visual plausibility alone is not enough for biological-age or identity-sensitive research. This pilot defines a practical evaluation scaffold for comparing one-photo face avatars against repeated photos and an MRI-derived outer-head surface. The current snapshot uses three known folder labels, two lightweight geometry baselines, and a supervised same-person versus different-person consistency test.</p>
-      <p>The main finding is negative but useful: MediaPipe and 3DDFA provide reliable preprocessing and visualization, yet they do not pass a strict identity-separation criterion. The page therefore treats them as lower-bound baselines before stronger avatar methods such as MeshLAM/LAM, MICA, DECA, EMOCA, or Gaussian-splatting-based reconstructions.</p>
+      <p>Single-image avatar methods can produce visually plausible faces, but visual plausibility alone is not enough for biological-age or identity-sensitive research. This pilot defines an evaluation scaffold for a paired photo/MRI case study: repeated face photographs are reconstructed into lightweight facial surfaces, aligned to an MRI-derived outer-head surface, and evaluated with landmark and surface-distance diagnostics.</p>
+      <p>The current page shows only the primary case subject. Additional subjects are reserved for internal validation and are not displayed. MediaPipe and 3DDFA are used as calibration baselines: they establish detection, alignment, and reporting conventions before higher-fidelity avatar families such as MeshLAM/LAM, MICA, DECA, EMOCA, and Gaussian-splatting-based reconstructions are compared under the same metric contract.</p>
     </div>
   </section>
 
   <section id="data">
-    <h2>Known-folder photo cohort</h2>
-    <p class="lead">The page uses folder labels only. It does not infer identity from faces. Locally available folders are 1_1, 2_1, and 3_1; 1_2 and 1_3/photos are currently empty on disk.</p>
-    <div class="panel"><img src="{assets['mosaic']}" alt="Mosaic of face crops grouped by folder"></div>
+    <h2>Single-subject case study</h2>
+    <p class="lead">The public visual page is restricted to the primary case subject only. Additional subjects remain internal controls for metric development and are not shown in project-page figures.</p>
+    <div class="panel"><img src="{assets['mosaic']}" alt="Mosaic of face crops for the primary case subject"></div>
   </section>
 
   <section class="band" id="method">
@@ -577,7 +592,7 @@ def html_page(assets: dict[str, str]) -> str:
       <div class="panel"><img src="{assets['diagram']}" alt="Pipeline diagram"></div>
       <div class="three" style="margin-top: 18px;">
         <div class="mini"><h3>Visual plausibility</h3><p>Does the overlay look reasonable on the input image?</p></div>
-        <div class="mini"><h3>Identity consistency</h3><p>Are same-folder avatars closer than different-folder avatars?</p></div>
+        <div class="mini"><h3>Geometric consistency</h3><p>Are repeated-photo avatars stable after the same alignment and masking protocol?</p></div>
         <div class="mini"><h3>Biological-age validity</h3><p>Does a face signal track aging, lifestyle, MRI, or outcomes?</p></div>
       </div>
     </div>
@@ -585,15 +600,30 @@ def html_page(assets: dict[str, str]) -> str:
 
   <section id="geometry">
     <h2>Geometry baseline</h2>
-    <p class="lead">3DDFA and MediaPipe give usable detection and rough facial geometry. They are not yet a MeshLAM/MATCH-level high-fidelity avatar and should be treated as the floor for better methods.</p>
+    <p class="lead">3DDFA and MediaPipe are calibration baselines. Their role is to make the evaluation harness explicit before comparing higher-fidelity reconstruction families under identical alignment, masking, and reporting rules.</p>
     <div class="grid-2">
       <div class="panel">
-        <img src="{assets['turntable']}" alt="Animated 3D point-cloud turntable for three known folders">
-        <div class="panel-body"><h3>3D mesh turntable</h3><p class="caption">Point-cloud render from 3DDFA meshes for one representative photo per known folder.</p></div>
+        <img src="{assets['turntable']}" alt="Animated 3D point-cloud turntable for the single-subject case study">
+        <div class="panel-body"><h3>Single-subject mesh turntable</h3><p class="caption">Point-cloud render from the current 3DDFA face-surface baseline.</p></div>
       </div>
       <div class="panel">
-        <img src="{assets['quicklook']}" alt="Full quicklook of crop, 3DDFA and MediaPipe overlays">
-        <div class="panel-body"><h3>Visual QC sheet</h3><p class="caption">All 14 crops with 3DDFA and MediaPipe overlays for rapid inspection.</p></div>
+        <img src="{assets['alignment']}" alt="MRI alignment previews">
+        <div class="panel-body"><h3>MRI alignment preview</h3><p class="caption">Current landmark-constrained alignment preview for the photo-to-MRI geometry bridge.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Animated diagnostics</h2>
+    <p class="lead">The page uses GIFs where motion helps: one for the crop-to-mesh pipeline, one for mesh rotation, and one for alignment stability across repeated photos.</p>
+    <div class="grid-2">
+      <div class="panel">
+        <img src="{assets['teaser']}" alt="Animated single-subject crop-to-mesh pipeline">
+        <div class="panel-body"><h3>Pipeline GIF</h3><p class="caption">Repeated-photo crop, dense fit, and landmark overlay.</p></div>
+      </div>
+      <div class="panel">
+        <img src="{assets['alignment_gif']}" alt="Animated MRI alignment previews for the primary case subject">
+        <div class="panel-body"><h3>Alignment GIF</h3><p class="caption">Larger alignment frames across case-subject photos.</p></div>
       </div>
     </div>
   </section>
@@ -608,8 +638,8 @@ def html_page(assets: dict[str, str]) -> str:
           <div class="panel-body"><h3>MRI outer-head surface</h3><p class="caption">Current MRI-derived surface used for coarse face-to-head alignment.</p></div>
         </div>
         <div class="panel">
-          <img src="{assets['alignment']}" alt="MRI alignment previews">
-          <div class="panel-body"><h3>Landmark-constrained alignment</h3><p class="caption">Preview panels from the current automatic alignment pipeline.</p></div>
+          <img src="{assets['chart']}" alt="Internal consistency separation chart">
+          <div class="panel-body"><h3>Internal validation diagnostic</h3><p class="caption">Non-face diagnostic chart from the internal multi-subject validation set.</p></div>
         </div>
       </div>
       <div class="callout">The earlier ~2.5 mm value is not a validated anatomical accuracy claim. It is a surface-distance baseline after landmark-seeded alignment and needs manual MRI landmarks or a controlled 3D face scan.</div>
@@ -618,12 +648,11 @@ def html_page(assets: dict[str, str]) -> str:
 
   <section id="metrics">
     <h2>Current consistency result</h2>
-    <p class="lead">A Face-ID-style geometric constraint is framed as a supervised separation test: same-folder pairs are genuine, different-folder pairs are impostor. The strict acceptance rule is genuine p90 below impostor p10.</p>
-    <div class="panel"><img src="{assets['chart']}" alt="Consistency separation chart"></div>
+    <p class="lead">The evaluation contract separates single-subject geometry from internal identity controls. The public page shows only the primary subject; the internal validation set is used to test whether same-subject surfaces are more stable than different-subject surfaces.</p>
     <table>
       <tr><th>Finding</th><th>Interpretation</th></tr>
-      <tr><td>26 genuine pairs and 65 impostor pairs per method</td><td>Enough for a first diagnostic distribution, not enough for a general identity benchmark.</td></tr>
-      <tr><td>No current metric passes genuine_p90 &lt; impostor_p10</td><td>The baseline is not identity-separable enough for Face ID-grade avatar claims.</td></tr>
+      <tr><td>Surface-distance reporting</td><td>Report median, p90/p95, HD95, directed Hausdorff, ASSD, and Chamfer after a fixed alignment protocol.</td></tr>
+      <tr><td>Identity-control reporting</td><td>Keep same-subject vs different-subject separation as an internal guardrail, not as a public face gallery.</td></tr>
       <tr><td>MediaPipe/3DDFA still detect all crop photos</td><td>They are useful as preprocessing and QC baselines before stronger avatar methods.</td></tr>
     </table>
   </section>
@@ -646,7 +675,7 @@ def html_page(assets: dict[str, str]) -> str:
     <table>
       <tr><th>Risk</th><th>Control planned in the next iteration</th></tr>
       <tr><td>Supine MRI versus upright photo posture</td><td>Separate rigid alignment error from soft-tissue/posture deformation.</td></tr>
-      <tr><td>One-photo avatar hallucination</td><td>Compare repeat photos, stronger baselines, and same-folder consistency.</td></tr>
+      <tr><td>One-photo avatar hallucination</td><td>Compare repeat photos, stronger baselines, MRI surface masks, and internal identity controls.</td></tr>
       <tr><td>Surface distance overfitting</td><td>Add anatomical landmarks, HD95/Hausdorff, ASSD, Chamfer, and masked facial regions.</td></tr>
       <tr><td>Biological-age overclaiming</td><td>Keep FaceAge, MRI geometry, and methylation/twin evidence as related but distinct axes.</td></tr>
     </table>
@@ -656,9 +685,9 @@ def html_page(assets: dict[str, str]) -> str:
     <div class="inner">
       <h2>Roadmap</h2>
       <div class="three">
-        <div class="mini"><h3>1. Better avatars</h3><p>Run MeshLAM/LAM, MICA, DECA, or EMOCA once model assets and compute are available.</p></div>
-        <div class="mini"><h3>2. Better MRI target</h3><p>Build scanner-artifact-resistant MRI face masks and add manual or semi-automatic landmarks.</p></div>
-        <div class="mini"><h3>3. Better metrics</h3><p>Report robust surface distances, perceptual review, identity separation, and cross-year consistency.</p></div>
+        <div class="mini"><h3>1. Baseline ladder</h3><p>Evaluate 3DDFA/MediaPipe, FLAME-family models, MeshLAM/LAM, and splatting-style reconstructions with one shared protocol.</p></div>
+        <div class="mini"><h3>2. MRI target</h3><p>Build scanner-artifact-resistant MRI face masks and add anatomical landmarks for nose, brow, chin, jaw, and periorbital regions.</p></div>
+        <div class="mini"><h3>3. Reporting standard</h3><p>Publish geometry, perception, identity-control, and cross-year consistency metrics as separate claims.</p></div>
       </div>
     </div>
   </section>
@@ -693,9 +722,9 @@ def build() -> None:
         "diagram": make_methods_diagram(),
         "turntable": make_mesh_turntable(),
         "chart": make_consistency_chart(),
-        "quicklook": copy_asset(REPORTS / "quicklook_3subjects_crops_mediapipe_3ddfa.jpg", "quicklook_3subjects_crops_mediapipe_3ddfa.jpg"),
         "mri_qc": copy_asset(MRI / "kate_2018_qc.png", "kate_2018_qc.png"),
         "alignment": make_alignment_strip() or copy_asset(MRI / "kate_2018_qc.png", "mri_alignment_fallback.png"),
+        "alignment_gif": make_alignment_gif() or make_pipeline_gif(),
     }
     (PAGE / "index.html").write_text(html_page(assets), encoding="utf-8")
     print(PAGE / "index.html")
