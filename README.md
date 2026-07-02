@@ -17,6 +17,18 @@ The active project page is:
 
 This page is the clearest current artifact of the project. It frames a single-subject photo/MRI case study and asks whether one-photo facial avatars can be evaluated against an MRI-derived face surface rather than judged only by visual plausibility.
 
+### Current Case Evidence
+
+<p align="center">
+  <img src="experiments/avatar_2026/project_page/assets/case_a_mask_overlays.jpg" alt="Primary case-subject photos with 3DDFA and MediaPipe mask overlays" width="880"/>
+</p>
+<p align="center"><em>Primary case subject: repeated face photographs with 3DDFA and MediaPipe one-photo geometry baselines. These are qualitative alignment diagnostics, not identity-grade avatar results.</em></p>
+
+<p align="center">
+  <img src="experiments/avatar_2026/project_page/assets/mri_alignment_strip.jpg" alt="Photo-derived face geometry aligned to MRI-derived outer-head surface" width="760"/>
+</p>
+<p align="center"><em>MRI bridge: current landmark-constrained alignment preview between photo-derived face geometry and the MRI-derived outer-head surface.</em></p>
+
 Current contribution:
 
 - define a case-only visual project page with no public display of control subjects;
@@ -47,7 +59,8 @@ The repository separates reusable methods from experiment-specific evidence:
 - `scripts/` contains reusable pipeline code.
 - `papers/` contains manuscript and literature context.
 - `experiments/avatar_2026/` contains the current claim-facing avatar case
-  study: public project page, status notes, and metric definitions.
+  study: public project page, curated visual assets, status notes, and metric
+  definitions.
 - `notebooks/` is ignored by git. Notebooks are useful for exploration, but
   they are not treated as the scientific record unless explicitly curated.
 
@@ -155,7 +168,7 @@ See [papers/data/README.md](papers/data/README.md) for full download instruction
 ```text
 faceage-to-brainage/
 |-- experiments/
-|   `-- avatar_2026/       <- curated avatar case study: page, status, metrics
+|   `-- avatar_2026/       <- curated avatar case study: page, visuals, status, metrics
 |-- scripts/
 |   |-- photo_mri_avatar/  <- reusable photo/MRI avatar utilities
 |   |-- gap_correlation.py

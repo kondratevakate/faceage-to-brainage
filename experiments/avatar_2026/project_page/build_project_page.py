@@ -159,7 +159,7 @@ def make_case_overlay_figure() -> str:
     thumb = (230, 230)
     pad = 16
     label_w = 170
-    header_h = 58
+    header_h = 84
     rows = [
         ("Input crop", lambda crop: crop),
         ("3DDFA mesh", lambda crop: overlay_for_crop(crop, "3ddfa")),
@@ -169,8 +169,13 @@ def make_case_overlay_figure() -> str:
     height = header_h + pad * (len(rows) + 1) + thumb[1] * len(rows)
     canvas = Image.new("RGB", (width, height), "#ffffff")
     draw = ImageDraw.Draw(canvas)
-    draw.text((pad, 16), "Case A mask overlays", fill="#0f172a", font=FONT_28_B)
-    draw.text((label_w, 22), "same subject / repeated photos / two one-photo geometry baselines", fill="#64748b", font=FONT_18)
+    draw.text((pad, 14), "Case A mask overlays", fill="#0f172a", font=FONT_28_B)
+    draw.text(
+        (pad, 50),
+        "same subject / repeated photos / two one-photo geometry baselines",
+        fill="#64748b",
+        font=FONT_18,
+    )
 
     for row_idx, (label, get_path) in enumerate(rows):
         y = header_h + pad + row_idx * (thumb[1] + pad)
