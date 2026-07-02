@@ -561,13 +561,13 @@ def html_page(assets: dict[str, str]) -> str:
     </div>
     <p class="paper-note">This page is intentionally formatted as a paper/project page: title, authors, teaser, abstract, method, visual results, quantitative diagnostics, limitations, and next baselines.</p>
     <div class="hero-media">
-      <img src="{assets['teaser']}" alt="Animated pipeline from crop to 3D face fitting overlays">
+      <img src="{assets['mosaic']}" alt="Primary case-subject photo crops used in the evaluation">
     </div>
     <div class="metrics">
       <div class="metric"><div class="num">4</div><div class="label">public case-study photos shown</div></div>
       <div class="metric"><div class="num">1</div><div class="label">single subject with paired MRI context</div></div>
       <div class="metric"><div class="num">2</div><div class="label">one-photo geometry baselines</div></div>
-      <div class="metric"><div class="num">0</div><div class="label">strict identity-separation metrics passed</div></div>
+      <div class="metric"><div class="num">4</div><div class="label">evaluation axes: geometry, perception, identity, age</div></div>
     </div>
   </header>
 
@@ -609,21 +609,6 @@ def html_page(assets: dict[str, str]) -> str:
       <div class="panel">
         <img src="{assets['alignment']}" alt="MRI alignment previews">
         <div class="panel-body"><h3>MRI alignment preview</h3><p class="caption">Current landmark-constrained alignment preview for the photo-to-MRI geometry bridge.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Animated diagnostics</h2>
-    <p class="lead">The page uses GIFs where motion helps: one for the crop-to-mesh pipeline, one for mesh rotation, and one for alignment stability across repeated photos.</p>
-    <div class="grid-2">
-      <div class="panel">
-        <img src="{assets['teaser']}" alt="Animated single-subject crop-to-mesh pipeline">
-        <div class="panel-body"><h3>Pipeline GIF</h3><p class="caption">Repeated-photo crop, dense fit, and landmark overlay.</p></div>
-      </div>
-      <div class="panel">
-        <img src="{assets['alignment_gif']}" alt="Animated MRI alignment previews for the primary case subject">
-        <div class="panel-body"><h3>Alignment GIF</h3><p class="caption">Larger alignment frames across case-subject photos.</p></div>
       </div>
     </div>
   </section>
@@ -724,7 +709,6 @@ def build() -> None:
         "chart": make_consistency_chart(),
         "mri_qc": copy_asset(MRI / "kate_2018_qc.png", "kate_2018_qc.png"),
         "alignment": make_alignment_strip() or copy_asset(MRI / "kate_2018_qc.png", "mri_alignment_fallback.png"),
-        "alignment_gif": make_alignment_gif() or make_pipeline_gif(),
     }
     (PAGE / "index.html").write_text(html_page(assets), encoding="utf-8")
     print(PAGE / "index.html")
