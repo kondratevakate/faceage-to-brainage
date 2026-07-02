@@ -151,6 +151,45 @@ def make_subject_mosaic() -> str:
     return "assets/kate_case_mosaic.jpg"
 
 
+def make_case_overlay_figure() -> str:
+    crops = grouped_crops().get(PUBLIC_GROUP, [])[:4]
+    if not crops:
+        raise FileNotFoundError(PUBLIC_GROUP)
+
+    thumb = (230, 230)
+    pad = 16
+    label_w = 170
+    header_h = 58
+    rows = [
+        ("Input crop", lambda crop: crop),
+        ("3DDFA mesh", lambda crop: overlay_for_crop(crop, "3ddfa")),
+        ("MediaPipe mask", lambda crop: overlay_for_crop(crop, "mediapipe")),
+    ]
+    width = label_w + pad * (len(crops) + 2) + thumb[0] * len(crops)
+    height = header_h + pad * (len(rows) + 1) + thumb[1] * len(rows)
+    canvas = Image.new("RGB", (width, height), "#ffffff")
+    draw = ImageDraw.Draw(canvas)
+    draw.text((pad, 16), "Case A mask overlays", fill="#0f172a", font=FONT_28_B)
+    draw.text((label_w, 22), "same subject / repeated photos / two one-photo geometry baselines", fill="#64748b", font=FONT_18)
+
+    for row_idx, (label, get_path) in enumerate(rows):
+        y = header_h + pad + row_idx * (thumb[1] + pad)
+        draw.text((pad, y + 94), label, fill="#111827", font=FONT_22_B)
+        for col_idx, crop in enumerate(crops):
+            x = label_w + pad + col_idx * (thumb[0] + pad)
+            img = fit_image(get_path(crop), thumb, "#f8fafc")
+            canvas.paste(img, (x, y))
+            draw.rounded_rectangle((x, y, x + thumb[0], y + thumb[1]), radius=8, outline="#cbd5e1", width=2)
+            if row_idx == 0:
+                badge = f"A.{col_idx + 1}"
+                draw.rounded_rectangle((x + 8, y + 8, x + 58, y + 34), radius=6, fill="#ffffff", outline="#cbd5e1")
+                draw.text((x + 18, y + 11), badge, fill="#111827", font=FONT_16)
+
+    out = ASSETS / "case_a_mask_overlays.jpg"
+    canvas.save(out, quality=92)
+    return "assets/case_a_mask_overlays.jpg"
+
+
 def make_alignment_strip() -> str | None:
     paths = sorted(ALIGN.glob(f"*_{PUBLIC_GROUP}_*_landmark_constrained_alignment.png"))[:1]
     if not paths:
@@ -646,6 +685,10 @@ def html_page(assets: dict[str, str]) -> str:
     <h2>Single-subject case study</h2>
     <p class="lead">The public visual page is restricted to the primary case subject only. Additional subjects remain internal controls for metric development and are not shown in project-page figures.</p>
     <div class="panel"><img src="{assets['mosaic']}" alt="Mosaic of face crops for the primary case subject"></div>
+    <div class="panel" style="margin-top: 24px;">
+      <img src="{assets['case_overlays']}" alt="Case A input crops with 3DDFA and MediaPipe mask overlays">
+      <div class="panel-body"><h3>Case A mask overlays</h3><p class="caption">Input crops, dense 3DDFA fits, and MediaPipe face-mask overlays across repeated photos of the same subject.</p></div>
+    </div>
   </section>
 
   <section class="band" id="method">
@@ -767,6 +810,7 @@ def build() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
     assets = {
         "mosaic": make_subject_mosaic(),
+        "case_overlays": make_case_overlay_figure(),
         "diagram": make_methods_diagram(),
         "turntable": make_mesh_turntable(),
         "surface_metrics": make_surface_metrics_figure(),
