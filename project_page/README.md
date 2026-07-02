@@ -1,6 +1,6 @@
-# Avatar 2026 Case Study
+# Project Page
 
-This folder contains the public, claim-facing part of the 2026
+This folder contains the public, claim-facing article page for the
 FaceAge-to-BrainAge avatar workstream.
 
 The scientific question is deliberately narrow:
@@ -10,9 +10,10 @@ The scientific question is deliberately narrow:
 
 ## What Belongs In Git
 
-- `project_page/` - the public visual article page and its generated assets.
-- `reports/METRICS_AND_LABELS.md` - metric definitions and interpretation rules.
-- `reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md` - FaceAge/twin-study context.
+- `index.html` - the public visual article page.
+- `assets/` - curated public visual assets.
+- `METRICS_AND_LABELS.md` - metric definitions and interpretation rules.
+- `TWIN_FACEAGE_LITERATURE_CONTEXT.md` - FaceAge/twin-study context.
 - `README.md` and `STATUS.md` - current scope and limitations.
 
 ## What Stays Local/Ignored
@@ -28,6 +29,9 @@ Raw or generated face/MRI artifacts are intentionally not tracked:
 
 Those files are useful for local reproduction, but they are not the public
 scientific surface of the project.
+
+Local generated/private work currently lives under ignored
+`data/avatar_2026_work/`.
 
 ## Interpretation
 

@@ -1,4 +1,4 @@
-# Avatar 2026 Status
+# Project Page Status
 
 Updated: 2026-07-02.
 
@@ -9,8 +9,8 @@ project page:
 
 - `project_page/index.html`
 - `project_page/assets/`
-- `reports/METRICS_AND_LABELS.md`
-- `reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md`
+- `project_page/METRICS_AND_LABELS.md`
+- `project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md`
 
 The GitHub Pages version is published from the separate `gh-pages` branch.
 
@@ -19,6 +19,8 @@ The GitHub Pages version is published from the separate `gh-pages` branch.
 The local workspace may contain additional photos, MRI surfaces, face crops,
 meshes, overlays, CSV manifests, and internal control-subject outputs. These are
 ignored by git. They are working data, not public project claims.
+
+Current local workbench path: `data/avatar_2026_work/`.
 
 ## Current Scientific Position
 

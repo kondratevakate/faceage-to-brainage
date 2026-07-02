@@ -14,17 +14,18 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 
-ROOT = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[1]
 PAGE = Path(__file__).resolve().parent
 ASSETS = PAGE / "assets"
+WORK = REPO / "data" / "avatar_2026_work"
 
-CROPS = ROOT / "photo_crops_3subjects_3ddfa_1024"
-DDDFA = ROOT / "photo_avatar_crops_3subjects_3ddfa_v2"
-MEDIAPIPE = ROOT / "photo_avatar_crops_3subjects_mediapipe"
-MRI = ROOT / "mri_surfaces"
-ALIGN = ROOT / "landmark_alignment" / "crops_3ddfa_v2"
-REPORTS = ROOT / "reports"
-CONSISTENCY = ROOT / "subject_consistency" / "crops_3subjects_3ddfa_1024"
+CROPS = WORK / "photo_crops_3subjects_3ddfa_1024"
+DDDFA = WORK / "photo_avatar_crops_3subjects_3ddfa_v2"
+MEDIAPIPE = WORK / "photo_avatar_crops_3subjects_mediapipe"
+MRI = WORK / "mri_surfaces"
+ALIGN = WORK / "landmark_alignment" / "crops_3ddfa_v2"
+REPORTS = WORK / "reports"
+CONSISTENCY = WORK / "subject_consistency" / "crops_3subjects_3ddfa_1024"
 PUBLIC_GROUP = "1_1"
 
 
@@ -193,6 +194,58 @@ def make_case_overlay_figure() -> str:
     out = ASSETS / "case_a_mask_overlays.jpg"
     canvas.save(out, quality=92)
     return "assets/case_a_mask_overlays.jpg"
+
+
+def make_mask_mri_teaser_gif() -> str:
+    crops = grouped_crops().get(PUBLIC_GROUP, [])[:4]
+    if not crops:
+        raise FileNotFoundError(PUBLIC_GROUP)
+
+    alignment_paths = sorted(ALIGN.glob(f"*_{PUBLIC_GROUP}_*_landmark_constrained_alignment.png"))
+    mri_panel = alignment_paths[0] if alignment_paths else MRI / "kate_2018_qc.png"
+
+    pad = 22
+    label_h = 54
+    panel = (360, 360)
+    mri_size = (440, 360)
+    width = pad * 5 + panel[0] * 2 + mri_size[0]
+    height = 86 + label_h + panel[1] + pad
+    frames: list[Image.Image] = []
+
+    for idx, crop in enumerate(crops, start=1):
+        canvas = Image.new("RGB", (width, height), "#f8fafc")
+        draw = ImageDraw.Draw(canvas)
+        draw.text((pad, 16), "Case A: face masks -> MRI mask", fill="#0f172a", font=FONT_28_B)
+        draw.text(
+            (pad, 52),
+            "one subject / repeated photos / photo-derived masks compared with an MRI-derived face target",
+            fill="#64748b",
+            font=FONT_18,
+        )
+
+        items = [
+            ("3DDFA face mask", overlay_for_crop(crop, "3ddfa"), panel),
+            ("MediaPipe landmarks", overlay_for_crop(crop, "mediapipe"), panel),
+            ("MRI-derived mask", mri_panel, mri_size),
+        ]
+        for col, (label, path, size) in enumerate(items):
+            x = pad + col * (panel[0] + pad)
+            if col == 2:
+                x = pad * 4 + panel[0] * 2
+            y = 86 + label_h
+            img = fit_image(path, size, "#ffffff")
+            canvas.paste(img, (x, y))
+            draw.rounded_rectangle((x, y, x + size[0], y + size[1]), radius=8, outline="#cbd5e1", width=2)
+            draw.text((x, 86), label, fill="#111827", font=FONT_22_B)
+            if col == 0:
+                badge = f"A.{idx}"
+                draw.rounded_rectangle((x + 8, y + 8, x + 58, y + 34), radius=6, fill="#ffffff", outline="#cbd5e1")
+                draw.text((x + 18, y + 11), badge, fill="#111827", font=FONT_16)
+        frames.extend([canvas] * 5)
+
+    out = ASSETS / "case_a_mask_mri_teaser.gif"
+    frames[0].save(out, save_all=True, append_images=frames[1:], duration=320, loop=0, optimize=True)
+    return "assets/case_a_mask_mri_teaser.gif"
 
 
 def make_alignment_strip() -> str | None:
@@ -661,14 +714,14 @@ def html_page(assets: dict[str, str]) -> str:
     <p class="subtitle">A visual article page for a single-subject photo/MRI case study: one-photo facial geometry, MRI alignment, surface-distance evaluation, and biological-age framing.</p>
     <div class="button-row">
       <a class="button primary" href="#abstract">Abstract</a>
-      <a class="button" href="../reports/METRICS_AND_LABELS.md">Report</a>
-      <a class="button" href="../../../../scripts/photo_mri_avatar/">Code</a>
+      <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/blob/main/project_page/METRICS_AND_LABELS.md">Report</a>
+      <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/tree/main/scripts/photo_mri_avatar">Code</a>
       <a class="button" href="#geometry">Results</a>
-      <a class="button" href="../reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md">Literature</a>
+      <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/blob/main/project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md">Literature</a>
     </div>
     <div class="tldr"><strong>TL;DR:</strong> This project asks whether a one-photo facial avatar can be evaluated against the same subject's MRI-derived face surface, rather than judged only by appearance. The page defines the first evaluation contract: photo reconstruction, MRI bridge, surface metrics, and biological-age interpretation kept as separate claims.</div>
     <div class="hero-media">
-      <img src="{assets['mosaic']}" alt="Primary case-subject photo crops used in the evaluation">
+      <img src="{assets['mask_mri_teaser']}" alt="Animated Case A face-mask and MRI-mask teaser">
     </div>
     <div class="metrics">
       <div class="metric"><div class="num">4</div><div class="label">case-study photographs</div></div>
@@ -814,6 +867,7 @@ def html_page(assets: dict[str, str]) -> str:
 def build() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
     assets = {
+        "mask_mri_teaser": make_mask_mri_teaser_gif(),
         "mosaic": make_subject_mosaic(),
         "case_overlays": make_case_overlay_figure(),
         "diagram": make_methods_diagram(),

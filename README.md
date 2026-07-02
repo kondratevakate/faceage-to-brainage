@@ -20,12 +20,12 @@ This page is the clearest current artifact of the project. It frames a single-su
 ### Current Case Evidence
 
 <p align="center">
-  <img src="experiments/avatar_2026/project_page/assets/case_a_mask_overlays.jpg" alt="Primary case-subject photos with 3DDFA and MediaPipe mask overlays" width="880"/>
+  <img src="project_page/assets/case_a_mask_mri_teaser.gif" alt="Animated face-mask and MRI-mask teaser for the primary case subject" width="900"/>
 </p>
-<p align="center"><em>Primary case subject: repeated face photographs with 3DDFA and MediaPipe one-photo geometry baselines. These are qualitative alignment diagnostics, not identity-grade avatar results.</em></p>
+<p align="center"><em>Primary case subject: repeated face photographs with photo-derived face masks and an MRI-derived face target. These are qualitative alignment diagnostics, not identity-grade avatar results.</em></p>
 
 <p align="center">
-  <img src="experiments/avatar_2026/project_page/assets/mri_alignment_strip.jpg" alt="Photo-derived face geometry aligned to MRI-derived outer-head surface" width="760"/>
+  <img src="project_page/assets/mri_alignment_strip.jpg" alt="Photo-derived face geometry aligned to MRI-derived outer-head surface" width="760"/>
 </p>
 <p align="center"><em>MRI bridge: current landmark-constrained alignment preview between photo-derived face geometry and the MRI-derived outer-head surface.</em></p>
 
@@ -39,11 +39,11 @@ Current contribution:
 Primary entry points:
 
 - Project page: [https://kondratevakate.github.io/faceage-to-brainage/](https://kondratevakate.github.io/faceage-to-brainage/)
-- Local project-page source: [experiments/avatar_2026/project_page/index.html](experiments/avatar_2026/project_page/index.html)
-- Avatar experiment status: [experiments/avatar_2026/STATUS.md](experiments/avatar_2026/STATUS.md)
-- Metrics and label definitions: [experiments/avatar_2026/reports/METRICS_AND_LABELS.md](experiments/avatar_2026/reports/METRICS_AND_LABELS.md)
-- Twin/FaceAge literature context: [experiments/avatar_2026/reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md](experiments/avatar_2026/reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md)
-- Project-page generator: [experiments/avatar_2026/project_page/build_project_page.py](experiments/avatar_2026/project_page/build_project_page.py)
+- Local project-page source: [project_page/index.html](project_page/index.html)
+- Avatar page status: [project_page/STATUS.md](project_page/STATUS.md)
+- Metrics and label definitions: [project_page/METRICS_AND_LABELS.md](project_page/METRICS_AND_LABELS.md)
+- Twin/FaceAge literature context: [project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md](project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md)
+- Project-page generator: [project_page/build_project_page.py](project_page/build_project_page.py)
 
 Older/adjacent material:
 
@@ -58,9 +58,8 @@ The repository separates reusable methods from experiment-specific evidence:
 
 - `scripts/` contains reusable pipeline code.
 - `papers/` contains manuscript and literature context.
-- `experiments/avatar_2026/` contains the current claim-facing avatar case
-  study: public project page, curated visual assets, status notes, and metric
-  definitions.
+- `project_page/` contains the current claim-facing avatar article: public page,
+  curated visual assets, status notes, and metric definitions.
 - `notebooks/` is ignored by git. Notebooks are useful for exploration, but
   they are not treated as the scientific record unless explicitly curated.
 
@@ -167,8 +166,7 @@ See [papers/data/README.md](papers/data/README.md) for full download instruction
 
 ```text
 faceage-to-brainage/
-|-- experiments/
-|   `-- avatar_2026/       <- curated avatar case study: page, visuals, status, metrics
+|-- project_page/           <- curated avatar article: page, visuals, status, metrics
 |-- scripts/
 |   |-- photo_mri_avatar/  <- reusable photo/MRI avatar utilities
 |   |-- gap_correlation.py
@@ -198,12 +196,11 @@ faceage-to-brainage/
 `-- requirements.txt
 ```
 
-`experiments/` is reserved for named studies with a README, status file, and
-claim-facing outputs. It is scientific when it acts as an experiment ledger:
-scope, inputs, metrics, limitations, and public evidence are explicit.
-Intermediate crops, meshes, CSV dumps, MRI surfaces, notebooks, and internal
-control-subject artifacts stay local/ignored unless they are deliberately
-curated for release.
+`project_page/` is the public article source for the active avatar workstream.
+The local reconstruction workbench lives in ignored data folders, not in the
+public article tree. Intermediate crops, meshes, CSV dumps, MRI surfaces,
+notebooks, and internal control-subject artifacts stay local/ignored unless
+they are deliberately curated for release.
 
 ---
 
