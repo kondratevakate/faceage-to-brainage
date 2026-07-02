@@ -40,6 +40,10 @@ here. DECA is the most realistic next geometry baseline once FLAME
 conceptual target for a mesh+texture baseline, but no separate runnable MeshLAM
 checkout/weights are available locally yet.
 
+A privacy-minimal cloud bundle path is available locally:
+`data/avatar_2026_work/cloud_bundles/avatar_case_1_1_latest.zip`. It contains
+only the primary case crops, no internal controls and no MRI surfaces.
+
 ## Next Work
 
 1. Add robust surface metrics: directed Hausdorff, HD95, ASSD, Chamfer, and
@@ -47,5 +51,7 @@ checkout/weights are available locally yet.
 2. Add a stronger reconstruction baseline under the same metric contract:
    DECA/MICA/EMOCA for MRI geometry first, then LAM/GAGAvatar/MeshLAM for
    perceptual avatar quality on a CUDA machine.
-3. Keep public visuals case-only; keep internal controls non-public unless
+3. Use `scripts/photo_mri_avatar/CLOUD_RUNBOOK.md` for Colab/AWS transfer and
+   return outputs into `data/avatar_2026_work/photo_avatar_<method>/`.
+4. Keep public visuals case-only; keep internal controls non-public unless
    explicitly consented and curated.

@@ -7,6 +7,7 @@ the photo-vs-MRI pilot and what each method can actually prove.
 
 Last checked: 2026-07-02 with
 `scripts/photo_mri_avatar/sota_avatar_preflight.py`.
+Cloud transfer instructions are in `scripts/photo_mri_avatar/CLOUD_RUNBOOK.md`.
 
 Hardware/runtime finding: the current Windows environment has no visible
 `nvidia-smi`, and the project `.venv` does not have `torch` installed. Treat
