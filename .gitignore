@@ -73,3 +73,8 @@ vendor/SFCN/
 
 *.h5
 *renders*/
+
+# Local/private workstreams that should not define the public repo surface
+data/kate_n1_2026/
+docs/kate_n1_2026/
+experiments/kate_n1_2026/

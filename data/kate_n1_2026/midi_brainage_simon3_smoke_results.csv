@@ -1,4 +1,0 @@
-ID,chronological_age_years,predicted_age_years,brain_age_delta_years,status,input_path,project_name,notes
-SIMON_ses001_run1,29.7,37.24,7.54,ok,/mnt/d/data/fastserfer_simon/ses-001_run-1_T1w_orig.mgz,midi_smoke_simon3_patched,"Existing FastSurfer orig.mgz derivative, not raw BIDS source. Technical SIMON sanity check only."
-SIMON_ses002_run1,30.4,33.20,2.80,ok,/mnt/d/data/fastserfer_simon/ses-002_run-1_T1w_orig.mgz,midi_smoke_simon3_patched,"Existing FastSurfer orig.mgz derivative, not raw BIDS source. Technical SIMON sanity check only."
-SIMON_ses003_run1,32.2,35.22,3.02,ok,/mnt/d/data/fastserfer_simon/ses-003_run-1_T1w_orig.mgz,midi_smoke_simon3_patched,"Existing FastSurfer orig.mgz derivative, not raw BIDS source. Technical SIMON sanity check only."

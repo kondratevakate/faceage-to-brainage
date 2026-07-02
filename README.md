@@ -2,14 +2,42 @@
 
 **Does the face in your MRI scan know how old your brain is?**
 
-A proof-of-concept pipeline for paired face-age and brain-age estimation from the same non-defaced T1 MRI volume.
+A proof-of-concept project for linking facial aging signals, brain-age estimation, and MRI-grounded human-avatar evaluation.
 
 <p align="center">
   <img src="papers/midl2026/ex_render.png" alt="Multi-view MRI-derived face renders" width="540"/>
 </p>
 <p align="center"><em>Nine-view frontal renders extracted from a single T1 MRI via marching cubes. These are the inputs to the face branch.</em></p>
 
-Project page: [experiments/avatar_2026/project_page/index.html](experiments/avatar_2026/project_page/index.html) · Article draft: [papers/midl2026/midl-shortpaper.tex](papers/midl2026/midl-shortpaper.tex) · Pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio) · Literature: [papers/related_works/literature_review.md](papers/related_works/literature_review.md) · Datasets catalog: [DATASETS.md](DATASETS.md)
+## Current Focus: One-Photo Avatar Evaluation
+
+The active project page is:
+
+**[FaceAge-to-BrainAge: MRI-grounded evaluation of one-photo human avatars](experiments/avatar_2026/project_page/index.html)**
+
+This page is the clearest current artifact of the project. It frames a single-subject photo/MRI case study and asks whether one-photo facial avatars can be evaluated against an MRI-derived face surface rather than judged only by visual plausibility.
+
+Current contribution:
+
+- define a case-only visual project page with no public display of control subjects;
+- separate four claims that are often blurred together: geometry, perception, identity, and biological age;
+- establish a surface-distance evaluation contract for avatar-to-MRI comparison: alignment, masking, sampling, and reporting;
+- keep FaceAge/twin-study evidence as biological-age narrative context, not as proof that a one-photo avatar is biologically valid.
+
+Primary entry points:
+
+- Project page: [experiments/avatar_2026/project_page/index.html](experiments/avatar_2026/project_page/index.html)
+- Avatar experiment status: [experiments/avatar_2026/STATUS.md](experiments/avatar_2026/STATUS.md)
+- Metrics and label definitions: [experiments/avatar_2026/reports/METRICS_AND_LABELS.md](experiments/avatar_2026/reports/METRICS_AND_LABELS.md)
+- Twin/FaceAge literature context: [experiments/avatar_2026/reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md](experiments/avatar_2026/reports/TWIN_FACEAGE_LITERATURE_CONTEXT.md)
+- Project-page generator: [experiments/avatar_2026/project_page/build_project_page.py](experiments/avatar_2026/project_page/build_project_page.py)
+
+Older/adjacent material:
+
+- MRI face/brain-age article draft: [papers/midl2026/midl-shortpaper.tex](papers/midl2026/midl-shortpaper.tex)
+- MRI pipeline diagram: [pipeline.drawio](papers/midl2026/pipeline.drawio)
+- General literature review: [papers/related_works/literature_review.md](papers/related_works/literature_review.md)
+- Datasets catalog: [DATASETS.md](DATASETS.md)
 
 ---
 

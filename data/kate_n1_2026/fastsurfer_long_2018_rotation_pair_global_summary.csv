@@ -1,2 +1,0 @@
-method,scan_id,n_augments,shape,n_labels_including_background,foreground_union_voxels,hard_vote_foreground_voxels,mean_foreground_vote_fraction,mean_foreground_entropy_bits,augmentation_ids
-FastSurfer_Long_v2,kate_2018_t1,2,256x256x256,96,1087481,1070360,0.992128,0.015744,rotneg;rotpos
