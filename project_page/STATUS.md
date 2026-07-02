@@ -32,10 +32,20 @@ The current MRI comparison is a geometry sanity check. It needs better MRI face
 masks, anatomical landmarks, and posture-aware interpretation before any
 anatomical accuracy claim is made.
 
+SOTA avatar preflight was added on 2026-07-02. The current local machine does
+not expose an NVIDIA/CUDA runtime and the project environment does not yet have
+`torch`, so LAM/GAGAvatar-style Gaussian-avatar methods are not locally runnable
+here. DECA is the most realistic next geometry baseline once FLAME
+`generic_model.pkl` and `deca_model.tar` are provided. MeshLAM is the strongest
+conceptual target for a mesh+texture baseline, but no separate runnable MeshLAM
+checkout/weights are available locally yet.
+
 ## Next Work
 
 1. Add robust surface metrics: directed Hausdorff, HD95, ASSD, Chamfer, and
    regional masked distances.
-2. Add a stronger reconstruction baseline under the same metric contract.
+2. Add a stronger reconstruction baseline under the same metric contract:
+   DECA/MICA/EMOCA for MRI geometry first, then LAM/GAGAvatar/MeshLAM for
+   perceptual avatar quality on a CUDA machine.
 3. Keep public visuals case-only; keep internal controls non-public unless
    explicitly consented and curated.
