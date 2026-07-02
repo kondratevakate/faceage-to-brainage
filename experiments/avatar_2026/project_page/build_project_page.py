@@ -283,6 +283,57 @@ def make_consistency_chart() -> str:
     return "assets/consistency_separation_chart.png"
 
 
+def make_surface_metrics_figure() -> str:
+    w, h = 1360, 520
+    canvas = Image.new("RGB", (w, h), "#ffffff")
+    draw = ImageDraw.Draw(canvas)
+    draw.text((44, 34), "Surface-distance evaluation contract", fill="#0f172a", font=FONT_28_B)
+    draw.text(
+        (44, 78),
+        "Avatar quality is reported as a set of geometry diagnostics after a fixed alignment and masking protocol.",
+        fill="#475569",
+        font=FONT_20,
+    )
+
+    steps = [
+        ("1", "Align", "Landmark-seeded\nrigid/similarity fit", "#2563eb"),
+        ("2", "Mask", "Anterior face and\nstable anatomy", "#16a34a"),
+        ("3", "Sample", "Balanced surface\npoint sampling", "#db2777"),
+        ("4", "Report", "Median, p95, HD95,\nASSD, Chamfer", "#0f766e"),
+    ]
+    x0, y0 = 54, 150
+    box_w, box_h, gap = 250, 160, 58
+    for i, (num, title, body, color) in enumerate(steps):
+        x = x0 + i * (box_w + gap)
+        draw.rounded_rectangle((x, y0, x + box_w, y0 + box_h), radius=12, fill="#f8fafc", outline="#d7dde7", width=2)
+        draw.ellipse((x + 18, y0 + 20, x + 58, y0 + 60), fill=color)
+        draw.text((x + 33, y0 + 28), num, fill="#ffffff", font=FONT_18)
+        draw.text((x + 78, y0 + 24), title, fill="#111827", font=FONT_22_B)
+        draw.multiline_text((x + 78, y0 + 68), body, fill="#475569", font=FONT_16, spacing=6)
+        if i < len(steps) - 1:
+            ax = x + box_w + 12
+            ay = y0 + box_h // 2
+            draw.line((ax, ay, ax + gap - 24, ay), fill="#94a3b8", width=4)
+            draw.polygon([(ax + gap - 24, ay - 8), (ax + gap - 24, ay + 8), (ax + gap - 8, ay)], fill="#94a3b8")
+
+    metrics = [
+        ("Median", "typical surface error"),
+        ("p95 / HD95", "robust worst-case boundary"),
+        ("ASSD", "mean bidirectional surface distance"),
+        ("Chamfer", "dense point-set agreement"),
+    ]
+    y = 372
+    for i, (name, desc) in enumerate(metrics):
+        x = 66 + i * 315
+        draw.rounded_rectangle((x, y, x + 270, y + 86), radius=10, fill="#ffffff", outline="#d7dde7", width=2)
+        draw.text((x + 18, y + 16), name, fill="#0f172a", font=FONT_22_B)
+        draw.text((x + 18, y + 48), desc, fill="#64748b", font=FONT_16)
+
+    out = ASSETS / "surface_metrics_contract.png"
+    canvas.save(out, quality=94)
+    return "assets/surface_metrics_contract.png"
+
+
 def make_methods_diagram() -> str:
     w, h = 1360, 430
     canvas = Image.new("RGB", (w, h), "#f8fafc")
@@ -623,8 +674,8 @@ def html_page(assets: dict[str, str]) -> str:
           <div class="panel-body"><h3>MRI outer-head surface</h3><p class="caption">Current MRI-derived surface used for coarse face-to-head alignment.</p></div>
         </div>
         <div class="panel">
-          <img src="{assets['chart']}" alt="Internal consistency separation chart">
-          <div class="panel-body"><h3>Internal validation diagnostic</h3><p class="caption">Non-face diagnostic chart from the internal multi-subject validation set.</p></div>
+          <img src="{assets['surface_metrics']}" alt="Surface-distance evaluation contract">
+          <div class="panel-body"><h3>Surface-distance contract</h3><p class="caption">A readable metric scaffold for comparing avatar surfaces with MRI-derived face geometry.</p></div>
         </div>
       </div>
       <div class="callout">The earlier ~2.5 mm value is not a validated anatomical accuracy claim. It is a surface-distance baseline after landmark-seeded alignment and needs manual MRI landmarks or a controlled 3D face scan.</div>
@@ -702,11 +753,10 @@ def html_page(assets: dict[str, str]) -> str:
 def build() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
     assets = {
-        "teaser": make_pipeline_gif(),
         "mosaic": make_subject_mosaic(),
         "diagram": make_methods_diagram(),
         "turntable": make_mesh_turntable(),
-        "chart": make_consistency_chart(),
+        "surface_metrics": make_surface_metrics_figure(),
         "mri_qc": copy_asset(MRI / "kate_2018_qc.png", "kate_2018_qc.png"),
         "alignment": make_alignment_strip() or copy_asset(MRI / "kate_2018_qc.png", "mri_alignment_fallback.png"),
     }
