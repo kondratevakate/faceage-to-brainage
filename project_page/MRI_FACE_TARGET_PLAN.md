@@ -41,12 +41,27 @@ Before reporting any avatar-to-MRI distance, the MRI target must pass:
 Use the current photo-avatar outputs only as QC references. Build the MRI face
 target first:
 
-1. start from the T1 head/skin candidate surface;
-2. remove non-face regions with anatomical cropping anchored by manual or
-   semi-manual landmarks;
-3. add a small editable landmark file for each MRI;
-4. export a face-only PLY plus region labels;
-5. rerun metrics only after target QC passes.
+1. preferred: if a defaced copy exists in the same voxel grid, estimate the
+   face target from `original - defaced` and then keep only the external skin
+   shell;
+2. fallback: start from the T1 head/skin candidate surface and crop a face ROI
+   with anatomical landmarks;
+3. remove non-face regions with manual or semi-manual landmark review;
+4. add a small editable landmark file for each MRI;
+5. export a face-only NIfTI mask, PLY surface, and region labels;
+6. rerun metrics only after target QC passes.
+
+Current utility:
+
+```powershell
+D:\projects\02_academia\_external\.venvs\avatar_cpu_py311\Scripts\python.exe scripts\photo_mri_avatar\segment_mri_face_target.py `
+  --input path\to\original_T1.nii.gz `
+  --defaced path\to\defaced_T1.nii.gz `
+  --output-dir data\avatar_2026_work\mri_face_segmentation\case_id
+```
+
+If `--defaced` is omitted, the script falls back to the current coarse
+landmark/anterior-surface ROI and should be treated as a draft target only.
 
 Higher-quality avatar models such as LAM, MeshLAM, MICA, DECA, or EMOCA are
 still useful, but they should not be judged against a bad MRI target.

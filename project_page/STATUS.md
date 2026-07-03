@@ -43,6 +43,13 @@ The current MRI comparison is suspended as a public result. It needs better MRI
 face masks, anatomical landmarks, and posture-aware interpretation before any
 anatomical accuracy claim is made.
 
+MRI face-target utility added on 2026-07-03:
+`scripts/photo_mri_avatar/segment_mri_face_target.py`. The preferred mode is
+`original - defaced` if a defaced copy exists on the same voxel grid. A coarse
+surface-shell fallback was run locally for the 2018 Case A MRI:
+`data/avatar_2026_work/mri_face_segmentation/kate_2018_surface_shell_v2/`.
+This output is draft QC only, not a ground-truth target.
+
 SOTA avatar preflight was added on 2026-07-02. The current local machine does
 not expose an NVIDIA/CUDA runtime, so LAM/GAGAvatar-style Gaussian-avatar
 methods are not locally runnable here. A separate CPU-only avatar environment is
