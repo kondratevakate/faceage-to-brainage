@@ -12,8 +12,8 @@ The scientific question is deliberately narrow:
 
 - `index.html` - the public visual article page.
 - `assets/` - curated public visual assets.
-- `assets/case_a_photo_mri_visual_comparison.jpg` - the current primary
-  visual result: Case A photos, baseline masks, and MRI-on-photo proxy overlay.
+- `assets/case_a_mesh_mri_comparison.jpg` - the current primary visual result:
+  Case A photo-derived meshes compared with the MRI face-region surface.
 - `METRICS_AND_LABELS.md` - metric definitions and interpretation rules.
 - `TWIN_FACEAGE_LITERATURE_CONTEXT.md` - FaceAge/twin-study context.
 - `README.md` and `STATUS.md` - current scope and limitations.
@@ -41,9 +41,9 @@ Current outputs are calibration baselines. They establish detection, alignment,
 masking, and reporting conventions. They should not be described as
 identity-grade avatars or validated biological-age measurements.
 
-The MRI-on-photo overlay is a visual diagnostic. It is produced from automatic
-proxy landmarks and should be treated as an alignment scaffold, not as a
-validated anatomical projection.
+The MRI/photo mesh comparison is a visual diagnostic. It is produced from
+automatic proxy landmarks and a visual MRI face-region crop. Treat it as an
+alignment scaffold, not as a validated anatomical projection.
 
 The project page separates four claims that must not be collapsed:
 

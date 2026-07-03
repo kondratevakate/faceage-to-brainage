@@ -26,6 +26,20 @@ Main caveats:
   landmarks.
 - Similarity alignment can hide scale and shape errors.
 
+## Sample-Size Notation
+
+The current workspace contains several metric tables created at different
+pipeline stages. Their `n` values are not interchangeable:
+
+- public Case A visual evidence: `n=4` repeated photos;
+- current landmark-constrained crop batch: `n=9` crop-level meshes
+  (`1_1`: 4 crops, `2_1`: 5 crops);
+- older selected/free-ICP sanity checks: `n=3` selected meshes, retained only as
+  historical/internal diagnostics.
+
+When reporting results, state the unit next to `n`: photos, crop meshes,
+subject folders, or selected sanity-check meshes.
+
 ## Working Accuracy Tiers
 
 | Tier | Surface/landmark error | Meaning |

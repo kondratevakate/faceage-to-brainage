@@ -770,10 +770,10 @@ def html_page(assets: dict[str, str]) -> str:
 
   <section id="geometry">
     <h2>Geometry baseline</h2>
-    <p class="lead">3DDFA and MediaPipe are calibration baselines. The key result at this stage is not a finished avatar, but an inspectable comparison: the same Case A photos, the current one-photo face fits, and a proxy MRI face-cap projection placed back onto the photos.</p>
+    <p class="lead">3DDFA and MediaPipe are calibration baselines. The key result at this stage is not a finished avatar, but an inspectable 3D comparison: the current one-photo face mesh against the MRI-derived face-region surface.</p>
     <div class="panel" style="margin-bottom: 24px;">
-      <img src="{assets['visual_mri_comparison']}" alt="Case A photo baselines compared with MRI proxy projection">
-      <div class="panel-body"><h3>Photo-level MRI comparison</h3><p class="caption">Rows show input crops, 3DDFA, MediaPipe, and a proxy MRI face-cap overlay on the same photos. The red MRI layer is visual QC from automatic proxy landmarks, not camera-calibrated anatomical registration.</p></div>
+      <img src="{assets['mesh_mri_comparison']}" alt="Case A MRI face mesh compared with photo-derived face mesh">
+      <div class="panel-body"><h3>Mesh-level MRI comparison</h3><p class="caption">Blue shows a visually cropped MRI face-region surface. Orange shows the photo-derived 3DDFA mesh after landmark-constrained alignment. This replaces the misleading 2D MRI-on-photo overlay.</p></div>
     </div>
     <div class="grid-2">
       <div class="panel">
@@ -886,7 +886,7 @@ def build() -> None:
         "mri_qc": copy_asset(MRI / "kate_2018_qc.png", "kate_2018_qc.png"),
         "alignment": make_alignment_strip() or copy_asset(MRI / "kate_2018_qc.png", "mri_alignment_fallback.png"),
     }
-    assets["visual_mri_comparison"] = existing_asset_or("case_a_photo_mri_visual_comparison.jpg", assets["case_overlays"])
+    assets["mesh_mri_comparison"] = existing_asset_or("case_a_mesh_mri_comparison.jpg", assets["case_overlays"])
     (PAGE / "index.html").write_text(html_page(assets), encoding="utf-8")
     print(PAGE / "index.html")
 
