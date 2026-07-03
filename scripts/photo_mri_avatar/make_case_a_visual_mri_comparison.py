@@ -18,7 +18,7 @@ from typing import Iterable
 
 import numpy as np
 import trimesh
-from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 
 LANDMARKS = ["nose_tip", "chin", "brow_center", "left_cheek", "right_cheek"]
@@ -106,6 +106,27 @@ def apply_2d(points: np.ndarray, r: np.ndarray, scale: float, t: np.ndarray) -> 
     return (scale * (r @ points.T)).T + t
 
 
+def photo_face_roi(photo_lm: dict[str, np.ndarray], image_size: tuple[int, int]) -> tuple[Image.Image, tuple[float, float, float, float]]:
+    image_w, image_h = image_size
+    left_cheek = photo_lm["left_cheek"]
+    right_cheek = photo_lm["right_cheek"]
+    brow = photo_lm["brow_center"]
+    chin = photo_lm["chin"]
+
+    cheek_width = max(abs(float(right_cheek[0] - left_cheek[0])), 1.0)
+    face_height = max(abs(float(chin[1] - brow[1])), cheek_width * 1.12, 1.0)
+    center_x = float((left_cheek[0] + right_cheek[0]) / 2.0)
+    roi_w = max(cheek_width * 2.05, face_height * 0.78)
+    left = max(-20.0, center_x - roi_w / 2.0)
+    right = min(float(image_w) + 20.0, center_x + roi_w / 2.0)
+    top = max(-20.0, float(brow[1]) - 0.22 * face_height)
+    bottom = min(float(image_h) + 20.0, float(chin[1]) + 0.12 * face_height)
+
+    roi = Image.new("L", image_size, 0)
+    ImageDraw.Draw(roi).ellipse((left, top, right, bottom), fill=255)
+    return roi, (left, right, top, bottom)
+
+
 def mri_proxy_landmarks(mri_points: np.ndarray) -> dict[str, np.ndarray]:
     x, y, z = mri_points[:, 0], mri_points[:, 1], mri_points[:, 2]
     x_center = np.median(x)
@@ -175,6 +196,7 @@ def draw_mri_on_photo(
     base = ImageOps.exif_transpose(Image.open(crop_path)).convert("RGB")
     image_w, image_h = base.size
     photo_lm = photo_landmarks_2d(ply_path, bfm_ids, image_h)
+    roi_mask, roi_bounds = photo_face_roi(photo_lm, base.size)
     mri_lm = mri_landmarks_2d(mri_landmarks, swap_lr=True)
     r, scale, t = similarity_2d(
         np.vstack([mri_lm[name] for name in FIT_LANDMARKS]),
@@ -182,30 +204,21 @@ def draw_mri_on_photo(
     )
 
     cap_photo = apply_2d(mri_front_cap_2d(mri_points), r, scale, t)
-    lm_bounds = np.vstack([photo_lm[name] for name in LANDMARKS])
-    lm_min = lm_bounds.min(axis=0)
-    lm_max = lm_bounds.max(axis=0)
-    lm_span = np.maximum(lm_max - lm_min, np.array([1.0, 1.0]))
-    face_bounds = (
-        lm_min[0] - 0.42 * lm_span[0],
-        lm_max[0] + 0.42 * lm_span[0],
-        lm_min[1] - 0.55 * lm_span[1],
-        lm_max[1] + 0.35 * lm_span[1],
-    )
+    left, right, top, bottom = roi_bounds
     cap_photo = cap_photo[
-        (cap_photo[:, 0] >= max(-40, face_bounds[0]))
-        & (cap_photo[:, 0] <= min(image_w + 40, face_bounds[1]))
-        & (cap_photo[:, 1] >= max(-40, face_bounds[2]))
-        & (cap_photo[:, 1] <= min(image_h + 40, face_bounds[3]))
+        (cap_photo[:, 0] >= left)
+        & (cap_photo[:, 0] <= right)
+        & (cap_photo[:, 1] >= top)
+        & (cap_photo[:, 1] <= bottom)
     ]
     lm_photo = {name: apply_2d(mri_lm[name].reshape(1, 2), r, scale, t)[0] for name in LANDMARKS}
 
     mask = Image.new("L", base.size, 0)
     draw_mask = ImageDraw.Draw(mask)
     for x, y in cap_photo:
-        draw_mask.ellipse((x - 3, y - 3, x + 3, y + 3), fill=42)
-    mask = mask.filter(ImageFilter.GaussianBlur(4))
-    mask = mask.point(lambda v: min(135, int(v * 2.6)))
+        draw_mask.ellipse((x - 2, y - 2, x + 2, y + 2), fill=38)
+    mask = ImageChops.multiply(mask.filter(ImageFilter.GaussianBlur(3)), roi_mask)
+    mask = mask.point(lambda v: min(105, int(v * 2.2)))
 
     color = Image.new("RGB", base.size, "#ef4444")
     blended = Image.composite(color, base, mask)
