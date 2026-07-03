@@ -88,6 +88,12 @@ def copy_asset(src: Path, name: str) -> str:
     return f"assets/{name}"
 
 
+def existing_asset_or(name: str, fallback: str) -> str:
+    if (ASSETS / name).exists():
+        return f"assets/{name}"
+    return fallback
+
+
 def make_pipeline_gif() -> str:
     groups = grouped_crops()
     selected = groups.get(PUBLIC_GROUP, [])[:3]
@@ -764,7 +770,11 @@ def html_page(assets: dict[str, str]) -> str:
 
   <section id="geometry">
     <h2>Geometry baseline</h2>
-    <p class="lead">3DDFA and MediaPipe are calibration baselines. Their role is to make the evaluation harness explicit before comparing higher-fidelity reconstruction families under identical alignment, masking, and reporting rules.</p>
+    <p class="lead">3DDFA and MediaPipe are calibration baselines. The key result at this stage is not a finished avatar, but an inspectable comparison: the same Case A photos, the current one-photo face fits, and a proxy MRI face-cap projection placed back onto the photos.</p>
+    <div class="panel" style="margin-bottom: 24px;">
+      <img src="{assets['visual_mri_comparison']}" alt="Case A photo baselines compared with MRI proxy projection">
+      <div class="panel-body"><h3>Photo-level MRI comparison</h3><p class="caption">Rows show input crops, 3DDFA, MediaPipe, and a proxy MRI face-cap overlay on the same photos. The red MRI layer is visual QC from automatic proxy landmarks, not camera-calibrated anatomical registration.</p></div>
+    </div>
     <div class="grid-2">
       <div class="panel">
         <img src="{assets['turntable']}" alt="Animated 3D point-cloud turntable for the single-subject case study">
@@ -876,6 +886,7 @@ def build() -> None:
         "mri_qc": copy_asset(MRI / "kate_2018_qc.png", "kate_2018_qc.png"),
         "alignment": make_alignment_strip() or copy_asset(MRI / "kate_2018_qc.png", "mri_alignment_fallback.png"),
     }
+    assets["visual_mri_comparison"] = existing_asset_or("case_a_photo_mri_visual_comparison.jpg", assets["case_overlays"])
     (PAGE / "index.html").write_text(html_page(assets), encoding="utf-8")
     print(PAGE / "index.html")
 

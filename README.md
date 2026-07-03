@@ -20,6 +20,11 @@ This page is the clearest current artifact of the project. It frames a single-su
 ### Current Case Evidence
 
 <p align="center">
+  <img src="project_page/assets/case_a_photo_mri_visual_comparison.jpg" alt="Case A photo baselines compared against MRI proxy projection" width="900"/>
+</p>
+<p align="center"><em>Primary case subject: same photos, current 3DDFA/MediaPipe one-photo baselines, and an automatic MRI face-cap proxy projected back onto the photos. This is visual QC, not camera-calibrated anatomical registration.</em></p>
+
+<p align="center">
   <img src="project_page/assets/case_a_mask_mri_teaser.gif" alt="Animated face-mask and MRI-mask teaser for the primary case subject" width="900"/>
 </p>
 <p align="center"><em>Primary case subject: repeated face photographs with photo-derived face masks and an MRI-derived face target. These are qualitative alignment diagnostics, not identity-grade avatar results.</em></p>
@@ -44,6 +49,7 @@ Primary entry points:
 - Metrics and label definitions: [project_page/METRICS_AND_LABELS.md](project_page/METRICS_AND_LABELS.md)
 - Twin/FaceAge literature context: [project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md](project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md)
 - Project-page generator: [project_page/build_project_page.py](project_page/build_project_page.py)
+- MRI-on-photo visual comparison generator: [scripts/photo_mri_avatar/make_case_a_visual_mri_comparison.py](scripts/photo_mri_avatar/make_case_a_visual_mri_comparison.py)
 
 Older/adjacent material:
 

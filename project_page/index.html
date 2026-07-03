@@ -297,7 +297,11 @@
 
   <section id="geometry">
     <h2>Geometry baseline</h2>
-    <p class="lead">3DDFA and MediaPipe are calibration baselines. Their role is to make the evaluation harness explicit before comparing higher-fidelity reconstruction families under identical alignment, masking, and reporting rules.</p>
+    <p class="lead">3DDFA and MediaPipe are calibration baselines. The key result at this stage is not a finished avatar, but an inspectable comparison: the same Case A photos, the current one-photo face fits, and a proxy MRI face-cap projection placed back onto the photos.</p>
+    <div class="panel" style="margin-bottom: 24px;">
+      <img src="assets/case_a_photo_mri_visual_comparison.jpg" alt="Case A photo baselines compared with MRI proxy projection">
+      <div class="panel-body"><h3>Photo-level MRI comparison</h3><p class="caption">Rows show input crops, 3DDFA, MediaPipe, and a proxy MRI face-cap overlay on the same photos. The red MRI layer is visual QC from automatic proxy landmarks, not camera-calibrated anatomical registration.</p></div>
+    </div>
     <div class="grid-2">
       <div class="panel">
         <img src="assets/kate_mesh_turntable.gif" alt="Animated 3D point-cloud turntable for the single-subject case study">
