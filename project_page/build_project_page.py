@@ -88,12 +88,6 @@ def copy_asset(src: Path, name: str) -> str:
     return f"assets/{name}"
 
 
-def existing_asset_or(name: str, fallback: str) -> str:
-    if (ASSETS / name).exists():
-        return f"assets/{name}"
-    return fallback
-
-
 def make_pipeline_gif() -> str:
     groups = grouped_crops()
     selected = groups.get(PUBLIC_GROUP, [])[:3]
@@ -721,17 +715,18 @@ def html_page(assets: dict[str, str]) -> str:
     <div class="button-row">
       <a class="button primary" href="#abstract">Abstract</a>
       <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/blob/main/project_page/METRICS_AND_LABELS.md">Report</a>
+      <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/blob/main/project_page/MRI_FACE_TARGET_PLAN.md">MRI Target</a>
       <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/tree/main/scripts/photo_mri_avatar">Code</a>
       <a class="button" href="#geometry">Results</a>
       <a class="button" href="https://github.com/kondratevakate/faceage-to-brainage/blob/main/project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md">Literature</a>
     </div>
-    <div class="tldr"><strong>TL;DR:</strong> This project asks whether a one-photo facial avatar can be evaluated against the same subject's MRI-derived face surface, rather than judged only by appearance. The page defines the first evaluation contract: photo reconstruction, MRI bridge, surface metrics, and biological-age interpretation kept as separate claims.</div>
+    <div class="tldr"><strong>TL;DR:</strong> This project asks whether a one-photo facial avatar can eventually be evaluated against the same subject's MRI-derived face surface. Current photo-avatar preprocessing is usable for QC; the MRI face segmentation target is the active blocker.</div>
     <div class="hero-media">
       <img src="{assets['mask_mri_teaser']}" alt="Animated Case A face-mask and MRI-mask teaser">
     </div>
     <div class="metrics">
       <div class="metric"><div class="num">4</div><div class="label">case-study photographs</div></div>
-      <div class="metric"><div class="num">1</div><div class="label">paired MRI-derived face surface</div></div>
+      <div class="metric"><div class="num">1</div><div class="label">MRI target under revision</div></div>
       <div class="metric"><div class="num">2</div><div class="label">calibration baselines</div></div>
       <div class="metric"><div class="num">4</div><div class="label">separate claims: geometry, perception, identity, age</div></div>
     </div>
@@ -758,7 +753,7 @@ def html_page(assets: dict[str, str]) -> str:
   <section class="band" id="method">
     <div class="inner">
       <h2>Pipeline</h2>
-      <p class="lead">The method page formalizes the evaluation loop: standardize photos, estimate one-photo face geometry, align to an MRI-derived outer-head surface, and report geometry separately from perception and biological-age interpretation.</p>
+      <p class="lead">The method page formalizes the evaluation loop: standardize photos, estimate one-photo face geometry, build a reliable MRI face target, and report geometry separately from perception and biological-age interpretation.</p>
       <div class="panel"><img src="{assets['diagram']}" alt="Pipeline diagram"></div>
       <div class="three" style="margin-top: 18px;">
         <div class="mini"><h3>Visual plausibility</h3><p>Does the overlay look reasonable on the input image?</p></div>
@@ -770,11 +765,8 @@ def html_page(assets: dict[str, str]) -> str:
 
   <section id="geometry">
     <h2>Geometry baseline</h2>
-    <p class="lead">3DDFA and MediaPipe are calibration baselines. The key result at this stage is not a finished avatar, but an inspectable 3D comparison: the current one-photo face mesh against the MRI-derived face-region surface.</p>
-    <div class="panel" style="margin-bottom: 24px;">
-      <img src="{assets['mesh_mri_comparison']}" alt="Case A MRI face mesh compared with photo-derived face mesh">
-      <div class="panel-body"><h3>Mesh-level MRI comparison</h3><p class="caption">Blue shows a visually cropped MRI face-region surface. Orange shows the photo-derived 3DDFA mesh after landmark-constrained alignment. This replaces the misleading 2D MRI-on-photo overlay.</p></div>
-    </div>
+    <p class="lead">3DDFA and MediaPipe are calibration baselines for the photo-avatar side. They are usable for crop, landmark, and rough mesh QC. Avatar-to-MRI accuracy is currently blocked by MRI face segmentation quality, so no public MRI-overlay result is reported here.</p>
+    <div class="callout" style="margin-bottom: 24px;">Current blocker: the MRI-derived face surface is not yet a reliable facial skin target. The next valid comparison needs improved MRI face segmentation before Hausdorff, ASSD, Chamfer, or visual overlay claims are meaningful.</div>
     <div class="grid-2">
       <div class="panel">
         <img src="{assets['turntable']}" alt="Animated 3D point-cloud turntable for the single-subject case study">
@@ -790,7 +782,7 @@ def html_page(assets: dict[str, str]) -> str:
   <section class="band">
     <div class="inner">
       <h2>MRI bridge</h2>
-      <p class="lead">MRI comparison is useful, but posture and soft tissue matter. Supine MRI and upright photos should not be treated as the same facial surface in eyelids, cheeks, jawline, or submental regions.</p>
+      <p class="lead">MRI comparison is the right validation direction, but the current MRI face segmentation is not good enough to serve as ground truth. Supine MRI and upright photos also differ in posture and soft tissue state, so the target must be built and QC'd before distance metrics are meaningful.</p>
       <div class="grid-2">
         <div class="panel">
           <img src="{assets['mri_qc']}" alt="MRI outer-head surface quality control">
@@ -801,7 +793,7 @@ def html_page(assets: dict[str, str]) -> str:
           <div class="panel-body"><h3>Surface-distance contract</h3><p class="caption">A readable metric scaffold for comparing avatar surfaces with MRI-derived face geometry.</p></div>
         </div>
       </div>
-      <div class="callout">The earlier ~2.5 mm value is not a validated anatomical accuracy claim. It is a surface-distance baseline after landmark-seeded alignment and needs manual MRI landmarks or a controlled 3D face scan.</div>
+      <div class="callout">MRI target status: blocked. The earlier ~2.5 mm value is not a validated anatomical accuracy claim. It came from a rough surface-distance sanity check and should not be treated as avatar accuracy until MRI face segmentation and landmark QC pass.</div>
     </div>
   </section>
 
@@ -886,7 +878,6 @@ def build() -> None:
         "mri_qc": copy_asset(MRI / "kate_2018_qc.png", "kate_2018_qc.png"),
         "alignment": make_alignment_strip() or copy_asset(MRI / "kate_2018_qc.png", "mri_alignment_fallback.png"),
     }
-    assets["mesh_mri_comparison"] = existing_asset_or("case_a_mesh_mri_comparison.jpg", assets["case_overlays"])
     (PAGE / "index.html").write_text(html_page(assets), encoding="utf-8")
     print(PAGE / "index.html")
 

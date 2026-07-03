@@ -60,6 +60,10 @@ For tissue ptosis and posture-sensitive tissue, use stricter regional metrics:
 
 ## Surface-Distance Contract
 
+Do not report avatar-to-MRI distances as project results until the MRI target
+passes a segmentation QC gate. Current automatic MRI face segmentation is not
+yet a reliable facial skin surface.
+
 For each reconstruction baseline, report:
 
 1. Alignment policy:

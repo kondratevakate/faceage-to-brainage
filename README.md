@@ -20,9 +20,9 @@ This page is the clearest current artifact of the project. It frames a single-su
 ### Current Case Evidence
 
 <p align="center">
-  <img src="project_page/assets/case_a_mesh_mri_comparison.jpg" alt="Case A MRI face mesh compared against photo-derived face mesh" width="900"/>
+  <img src="project_page/assets/case_a_mask_overlays.jpg" alt="Case A input crops with 3DDFA and MediaPipe mask overlays" width="900"/>
 </p>
-<p align="center"><em>Primary case subject: MRI face-region surface points compared with photo-derived 3DDFA meshes after landmark-constrained alignment. This is 3D visual QC, not a validated anatomical accuracy claim.</em></p>
+<p align="center"><em>Primary case subject: repeated face photographs with current photo-avatar preprocessing baselines. The avatar side is usable for QC; the MRI face target is currently rejected until segmentation is improved.</em></p>
 
 <p align="center">
   <img src="project_page/assets/case_a_mask_mri_teaser.gif" alt="Animated face-mask and MRI-mask teaser for the primary case subject" width="900"/>
@@ -46,10 +46,10 @@ Primary entry points:
 - Project page: [https://kondratevakate.github.io/faceage-to-brainage/](https://kondratevakate.github.io/faceage-to-brainage/)
 - Local project-page source: [project_page/index.html](project_page/index.html)
 - Avatar page status: [project_page/STATUS.md](project_page/STATUS.md)
+- MRI face target plan: [project_page/MRI_FACE_TARGET_PLAN.md](project_page/MRI_FACE_TARGET_PLAN.md)
 - Metrics and label definitions: [project_page/METRICS_AND_LABELS.md](project_page/METRICS_AND_LABELS.md)
 - Twin/FaceAge literature context: [project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md](project_page/TWIN_FACEAGE_LITERATURE_CONTEXT.md)
 - Project-page generator: [project_page/build_project_page.py](project_page/build_project_page.py)
-- Mesh-level MRI/photo comparison generator: [scripts/photo_mri_avatar/make_case_a_mesh_mri_comparison.py](scripts/photo_mri_avatar/make_case_a_mesh_mri_comparison.py)
 
 Older/adjacent material:
 
