@@ -1,0 +1,2 @@
+dataset,subject_id,session,scan_id,chronological_age_years,input,mask_source,preprocessing_level,evidence_role,notes
+kate_n1_2026,kate,2018,kate_2018_t1_hdbet,,/mnt/d/YandexDisk/kondratevakate/01_insidekatesbrain/01_my_brain_years/reprocessed_2026/foundation_models/neurofm_hdbet_inputs/kate_2018_t1_hdbet.nii.gz,HD_BET_2.0.1_cpu_disable_tta,raw_t1w_hdbet_skull_stripped,application_qc_only,Primary 2018 structural T1-like input; NeuroFM docs require skull-stripped T1w and internally conform to 1mm/LIA.
