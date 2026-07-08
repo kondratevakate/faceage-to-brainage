@@ -14,8 +14,10 @@ Scientific guard: NeuroFM brain-health outputs are model outputs for a foundatio
 - TensorFlow 2.13.0 and NeuroFM 1.0.3 are installed there.
 - The upstream docs/model card require skull-stripped T1w NIfTI input; NeuroFM internally conforms resolution/orientation.
 - The model card states that the model is not suitable for skull-on inputs or populations substantially outside the 40-90 year range.
-- Kate 2018 primary T1 was skull-stripped with HD-BET 2.0.1 CPU, `--disable_tta`, producing:
-  - `/mnt/d/YandexDisk/kondratevakate/01_insidekatesbrain/01_my_brain_years/reprocessed_2026/foundation_models/neurofm_hdbet_inputs/kate_2018_t1_hdbet.nii.gz`
+- Kate T1-like candidates were skull-stripped with HD-BET 2.0.1 CPU, `--disable_tta`.
+  - result: 5/5 ready inputs
+  - candidates: 2018 T1, 2022 T1, 2024 3DI, 2024 FFE 401, 2024 FFE 601
+  - manifest: `experiments/kate_n1_2026/neurofm_kate_hdbet_inputs.csv`
   - status: `data/kate_n1_2026/neurofm_kate_hdbet_preprocessing_status.csv`
 - NeuroFM inference did not produce a brain-age estimate because the official `NeuroAI-UofG/NeuroFM` Hugging Face weights are gated. The unauthenticated `neurofm-s.h5` download returned 401.
 - No fake checkpoint or substitute weight was created.
@@ -35,7 +37,7 @@ Scientific guard: NeuroFM brain-health outputs are model outputs for a foundatio
 
 ## Next Command
 
-After accepting access and placing official `neurofm-s.h5` outside git:
+After accepting access and placing official `neurofm-s.h5` outside git, run Kate:
 
 ```bash
 cd /mnt/d/projects/02_academia/faceage-to-brainage
