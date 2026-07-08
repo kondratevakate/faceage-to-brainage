@@ -25,6 +25,7 @@ LIMIT="${LIMIT:-0}"
 INFER_FASTSURFER_LABEL="${INFER_FASTSURFER_LABEL:-0}"
 OVERWRITE_MASKED_INPUTS="${OVERWRITE_MASKED_INPUTS:-0}"
 PREPARE_MASKED_INPUTS="${PREPARE_MASKED_INPUTS:-1}"
+PREPARE_ONLY="${PREPARE_ONLY:-0}"
 MIN_FREE_GB="${MIN_FREE_GB:-20}"
 ALLOW_LOW_DISK="${ALLOW_LOW_DISK:-0}"
 
@@ -74,13 +75,19 @@ else
   INPUT_MANIFEST_RESOLVED="$SOURCE_MANIFEST"
 fi
 
-resolved_count="$(awk 'END {print NR > 0 ? NR - 1 : 0}' "$INPUT_MANIFEST_RESOLVED")"
+resolved_count="$(awk 'END {print (NR > 0 ? NR - 1 : 0)}' "$INPUT_MANIFEST_RESOLVED")"
 if [[ "$resolved_count" -lt 1 ]]; then
   echo "No NeuroFM-ready inputs in: $INPUT_MANIFEST_RESOLVED" >&2
   if [[ "$PREPARE_MASKED_INPUTS" == "1" ]]; then
     echo "See preprocessing status: $INPUT_STATUS_CSV" >&2
   fi
   exit 4
+fi
+
+if [[ "$PREPARE_ONLY" == "1" ]]; then
+  echo "Prepared ${resolved_count} NeuroFM-ready input(s): $INPUT_MANIFEST_RESOLVED"
+  echo "PREPARE_ONLY=1, skipping NeuroFM model inference."
+  exit 0
 fi
 
 weights_arg=()
