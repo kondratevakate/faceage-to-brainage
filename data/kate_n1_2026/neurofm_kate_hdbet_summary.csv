@@ -1,0 +1,2 @@
+summary_id,n_rows,n_predictions,n_with_chronological_age,mean_predicted_brain_age_years,min_predicted_brain_age_years,max_predicted_brain_age_years,mae_years,bias_years_pred_minus_chron,rmse_years,pearson_r,claim_level,interpretation
+neurofm_kate_hdbet_predictions,5,5,0,53.3578,45.9739,64.5316,,,,,application_branch_not_validation_claim,"NeuroFM run on a skull-stripped, mask-derived application branch. This is not validation evidence for Kate brain age or segmentation quality."

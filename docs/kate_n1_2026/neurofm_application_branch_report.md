@@ -1,66 +1,84 @@
 # NeuroFM Application Branch Status
 
-Date: 2026-07-06
+Date: 2026-07-09
 
 ## Scope
 
 This branch uses the user-requested repository `https://github.com/rockNroll87q/NeuroFM`, not the earlier `peirong26/BrainFM` feature-only branch. The local clone is `D:\projects\02_academia\_external\NeuroFM` at commit `d4e3c463910d939a681d24ebdeb26d44dea6878f` (`v1.0.3`).
 
-Scientific guard: NeuroFM brain-health outputs are model outputs for a foundation-model application branch. They do not prove segmentation quality, morphometric validity, or individual clinical brain health.
+Scientific guard: NeuroFM brain-health outputs are model outputs for a foundation-model application/QC branch. They do not prove segmentation quality, morphometric validity, individual clinical brain health, or Kate's biological brain age.
 
-## Facts
+## Weights
 
-- NeuroFM code was installed in an isolated WSL environment: `/home/kate/.venvs/neurofm_py311`.
-- TensorFlow 2.13.0 and NeuroFM 1.0.3 are installed there.
-- The upstream docs/model card require skull-stripped T1w NIfTI input; NeuroFM internally conforms resolution/orientation.
-- The model card states that the model is not suitable for skull-on inputs or populations substantially outside the 40-90 year range.
-- Kate T1-like candidates were skull-stripped with HD-BET 2.0.1 CPU, `--disable_tta`.
-  - result: 5/5 ready inputs
-  - candidates: 2018 T1, 2022 T1, 2024 3DI, 2024 FFE 401, 2024 FFE 601
-  - manifest: `experiments/kate_n1_2026/neurofm_kate_hdbet_inputs.csv`
-  - status: `data/kate_n1_2026/neurofm_kate_hdbet_preprocessing_status.csv`
-- NeuroFM inference did not produce a brain-age estimate because the official `NeuroAI-UofG/NeuroFM` Hugging Face weights are gated. The unauthenticated `neurofm-s.h5` download returned 401.
-- No fake checkpoint or substitute weight was created.
-- SIMON FastSurfer-mask preprocessing was prepared as a future labeled sanity branch:
-  - source: 94 visible `*_orig.mgz` internal source images under `D:\data\fastserfer_simon`
-  - mask source: matching `*_aparcDKT+aseg.mgz` label maps where available
-  - result: 87/94 NeuroFM-ready masked NIfTI inputs
-  - status: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_input_status.csv`
-  - resolved inputs: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_inputs_resolved.csv`
+Official `neurofm-s.h5` was downloaded from `https://huggingface.co/NeuroAI-UofG/NeuroFM` after gated access acceptance.
 
-## Blockers
+- local path: `D:\projects\02_academia\_external\NeuroFM\.cache\neurofm-s.h5`
+- WSL path: `/mnt/d/projects/02_academia/_external/NeuroFM/.cache/neurofm-s.h5`
+- size: `2055816` bytes
+- SHA256: `8015a0552214b87e43b5462b6c183f8d0da2d957d7ae11ed09a2e3355f5e991f`
+- git policy: weights remain outside git
 
-1. Official weights require accepting Hugging Face model conditions/authentication.
-2. The previous BrainChop-mask input branch is unavailable in the current data root because the referenced `tissue_fast` NIfTI files are missing.
-3. The SIMON FastSurfer-mask branch is partial: 7/94 rows lack matching `aparcDKT+aseg.mgz` labels.
-4. Even after weights are available, Kate/SIMON ages below 40 would be outside NeuroFM's documented age range, so results must be treated as application/QC output until calibrated against labeled data.
+## Kate HD-BET Run
 
-## Next Command
+Inputs were skull-stripped with HD-BET 2.0.1 CPU, `--disable_tta`, and run through NeuroFM-S on CPU with `--output-mode summary` and `outputs=brain_health`.
 
-After accepting access and placing official `neurofm-s.h5` outside git, run Kate:
+Artifacts:
 
-```bash
-cd /mnt/d/projects/02_academia/faceage-to-brainage
-export NEUROFM_WEIGHTS=/mnt/d/projects/02_academia/_external/NeuroFM/weights_cache/neurofm-s.h5
-export PREPARE_MASKED_INPUTS=0
-export SOURCE_MANIFEST=/mnt/d/projects/02_academia/faceage-to-brainage/experiments/kate_n1_2026/neurofm_kate_hdbet_inputs.csv
-export PREDICTIONS_CSV=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_kate_hdbet_predictions.csv
-export SUMMARY_CSV=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_kate_hdbet_summary.csv
-export METADATA_JSON=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_kate_hdbet_metadata.json
-bash experiments/kate_n1_2026/run_neurofm_local.sh
-```
+- manifest: `experiments/kate_n1_2026/neurofm_kate_hdbet_inputs.csv`
+- preprocessing status: `data/kate_n1_2026/neurofm_kate_hdbet_preprocessing_status.csv`
+- predictions: `data/kate_n1_2026/neurofm_kate_hdbet_predictions.csv`
+- summary: `data/kate_n1_2026/neurofm_kate_hdbet_summary.csv`
+- metadata: `data/kate_n1_2026/neurofm_kate_hdbet_metadata.json`
+- external NeuroFM summary: `D:\YandexDisk\kondratevakate\01_insidekatesbrain\01_my_brain_years\reprocessed_2026\foundation_models\neurofm_kate_hdbet\results\results_summary.csv`
 
-Do not commit raw MRI, HD-BET NIfTI outputs, NeuroFM weights, logs, or caches.
+Results:
 
-For the prepared SIMON branch after weights are available:
+| scan_id | predicted_brain_age_years | predicted_sex_binary |
+|---|---:|---:|
+| `kate_2018_t1_hdbet` | 52.5202 | 0.0 |
+| `kate_2022_t1_hdbet` | 64.5316 | 0.0 |
+| `kate_2024_3di_hdbet` | 51.4625 | 1.0 |
+| `kate_2024_t1_ffe_401_hdbet` | 45.9739 | 0.0 |
+| `kate_2024_t1_ffe_601_hdbet` | 52.3006 | 0.0 |
 
-```bash
-cd /mnt/d/projects/02_academia/faceage-to-brainage
-export NEUROFM_WEIGHTS=/mnt/d/projects/02_academia/_external/NeuroFM/weights_cache/neurofm-s.h5
-export PREPARE_MASKED_INPUTS=0
-export SOURCE_MANIFEST=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_simon_fastsurfer_mask_inputs_resolved.csv
-export PREDICTIONS_CSV=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv
-export SUMMARY_CSV=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_simon_fastsurfer_mask_summary.csv
-export METADATA_JSON=/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_simon_fastsurfer_mask_metadata.json
-bash experiments/kate_n1_2026/run_neurofm_local.sh
-```
+Summary: 5/5 completed; mean predicted brain age `53.3578`, min `45.9739`, max `64.5316`. No chronological-age field is available in this manifest, so no accuracy metric is computed for Kate. The predicted-sex inconsistency across Kate protocols, especially the 2024 3DI branch differing from the other four inputs, is a QC/protocol-sensitivity signal.
+
+## SIMON FastSurfer-Mask Run
+
+SIMON was run as a derivative sanity/domain-risk branch, not as raw validation. Inputs are existing `*_orig.mgz` internal source images multiplied by matching `*_aparcDKT+aseg.mgz > 0` masks where available.
+
+Artifacts:
+
+- preprocessing status: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_input_status.csv`
+- resolved inputs: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_inputs_resolved.csv`
+- predictions: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv`
+- summary: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_summary.csv`
+- metadata: `data/kate_n1_2026/neurofm_simon_fastsurfer_mask_metadata.json`
+- external NeuroFM summary: `D:\YandexDisk\kondratevakate\01_insidekatesbrain\01_my_brain_years\reprocessed_2026\foundation_models\neurofm_simon_fastsurfer_mask\results\results_summary.csv`
+
+Input preparation: 87/94 visible SIMON rows were usable. Seven rows lacked matching `aparcDKT+aseg.mgz` label maps.
+
+Results against chronological ages:
+
+- completed: 87/87
+- chronological age range: 29.69-46.41 years
+- predicted brain age range: 68.8255-87.1781 years
+- mean predicted brain age: 80.9927 years
+- MAE: 37.1518 years
+- bias, predicted minus chronological: +37.1518 years
+- RMSE: 37.4354 years
+- Pearson r: 0.057847
+- predicted sex counts: 83 rows `0.0`, 4 rows `1.0`
+
+Interpretation: this is a strong negative sanity check for using NeuroFM-S as a brain-age estimator on the SIMON FastSurfer-mask derivative branch. It does not support reporting Kate's brain age from NeuroFM.
+
+## Critical Limitations
+
+1. NeuroFM documentation/model card is oriented to skull-stripped T1w input and a 40-90 year population. Much of SIMON, and likely Kate depending on date, is outside or near the lower edge of that range.
+2. Kate inputs are heterogeneous across acquisition/protocol, and NeuroFM logged internal resampling warnings for the Kate HD-BET inputs.
+3. SIMON is not raw scanner-native validation here; it is a FastSurfer internal-source plus label-mask derivative branch.
+4. NeuroFM `brain_health` outputs are model estimates. They are not segmentation outputs, morphometric validation, or clinical evidence.
+
+## Decision
+
+Keep NeuroFM as a foundation-model application/QC branch only. Do not use the Kate NeuroFM numbers as a biological age claim. For a brain-age claim, require an adult-calibrated model with documented preprocessing and a labeled sanity branch that passes before applying it to Kate.
