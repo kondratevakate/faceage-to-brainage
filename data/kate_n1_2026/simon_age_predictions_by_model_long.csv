@@ -1,0 +1,476 @@
+model_branch,scan_id,chronological_age_years,predicted_age_years,prediction_minus_chronological_years,source_file,interpretation_note
+BrainIAC app-style years (/12),ses-001_run-1_T1w,29.69,3.73949,-25.9505,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-002_run-1_T1w,30.43,3.7598,-26.6702,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-003_run-1_T1w,32.18,3.725,-28.455,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-004_run-1_T1w,34.52,4.21547,-30.3045,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-005_run-1_T1w,37.91,4.1332,-33.7768,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-005_run-2_T1w,37.91,4.52993,-33.3801,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-005_run-3_T1w,37.91,4.06362,-33.8464,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-006_run-1_T1w,37.91,4.20218,-33.7078,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-006_run-2_T1w,37.91,4.08865,-33.8213,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-007_run-1_T1w,38.18,4.03026,-34.1497,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-008_run-1_T1w,38.81,4.45262,-34.3574,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-009_run-1_T1w,38.81,3.97657,-34.8334,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-010_run-1_T1w,40.6,3.95173,-36.6483,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-011_run-1_T1w,42.35,4.14508,-38.2049,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-011_run-2_T1w,42.35,4.14943,-38.2006,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-012_run-1_T1w,42.35,4.30019,-38.0498,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-013_run-1_T1w,42.35,4.08252,-38.2675,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-014_run-1_T1w,42.35,4.3696,-37.9804,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-015_run-1_T1w,42.35,4.87222,-37.4778,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-016_run-1_T1w,42.35,4.24784,-38.1022,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-017_run-1_T1w,42.35,4.08283,-38.2672,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-018_run-1_T1w,42.7,3.87088,-38.8291,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-019_run-1_T1w,42.7,4.06129,-38.6387,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-020,42.7,3.89222,-38.8078,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-021_run-1_T1w,42.7,3.91944,-38.7806,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-022,42.7,3.76928,-38.9307,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-023_run-1_T1w,43.27,4.26809,-39.0019,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-024,43.27,3.69154,-39.5785,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-025_run-1_T1w,43.27,4.23852,-39.0315,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-026_run-1_T1w,43.27,3.80732,-39.4627,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-027_run-1_T1w,43.27,4.33087,-38.9391,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-028_run-1_T1w,43.27,6.26802,-37.002,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-029_acq-T1Cube_run-1_T1w,43.83,3.60651,-40.2235,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-029_acq-dirWMCube_run-1_T1w,43.83,3.47421,-40.3558,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-029_run-1_T1w,43.83,3.62995,-40.2001,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-029_run-2_T1w,43.83,3.63545,-40.1946,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-030_acq-32channel_run-2_T1w,43.83,3.80568,-40.0243,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-030_acq-32channel_run-3_T1w,43.83,3.81718,-40.0128,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-030_run-1_T1w,43.83,3.75344,-40.0766,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-031_run-1_T1w,43.83,4.24559,-39.5844,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-032_acq-08iso_run-2_T1w,43.83,4.49368,-39.3363,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-032_acq-10iso_run-1_T1w,43.83,4.45309,-39.3769,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-033_acq-08iso_run-2_T1w,43.83,4.52572,-39.3043,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-033_acq-10iso_run-1_T1w,43.83,4.53039,-39.2996,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-034_acq-08iso_run-1_T1w,43.83,4.6568,-39.1732,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-035_run-1_T1w,44.81,3.81761,-40.9924,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-036,44.81,4.11306,-40.6969,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-037_run-1_T1w,44.81,3.61122,-41.1988,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-038_run-1_T1w,44.81,4.25168,-40.5583,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-039_run-1_T1w,44.81,4.24556,-40.5644,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-040_run-1_T1w,44.81,4.56901,-40.241,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-041_run-1_T1w,44.81,3.81462,-40.9954,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-042_run-1_T1w,44.81,3.58554,-41.2245,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-042_run-2_T1w,44.81,5.47077,-39.3392,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-043_run-1_T1w,44.81,4.4845,-40.3255,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-044_run-1_T1w,45.17,4.32884,-40.8412,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-044_run-2_T1w,45.17,4.24006,-40.9299,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-044_run-3_T1w,45.17,3.87492,-41.2951,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-045_run-1_T1w,45.17,4.23299,-40.937,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-045_run-2_T1w,45.17,4.04765,-41.1223,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-046_run-1_T1w,45.17,3.99181,-41.1782,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-046_run-2_T1w,45.17,4.54495,-40.6251,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-046_run-3_T1w,45.17,4.10843,-41.0616,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-047_run-1_T1w,45.17,4.18245,-40.9876,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-048_acq-transverse_run-3_T1w,45.17,4.00988,-41.1601,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-048_run-1_T1w,45.17,3.46262,-41.7074,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-048_run-2_T1w,45.17,4.58662,-40.5834,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-049_run-1_T1w,45.17,4.41817,-40.7518,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-050_run-1_T1w,45.17,4.68386,-40.4861,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-051_run-1_T1w,45.17,4.20031,-40.9697,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-051_run-2_T1w,45.17,4.16017,-41.0098,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-052_run-1_T1w,45.44,4.31165,-41.1284,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-053_run-1_T1w,45.44,3.69498,-41.745,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-054_run-1_T1w,45.44,3.69866,-41.7413,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-055_run-1_T1w,45.94,3.96616,-41.9738,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-056_run-1_T1w,45.94,3.99192,-41.9481,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-057_run-1_T1w,46.41,4.42187,-41.9881,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-058_run-1_T1w,46.41,4.74425,-41.6658,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-059,46.41,4.62349,-41.7865,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-060_run-1_T1w,46.41,3.74367,-42.6663,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-061_run-1_T1w,46.41,4.84667,-41.5633,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-061_run-2_T1w,46.41,4.56234,-41.8477,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-062_run-1_T1w,46.41,4.26663,-42.1434,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-063_run-1_T1w,46.41,3.87587,-42.5341,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-064_run-1_T1w,46.41,4.86596,-41.544,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-065,46.41,4.54761,-41.8624,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-066_run-1_T1w,46.41,3.70395,-42.7061,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-067_run-1_T1w,46.41,4.47701,-41.933,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-068_run-1_T1w,46.41,4.86218,-41.5478,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-069_run-1_T1w,46.41,4.59244,-41.8176,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-070_run-1_T1w,46.41,3.69747,-42.7125,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-071_run-1_T1w,46.41,3.82617,-42.5838,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-072_run-1_T1w,46.41,3.83426,-42.5757,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC app-style years (/12),ses-073_run-1_T1w,46.41,3.70453,-42.7055,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,BrainIAC Space display-style conversion; unit ambiguity branch.
+BrainIAC raw output as years,ses-001_run-1_T1w,29.69,44.8739,15.1839,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-002_run-1_T1w,30.43,45.1176,14.6876,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-003_run-1_T1w,32.18,44.7,12.52,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-004_run-1_T1w,34.52,50.5856,16.0656,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-005_run-1_T1w,37.91,49.5985,11.6885,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-005_run-2_T1w,37.91,54.3591,16.4491,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-005_run-3_T1w,37.91,48.7635,10.8535,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-006_run-1_T1w,37.91,50.4262,12.5162,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-006_run-2_T1w,37.91,49.0638,11.1538,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-007_run-1_T1w,38.18,48.3631,10.1831,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-008_run-1_T1w,38.81,53.4315,14.6215,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-009_run-1_T1w,38.81,47.7189,8.90886,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-010_run-1_T1w,40.6,47.4207,6.82072,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-011_run-1_T1w,42.35,49.741,7.39099,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-011_run-2_T1w,42.35,49.7931,7.44311,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-012_run-1_T1w,42.35,51.6023,9.25231,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-013_run-1_T1w,42.35,48.9902,6.64021,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-014_run-1_T1w,42.35,52.4352,10.0852,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-015_run-1_T1w,42.35,58.4667,16.1167,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-016_run-1_T1w,42.35,50.974,8.62405,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-017_run-1_T1w,42.35,48.994,6.64401,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-018_run-1_T1w,42.7,46.4506,3.75058,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-019_run-1_T1w,42.7,48.7355,6.03552,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-020,42.7,46.7066,4.00662,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-021_run-1_T1w,42.7,47.0333,4.33326,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-022,42.7,45.2314,2.53138,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-023_run-1_T1w,43.27,51.2171,7.94714,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-024,43.27,44.2985,1.0285,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-025_run-1_T1w,43.27,50.8622,7.59221,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-026_run-1_T1w,43.27,45.6879,2.41786,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-027_run-1_T1w,43.27,51.9704,8.70044,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-028_run-1_T1w,43.27,75.2162,31.9462,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-029_acq-T1Cube_run-1_T1w,43.83,43.2782,-0.551832,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-029_acq-dirWMCube_run-1_T1w,43.83,41.6905,-2.13946,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-029_run-1_T1w,43.83,43.5594,-0.270632,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-029_run-2_T1w,43.83,43.6253,-0.204657,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-030_acq-32channel_run-2_T1w,43.83,45.6682,1.83817,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-030_acq-32channel_run-3_T1w,43.83,45.8061,1.97615,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-030_run-1_T1w,43.83,45.0412,1.21124,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-031_run-1_T1w,43.83,50.9471,7.11705,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-032_acq-08iso_run-2_T1w,43.83,53.9241,10.0941,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-032_acq-10iso_run-1_T1w,43.83,53.4371,9.6071,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-033_acq-08iso_run-2_T1w,43.83,54.3087,10.4787,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-033_acq-10iso_run-1_T1w,43.83,54.3647,10.5347,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-034_acq-08iso_run-1_T1w,43.83,55.8815,12.0515,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-035_run-1_T1w,44.81,45.8113,1.00131,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-036,44.81,49.3567,4.54667,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-037_run-1_T1w,44.81,43.3347,-1.47534,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-038_run-1_T1w,44.81,51.0202,6.2102,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-039_run-1_T1w,44.81,50.9468,6.13675,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-040_run-1_T1w,44.81,54.8282,10.0182,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-041_run-1_T1w,44.81,45.7754,0.965444,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-042_run-1_T1w,44.81,43.0265,-1.78355,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-042_run-2_T1w,44.81,65.6492,20.8392,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-043_run-1_T1w,44.81,53.814,9.00402,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-044_run-1_T1w,45.17,51.9461,6.77611,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-044_run-2_T1w,45.17,50.8807,5.71074,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-044_run-3_T1w,45.17,46.499,1.329,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-045_run-1_T1w,45.17,50.7958,5.62583,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-045_run-2_T1w,45.17,48.5718,3.40183,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-046_run-1_T1w,45.17,47.9017,2.7317,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-046_run-2_T1w,45.17,54.5394,9.36938,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-046_run-3_T1w,45.17,49.3012,4.13119,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-047_run-1_T1w,45.17,50.1894,5.01938,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-048_acq-transverse_run-3_T1w,45.17,48.1186,2.94855,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-048_run-1_T1w,45.17,41.5515,-3.61852,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-048_run-2_T1w,45.17,55.0394,9.86938,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-049_run-1_T1w,45.17,53.018,7.84801,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-050_run-1_T1w,45.17,56.2063,11.0363,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-051_run-1_T1w,45.17,50.4037,5.23373,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-051_run-2_T1w,45.17,49.922,4.75201,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-052_run-1_T1w,45.44,51.7397,6.29974,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-053_run-1_T1w,45.44,44.3397,-1.10026,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-054_run-1_T1w,45.44,44.3839,-1.0561,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-055_run-1_T1w,45.94,47.5939,1.65392,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-056_run-1_T1w,45.94,47.9031,1.9631,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-057_run-1_T1w,46.41,53.0625,6.65247,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-058_run-1_T1w,46.41,56.931,10.521,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-059,46.41,55.4818,9.07182,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-060_run-1_T1w,46.41,44.924,-1.486,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-061_run-1_T1w,46.41,58.16,11.75,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-061_run-2_T1w,46.41,54.7481,8.33807,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-062_run-1_T1w,46.41,51.1996,4.78956,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-063_run-1_T1w,46.41,46.5104,0.100384,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-064_run-1_T1w,46.41,58.3915,11.9815,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-065,46.41,54.5714,8.16137,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-066_run-1_T1w,46.41,44.4474,-1.9626,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-067_run-1_T1w,46.41,53.7242,7.31417,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-068_run-1_T1w,46.41,58.3462,11.9362,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-069_run-1_T1w,46.41,55.1093,8.69928,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-070_run-1_T1w,46.41,44.3697,-2.04033,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-071_run-1_T1w,46.41,45.914,-0.496006,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-072_run-1_T1w,46.41,46.0111,-0.398892,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+BrainIAC raw output as years,ses-073_run-1_T1w,46.41,44.4544,-1.9556,data/kate_n1_2026/brainiac_brainage_predictions_simon_fastsurfer_orig.csv,Diagnostic raw-output-as-years view; conflicts with Space display convention.
+MIDIBrainAge stratified-12,ses-001_run-1_T1w,29.69,37.6,7.91,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-008_run-1_T1w,38.81,38.92,0.11,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-014_run-1_T1w,42.35,37.6,-4.75,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-021_run-1_T1w,42.7,37.54,-5.16,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-027_run-1_T1w,43.27,37.9,-5.37,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-034_acq-08iso_run-1_T1w,43.83,30.98,-12.85,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-040_run-1_T1w,44.81,39.04,-5.77,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-047_run-1_T1w,45.17,32.7,-12.47,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-053_run-1_T1w,45.44,37.96,-7.48,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-060_run-1_T1w,46.41,27.06,-19.35,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-066_run-1_T1w,46.41,30.9,-15.51,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge stratified-12,ses-073_run-1_T1w,46.41,35.22,-11.19,data/kate_n1_2026/midi_brainage_simon_stratified12_predictions.csv,12-case stratified sanity subset.
+MIDIBrainAge all-orig,ses-001_run-1_T1w,29.69,37.6,7.91,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-008_run-1_T1w,38.81,38.92,0.11,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-014_run-1_T1w,42.35,37.6,-4.75,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-021_run-1_T1w,42.7,37.54,-5.16,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-027_run-1_T1w,43.27,37.9,-5.37,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-034_acq-08iso_run-1_T1w,43.83,30.98,-12.85,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-040_run-1_T1w,44.81,39.04,-5.77,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-047_run-1_T1w,45.17,32.7,-12.47,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-053_run-1_T1w,45.44,37.96,-7.48,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-060_run-1_T1w,46.41,27.06,-19.35,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-066_run-1_T1w,46.41,30.9,-15.51,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-073_run-1_T1w,46.41,35.22,-11.19,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-002_run-1_T1w,30.43,33.1,2.67,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-003_run-1_T1w,32.18,35.16,2.98,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-004_run-1_T1w,34.52,43.82,9.3,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-005_run-1_T1w,37.91,32.64,-5.27,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-005_run-2_T1w,37.91,38.68,0.77,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-005_run-3_T1w,37.91,30.94,-6.97,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-006_run-1_T1w,37.91,31.18,-6.73,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-006_run-2_T1w,37.91,30.12,-7.79,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-007_run-1_T1w,38.18,34.4,-3.78,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-009_run-1_T1w,38.81,30.48,-8.33,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-010_run-1_T1w,40.6,30.9,-9.7,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-011_run-1_T1w,42.35,36.56,-5.79,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-011_run-2_T1w,42.35,37.14,-5.21,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-012_run-1_T1w,42.35,32.82,-9.53,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-013_run-1_T1w,42.35,36.68,-5.67,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-015_run-1_T1w,42.35,37.38,-4.97,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-016_run-1_T1w,42.35,34.96,-7.39,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-017_run-1_T1w,42.35,37.36,-4.99,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-018_run-1_T1w,42.7,36.86,-5.84,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-019_run-1_T1w,42.7,36.58,-6.12,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-020,42.7,35.14,-7.56,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-022,42.7,34.66,-8.04,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-023_run-1_T1w,43.27,34.58,-8.69,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-024,43.27,30.9,-12.37,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-025_run-1_T1w,43.27,35.64,-7.63,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-026_run-1_T1w,43.27,34.08,-9.19,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-028_run-1_T1w,43.27,23.54,-19.73,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-029_acq-T1Cube_run-1_T1w,43.83,45.16,1.33,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-029_acq-dirWMCube_run-1_T1w,43.83,41.64,-2.19,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-029_run-1_T1w,43.83,38.54,-5.29,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-029_run-2_T1w,43.83,37.9,-5.93,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-030_acq-32channel_run-2_T1w,43.83,35.58,-8.25,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-030_acq-32channel_run-3_T1w,43.83,33.8,-10.03,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-030_run-1_T1w,43.83,33.84,-9.99,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-031_run-1_T1w,43.83,36.14,-7.69,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-032_acq-08iso_run-2_T1w,43.83,34.4,-9.43,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-032_acq-10iso_run-1_T1w,43.83,31.32,-12.51,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-033_acq-08iso_run-2_T1w,43.83,36.28,-7.55,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-033_acq-10iso_run-1_T1w,43.83,33.94,-9.89,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-035_run-1_T1w,44.81,36.52,-8.29,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-036,44.81,36.46,-8.35,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-037_run-1_T1w,44.81,33.26,-11.55,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-038_run-1_T1w,44.81,37.64,-7.17,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-039_run-1_T1w,44.81,37.22,-7.59,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-041_run-1_T1w,44.81,37.76,-7.05,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-042_run-1_T1w,44.81,32.94,-11.87,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-042_run-2_T1w,44.81,28.38,-16.43,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-043_run-1_T1w,44.81,35.64,-9.17,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-044_run-1_T1w,45.17,36.8,-8.37,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-044_run-2_T1w,45.17,37.98,-7.19,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-044_run-3_T1w,45.17,38.34,-6.83,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-045_run-1_T1w,45.17,32.1,-13.07,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-045_run-2_T1w,45.17,33.06,-12.11,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-046_run-1_T1w,45.17,31.66,-13.51,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-046_run-2_T1w,45.17,33.76,-11.41,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-046_run-3_T1w,45.17,29.76,-15.41,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-048_acq-transverse_run-3_T1w,45.17,32.92,-12.25,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-048_run-1_T1w,45.17,31.94,-13.23,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-048_run-2_T1w,45.17,31.28,-13.89,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-049_run-1_T1w,45.17,26.56,-18.61,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-050_run-1_T1w,45.17,34.74,-10.43,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-051_run-1_T1w,45.17,35.74,-9.43,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-051_run-2_T1w,45.17,32.58,-12.59,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-052_run-1_T1w,45.44,33.26,-12.18,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-054_run-1_T1w,45.44,27.94,-17.5,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-055_run-1_T1w,45.94,39.68,-6.26,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-056_run-1_T1w,45.94,35.8,-10.14,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-057_run-1_T1w,46.41,33.66,-12.75,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-058_run-1_T1w,46.41,28.96,-17.45,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-059,46.41,35.88,-10.53,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-061_run-1_T1w,46.41,40.28,-6.13,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-061_run-2_T1w,46.41,39.04,-7.37,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-062_run-1_T1w,46.41,34.98,-11.43,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-063_run-1_T1w,46.41,34.12,-12.29,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-064_run-1_T1w,46.41,41.04,-5.37,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-065,46.41,38.14,-8.27,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-067_run-1_T1w,46.41,34.38,-12.03,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-068_run-1_T1w,46.41,34.36,-12.05,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-069_run-1_T1w,46.41,34.76,-11.65,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-070_run-1_T1w,46.41,32.24,-14.17,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-071_run-1_T1w,46.41,39.1,-7.31,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+MIDIBrainAge all-orig,ses-072_run-1_T1w,46.41,41.86,-4.55,data/kate_n1_2026/midi_brainage_simon_all_orig_predictions.csv,All visible FastSurfer orig.mgz derivative branch.
+NeuroFM FastSurfer mask,ses-001_run-1_T1w,29.69,83.9293,54.2393,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-002_run-1_T1w,30.43,85.2554,54.8254,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-003_run-1_T1w,32.18,84.4979,52.3179,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-006_run-1_T1w,37.91,75.9606,38.0506,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-006_run-2_T1w,37.91,77.4969,39.5869,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-007_run-1_T1w,38.18,81.8197,43.6397,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-009_run-1_T1w,38.81,73.1309,34.3209,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-010_run-1_T1w,40.6,72.9645,32.3645,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-011_run-1_T1w,42.35,81.8922,39.5422,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-011_run-2_T1w,42.35,81.0936,38.7436,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-012_run-1_T1w,42.35,74.8626,32.5126,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-013_run-1_T1w,42.35,80.0544,37.7044,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-014_run-1_T1w,42.35,80.4432,38.0932,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-015_run-1_T1w,42.35,82.4198,40.0698,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-016_run-1_T1w,42.35,81.1841,38.8341,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-017_run-1_T1w,42.35,82.1941,39.8441,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-018_run-1_T1w,42.7,80.0842,37.3842,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-019_run-1_T1w,42.7,79.3932,36.6932,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-020,42.7,79.5396,36.8396,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-021_run-1_T1w,42.7,82.413,39.713,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-022,42.7,80.837,38.137,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-023_run-1_T1w,43.27,83.0048,39.7348,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-024,43.27,75.1567,31.8867,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-025_run-1_T1w,43.27,80.7765,37.5065,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-026_run-1_T1w,43.27,81.6911,38.4211,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-027_run-1_T1w,43.27,81.7624,38.4924,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-028_run-1_T1w,43.27,77.544,34.274,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-029_run-1_T1w,43.83,69.257,25.427,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-029_run-2_T1w,43.83,68.8255,24.9955,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-030_acq-32channel_run-2_T1w,43.83,80.4573,36.6273,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-030_acq-32channel_run-3_T1w,43.83,78.0209,34.1909,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-030_run-1_T1w,43.83,78.5015,34.6715,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-031_run-1_T1w,43.83,82.9523,39.1223,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-032_acq-08iso_run-2_T1w,43.83,82.4464,38.6164,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-032_acq-10iso_run-1_T1w,43.83,83.545,39.715,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-033_acq-08iso_run-2_T1w,43.83,84.1343,40.3043,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-033_acq-10iso_run-1_T1w,43.83,83.9565,40.1265,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-034_acq-08iso_run-1_T1w,43.83,83.2263,39.3963,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-035_run-1_T1w,44.81,81.3032,36.4932,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-036,44.81,83.3684,38.5584,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-037_run-1_T1w,44.81,85.9363,41.1263,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-038_run-1_T1w,44.81,79.6942,34.8842,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-039_run-1_T1w,44.81,84.6879,39.8779,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-040_run-1_T1w,44.81,83.8008,38.9908,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-041_run-1_T1w,44.81,80.4871,35.6771,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-042_run-1_T1w,44.81,76.1957,31.3857,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-042_run-2_T1w,44.81,74.0326,29.2226,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-043_run-1_T1w,44.81,81.8195,37.0095,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-044_run-1_T1w,45.17,83.2097,38.0397,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-044_run-2_T1w,45.17,84.1231,38.9531,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-044_run-3_T1w,45.17,81.2769,36.1069,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-045_run-1_T1w,45.17,83.1234,37.9534,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-045_run-2_T1w,45.17,85.2566,40.0866,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-046_run-1_T1w,45.17,82.1968,37.0268,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-046_run-2_T1w,45.17,82.6141,37.4441,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-046_run-3_T1w,45.17,83.2656,38.0956,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-047_run-1_T1w,45.17,83.1448,37.9748,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-048_acq-transverse_run-3_T1w,45.17,84.4551,39.2851,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-048_run-1_T1w,45.17,79.5429,34.3729,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-048_run-2_T1w,45.17,84.3103,39.1403,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-049_run-1_T1w,45.17,80.3827,35.2127,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-050_run-1_T1w,45.17,78.7254,33.5554,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-051_run-1_T1w,45.17,83.1076,37.9376,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-051_run-2_T1w,45.17,83.3068,38.1368,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-052_run-1_T1w,45.44,79.5671,34.1271,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-053_run-1_T1w,45.44,80.5095,35.0695,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-054_run-1_T1w,45.44,78.717,33.277,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-055_run-1_T1w,45.94,82.8901,36.9501,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-056_run-1_T1w,45.94,85.3114,39.3714,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-057_run-1_T1w,46.41,82.0685,35.6585,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-058_run-1_T1w,46.41,80.2145,33.8045,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-059,46.41,87.1781,40.7681,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-060_run-1_T1w,46.41,75.6129,29.2029,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-061_run-1_T1w,46.41,83.6194,37.2094,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-061_run-2_T1w,46.41,81.9433,35.5333,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-062_run-1_T1w,46.41,81.7415,35.3315,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-063_run-1_T1w,46.41,85.8997,39.4897,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-064_run-1_T1w,46.41,82.1283,35.7183,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-065,46.41,81.5578,35.1478,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-066_run-1_T1w,46.41,72.9513,26.5413,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-067_run-1_T1w,46.41,81.5825,35.1725,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-068_run-1_T1w,46.41,80.2232,33.8132,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-069_run-1_T1w,46.41,83.155,36.745,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-070_run-1_T1w,46.41,77.8619,31.4519,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-071_run-1_T1w,46.41,83.8701,37.4601,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-072_run-1_T1w,46.41,83.0573,36.6473,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM FastSurfer mask,ses-073_run-1_T1w,46.41,84.6156,38.2056,data/kate_n1_2026/neurofm_simon_fastsurfer_mask_predictions.csv,Mask-derived skull-stripped branch; application/QC only.
+NeuroFM raw-orig all-94,ses-001_run-1_T1w,29.69,58.0371,28.3471,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-002_run-1_T1w,30.43,65.228,34.798,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-003_run-1_T1w,32.18,59.8697,27.6897,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-004_run-1_T1w,34.52,82.5496,48.0296,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-005_run-1_T1w,37.91,87.2691,49.3591,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-005_run-2_T1w,37.91,84.8833,46.9733,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-005_run-3_T1w,37.91,90.5833,52.6733,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-006_run-1_T1w,37.91,74.1447,36.2347,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-006_run-2_T1w,37.91,77.018,39.108,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-007_run-1_T1w,38.18,85.4494,47.2694,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-008_run-1_T1w,38.81,88.9055,50.0955,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-009_run-1_T1w,38.81,72.0002,33.1902,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-010_run-1_T1w,40.6,68.1139,27.5139,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-011_run-1_T1w,42.35,78.1744,35.8244,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-011_run-2_T1w,42.35,82.4668,40.1168,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-012_run-1_T1w,42.35,72.2557,29.9057,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-013_run-1_T1w,42.35,82.2478,39.8978,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-014_run-1_T1w,42.35,80.5237,38.1737,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-015_run-1_T1w,42.35,75.815,33.465,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-016_run-1_T1w,42.35,82.2779,39.9279,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-017_run-1_T1w,42.35,83.4857,41.1357,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-018_run-1_T1w,42.7,81.5796,38.8796,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-019_run-1_T1w,42.7,82.9485,40.2485,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-020,42.7,80.6457,37.9457,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-021_run-1_T1w,42.7,84.8536,42.1536,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-022,42.7,76.7536,34.0536,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-023_run-1_T1w,43.27,70.4655,27.1955,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-024,43.27,50.1406,6.87057,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-025_run-1_T1w,43.27,85.2185,41.9485,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-026_run-1_T1w,43.27,80.3143,37.0443,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-027_run-1_T1w,43.27,78.6482,35.3782,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-028_run-1_T1w,43.27,79.1803,35.9103,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-029_acq-T1Cube_run-1_T1w,43.83,84.3327,40.5027,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-029_acq-dirWMCube_run-1_T1w,43.83,69.4285,25.5985,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-029_run-1_T1w,43.83,64.8299,20.9999,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-029_run-2_T1w,43.83,63.9628,20.1328,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-030_acq-32channel_run-2_T1w,43.83,83.9014,40.0714,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-030_acq-32channel_run-3_T1w,43.83,83.1454,39.3154,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-030_run-1_T1w,43.83,78.3827,34.5527,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-031_run-1_T1w,43.83,76.9222,33.0922,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-032_acq-08iso_run-2_T1w,43.83,75.2123,31.3823,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-032_acq-10iso_run-1_T1w,43.83,81.3916,37.5616,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-033_acq-08iso_run-2_T1w,43.83,73.5509,29.7209,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-033_acq-10iso_run-1_T1w,43.83,79.086,35.256,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-034_acq-08iso_run-1_T1w,43.83,79.1285,35.2985,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-035_run-1_T1w,44.81,88.7166,43.9066,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-036,44.81,70.0605,25.2505,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-037_run-1_T1w,44.81,85.9966,41.1866,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-038_run-1_T1w,44.81,90.7587,45.9487,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-039_run-1_T1w,44.81,79.6598,34.8498,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-040_run-1_T1w,44.81,74.9326,30.1226,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-041_run-1_T1w,44.81,89.7118,44.9018,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-042_run-1_T1w,44.81,79.5869,34.7769,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-042_run-2_T1w,44.81,73.0502,28.2402,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-043_run-1_T1w,44.81,70.8248,26.0148,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-044_run-1_T1w,45.17,80.7031,35.5331,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-044_run-2_T1w,45.17,79.4497,34.2797,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-044_run-3_T1w,45.17,76.9256,31.7556,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-045_run-1_T1w,45.17,78.5263,33.3563,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-045_run-2_T1w,45.17,81.0597,35.8897,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-046_run-1_T1w,45.17,80.9435,35.7735,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-046_run-2_T1w,45.17,80.3745,35.2045,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-046_run-3_T1w,45.17,76.1495,30.9795,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-047_run-1_T1w,45.17,75.4441,30.2741,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-048_acq-transverse_run-3_T1w,45.17,91.7619,46.5919,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-048_run-1_T1w,45.17,67.4145,22.2445,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-048_run-2_T1w,45.17,74.3939,29.2239,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-049_run-1_T1w,45.17,65.0053,19.8353,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-050_run-1_T1w,45.17,73.4141,28.2441,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-051_run-1_T1w,45.17,83.3229,38.1529,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-051_run-2_T1w,45.17,85.6508,40.4808,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-052_run-1_T1w,45.44,80.3718,34.9318,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-053_run-1_T1w,45.44,71.4397,25.9997,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-054_run-1_T1w,45.44,81.7158,36.2758,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-055_run-1_T1w,45.94,82.8389,36.8989,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-056_run-1_T1w,45.94,86.8857,40.9457,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-057_run-1_T1w,46.41,65.0548,18.6448,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-058_run-1_T1w,46.41,74.6057,28.1957,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-059,46.41,81.6741,35.2641,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-060_run-1_T1w,46.41,79.1525,32.7425,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-061_run-1_T1w,46.41,74.2159,27.8059,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-061_run-2_T1w,46.41,72.1582,25.7482,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-062_run-1_T1w,46.41,76.623,30.213,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-063_run-1_T1w,46.41,79.5706,33.1606,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-064_run-1_T1w,46.41,74.4521,28.0421,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-065,46.41,70.3621,23.9521,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-066_run-1_T1w,46.41,76.1739,29.7639,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-067_run-1_T1w,46.41,64.106,17.696,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-068_run-1_T1w,46.41,79.4885,33.0785,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-069_run-1_T1w,46.41,69.6525,23.2425,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-070_run-1_T1w,46.41,78.5041,32.0941,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-071_run-1_T1w,46.41,88.2846,41.8746,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-072_run-1_T1w,46.41,71.999,25.589,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
+NeuroFM raw-orig all-94,ses-073_run-1_T1w,46.41,81.6926,35.2826,data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv,Non-skull-stripped all-orig stress branch; application/QC only.
