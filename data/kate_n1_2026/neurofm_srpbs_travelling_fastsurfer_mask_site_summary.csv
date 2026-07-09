@@ -1,0 +1,17 @@
+dataset,branch,site,n_subjects,n,age_min_years,age_max_years,predicted_age_mean_years,predicted_age_sd_years,predicted_age_min_years,predicted_age_max_years,predicted_age_range_years,brain_age_delta_mean_years,mae_years,rmse_years,pearson_r,interpretation
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteATTd1,9,9,24,32,83.5747,2.66777,77.4175,87.1339,9.71637,56.5747,56.5747,56.6366,0.431728,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteATTd2,9,9,24,32,83.5747,2.66777,77.4175,87.1339,9.71637,56.5747,56.5747,56.6366,0.431728,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteATTd3,8,8,25,32,83.6594,2.83902,77.4175,87.1339,9.71637,56.2844,56.2844,56.3476,0.435216,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteATTd4,9,9,24,32,83.5747,2.66777,77.4175,87.1339,9.71637,56.5747,56.5747,56.6366,0.431728,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteATTd5,9,9,24,32,83.5747,2.66777,77.4175,87.1339,9.71637,56.5747,56.5747,56.6366,0.431728,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteATV,9,9,24,32,83.5747,2.66777,77.4175,87.1339,9.71637,56.5747,56.5747,56.6366,0.431728,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteCOI,9,9,24,32,80.7618,2.96297,76.7029,85.7918,9.08893,53.7618,53.7618,53.814,0.598346,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteHKH,9,9,24,32,77.4967,3.91662,69.3585,83.4903,14.1318,50.4967,50.4967,50.6992,-0.0471668,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteHUH,9,9,24,32,76.5081,2.37687,73.3449,81.2409,7.8959,49.5081,49.5081,49.5726,0.421361,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteKPM,9,9,24,32,80.1731,6.30117,70.534,89.444,18.91,53.1731,53.1731,53.4467,0.416251,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteKUS,9,9,24,32,80.6804,2.90447,74.537,83.7795,9.24252,53.6804,53.6804,53.8129,-0.0554978,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteKUT,9,9,24,32,80.3151,3.5478,71.9358,84.4879,12.5521,53.3151,53.3151,53.4827,-0.0435454,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteSWA,9,9,24,32,81.0402,3.47066,73.5981,84.8793,11.2812,54.0402,54.0402,54.1453,0.332832,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteUTO,9,9,24,32,77.87,2.23513,72.3919,79.8361,7.44411,50.87,50.87,50.9387,0.334676,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteYC1,9,9,24,32,79.5949,2.40193,75.0763,82.3311,7.25478,52.5949,52.5949,52.6984,0.0213546,site-level derivative-branch NeuroFM-S output; age claim failed
+SRPBS_TS,neurofm_srpbs_travelling_fastsurfer_mask,siteYC2,9,9,24,32,81.2187,3.09974,75.6293,86.8217,11.1924,54.2187,54.2187,54.3109,0.316138,site-level derivative-branch NeuroFM-S output; age claim failed
