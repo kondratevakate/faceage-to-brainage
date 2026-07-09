@@ -21,6 +21,8 @@ NEUROFM_OUTPUTS="${NEUROFM_OUTPUTS:-brain_health}"
 DEVICE="${DEVICE:-cpu}"
 NEUROFM_CACHE_DIR="${NEUROFM_CACHE_DIR:-/mnt/d/projects/02_academia/_external/NeuroFM/.cache}"
 NEUROFM_WEIGHTS="${NEUROFM_WEIGHTS:-}"
+NEUROFM_WEIGHTS_SOURCE="${NEUROFM_WEIGHTS_SOURCE:-}"
+NEUROFM_INTERPRETATION="${NEUROFM_INTERPRETATION:-NeuroFM run on a skull-stripped, mask-derived application branch. This is not validation evidence for Kate brain age or segmentation quality.}"
 LIMIT="${LIMIT:-0}"
 INFER_FASTSURFER_LABEL="${INFER_FASTSURFER_LABEL:-0}"
 OVERWRITE_MASKED_INPUTS="${OVERWRITE_MASKED_INPUTS:-0}"
@@ -95,6 +97,14 @@ if [[ -n "$NEUROFM_WEIGHTS" ]]; then
   weights_arg+=(--weights "$NEUROFM_WEIGHTS")
 fi
 
+summary_weight_args=()
+if [[ -n "$NEUROFM_WEIGHTS" ]]; then
+  summary_weight_args+=(--weights-path "$NEUROFM_WEIGHTS")
+fi
+if [[ -n "$NEUROFM_WEIGHTS_SOURCE" ]]; then
+  summary_weight_args+=(--weights-source "$NEUROFM_WEIGHTS_SOURCE")
+fi
+
 "$NEUROFM_PYTHON" "$NEUROFM_REPO/scripts/run_inference.py" \
   --input "$INPUT_MANIFEST_RESOLVED" \
   --output "$RESULTS_DIR" \
@@ -118,7 +128,8 @@ source_commit="$(git -C "$NEUROFM_REPO" rev-parse HEAD)"
   --source-commit "$source_commit" \
   --variant "$MODEL_VARIANT" \
   --weights-cache-dir "${NEUROFM_WEIGHTS:-$NEUROFM_CACHE_DIR}" \
-  --interpretation "NeuroFM run on a skull-stripped, mask-derived application branch. This is not validation evidence for Kate brain age or segmentation quality."
+  --interpretation "$NEUROFM_INTERPRETATION" \
+  "${summary_weight_args[@]}"
 
 echo "NeuroFM predictions: $PREDICTIONS_CSV"
 echo "NeuroFM summary: $SUMMARY_CSV"

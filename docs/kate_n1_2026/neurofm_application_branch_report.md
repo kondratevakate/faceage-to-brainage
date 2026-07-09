@@ -72,12 +72,47 @@ Results against chronological ages:
 
 Interpretation: this is a strong negative sanity check for using NeuroFM-S as a brain-age estimator on the SIMON FastSurfer-mask derivative branch. It does not support reporting Kate's brain age from NeuroFM.
 
+Recheck on 2026-07-09: rerunning the 87-row resolved masked manifest reproduced the committed predictions, compact summary, and external NeuroFM `results_summary.csv` bitwise. The predictions SHA256 remained `35ad35cf283a3207abd507696f9a26bddc8c38cae81824e19fd870744c495277`.
+
+## SIMON Raw-Orig All-94 Diagnostic Run
+
+The source folder `D:\data\fastserfer_simon` contains 94 `*_orig.mgz` images but only 87 matching `*_aparcDKT+aseg.mgz` label maps. Therefore the FastSurfer-mask branch cannot cover all 94 without regenerating or locating missing labels.
+
+To answer the all-orig question separately, a raw diagnostic branch converted the 94 FastSurfer `_orig.mgz` files to NIfTI and ran NeuroFM-S without skull-strip. This branch is intentionally separated from the masked branch because it is non-conforming for NeuroFM's expected skull-stripped T1w input.
+
+Artifacts:
+
+- converter: `experiments/kate_n1_2026/prepare_neurofm_orig_nifti_inputs.py`
+- runner: `experiments/kate_n1_2026/run_neurofm_simon_raw_orig.sh`
+- input status: `data/kate_n1_2026/neurofm_simon_raw_orig_input_status.csv`
+- resolved inputs: `data/kate_n1_2026/neurofm_simon_raw_orig_inputs_resolved.csv`
+- predictions: `data/kate_n1_2026/neurofm_simon_raw_orig_predictions.csv`
+- summary: `data/kate_n1_2026/neurofm_simon_raw_orig_summary.csv`
+- metadata: `data/kate_n1_2026/neurofm_simon_raw_orig_metadata.json`
+
+Results against chronological ages:
+
+- completed: 94/94
+- chronological age range: 29.69-46.41 years
+- predicted brain age range: 50.1406-91.7619 years
+- mean predicted brain age: 77.5551 years
+- MAE: 34.0564 years
+- bias, predicted minus chronological: +34.0564 years
+- RMSE: 34.9448 years
+- Pearson r: 0.143206
+- predicted sex counts: 38 rows `0.0`, 56 rows `1.0`
+
+Input QC: 16/94 raw-orig inputs had voxel sizes other than 1x1x1 mm and triggered or required NeuroFM internal resampling.
+
+Interpretation: the raw all-orig branch covers all visible SIMON orig images, but it is a non-skull-stripped stress test and not a calibrated NeuroFM age pipeline. It also does not support reporting Kate's brain age from NeuroFM.
+
 ## Critical Limitations
 
 1. NeuroFM documentation/model card is oriented to skull-stripped T1w input and a 40-90 year population. Much of SIMON, and likely Kate depending on date, is outside or near the lower edge of that range.
 2. Kate inputs are heterogeneous across acquisition/protocol, and NeuroFM logged internal resampling warnings for the Kate HD-BET inputs.
 3. SIMON is not raw scanner-native validation here; it is a FastSurfer internal-source plus label-mask derivative branch.
-4. NeuroFM `brain_health` outputs are model estimates. They are not segmentation outputs, morphometric validation, or clinical evidence.
+4. The SIMON raw-orig branch is all-94, but it is non-skull-stripped and therefore a stress/QC branch, not a recommended NeuroFM preprocessing branch.
+5. NeuroFM `brain_health` outputs are model estimates. They are not segmentation outputs, morphometric validation, or clinical evidence.
 
 ## Decision
 

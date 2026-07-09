@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -17,6 +18,14 @@ def read_rows(path: Path) -> list[dict[str, str]]:
         return []
     with path.open("r", newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
+
+
+def sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(block_size), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def write_csv(path: Path, rows: list[dict[str, str]], fieldnames: list[str] | None = None) -> None:
@@ -101,6 +110,8 @@ def main() -> None:
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--variant", default="neurofm-s")
     parser.add_argument("--weights-cache-dir", default="")
+    parser.add_argument("--weights-path", default="")
+    parser.add_argument("--weights-source", default="")
     parser.add_argument("--interpretation", required=True)
     args = parser.parse_args()
 
@@ -157,6 +168,14 @@ def main() -> None:
             "They do not prove segmentation quality, morphometric validity, or individual clinical brain health."
         ),
     }
+    if args.weights_path:
+        weights_path = Path(args.weights_path)
+        metadata["weights_path"] = str(weights_path)
+        if weights_path.exists():
+            metadata["weights_sha256"] = sha256_file(weights_path)
+            metadata["weights_size_bytes"] = weights_path.stat().st_size
+        if args.weights_source:
+            metadata["weights_source"] = args.weights_source
     args.metadata_json.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
 

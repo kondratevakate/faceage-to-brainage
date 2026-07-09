@@ -1,0 +1,2 @@
+summary_id,n_rows,n_predictions,n_with_chronological_age,mean_predicted_brain_age_years,min_predicted_brain_age_years,max_predicted_brain_age_years,mae_years,bias_years_pred_minus_chron,rmse_years,pearson_r,claim_level,interpretation
+neurofm_simon_raw_orig_predictions,94,94,94,77.5551,50.1406,91.7619,34.0564,34.0564,34.9448,0.143206,application_branch_not_validation_claim,"NeuroFM run on non-skull-stripped FastSurfer orig.mgz images converted to NIfTI. This is an all-orig diagnostic stress branch, not a validation claim or calibrated brain-age estimate."
