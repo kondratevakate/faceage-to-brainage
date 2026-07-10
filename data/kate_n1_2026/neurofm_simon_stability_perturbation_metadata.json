@@ -1,0 +1,17 @@
+{
+  "method": "NeuroFM",
+  "source_repo": "https://github.com/rockNroll87q/NeuroFM.git",
+  "source_commit": "d4e3c463910d939a681d24ebdeb26d44dea6878f",
+  "variant": "neurofm-s",
+  "weights_cache_dir": "/mnt/d/projects/02_academia/_external/NeuroFM/.cache/neurofm-s.h5",
+  "input_manifest": "/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/simon_stability_perturbation_inputs.csv",
+  "results_summary": "/mnt/d/YandexDisk/kondratevakate/01_insidekatesbrain/01_my_brain_years/reprocessed_2026/foundation_models/simon_model_stability/neurofm_simon_perturbations/results/results_summary.csv",
+  "output_csv": "/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_simon_stability_perturbation_predictions.csv",
+  "summary_csv": "/mnt/d/projects/02_academia/faceage-to-brainage/data/kate_n1_2026/neurofm_simon_stability_perturbation_summary.csv",
+  "n_output_rows": 84,
+  "critical_interpretation": "NeuroFM brain-health outputs are application-branch model outputs. They do not prove segmentation quality, morphometric validity, or individual clinical brain health.",
+  "weights_path": "/mnt/d/projects/02_academia/_external/NeuroFM/.cache/neurofm-s.h5",
+  "weights_sha256": "8015a0552214b87e43b5462b6c183f8d0da2d957d7ae11ed09a2e3355f5e991f",
+  "weights_size_bytes": 2055816,
+  "weights_source": "https://huggingface.co/NeuroAI-UofG/NeuroFM neurofm-s.h5 gated access accepted 2026-07-09 kept outside git"
+}

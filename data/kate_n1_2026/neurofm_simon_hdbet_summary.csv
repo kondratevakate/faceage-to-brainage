@@ -1,0 +1,2 @@
+summary_id,n_rows,n_predictions,n_with_chronological_age,mean_predicted_brain_age_years,min_predicted_brain_age_years,max_predicted_brain_age_years,mae_years,bias_years_pred_minus_chron,rmse_years,pearson_r,claim_level,interpretation
+neurofm_simon_hdbet_predictions,94,94,94,58.4445,45.7431,79.4811,14.9457,14.9457,15.7196,0.31358,application_branch_not_validation_claim,NeuroFM-S on SIMON all-94 HD-BET skull-stripped FastSurfer orig.mgz derivatives; documented skull-strip application branch and labeled sanity check; not validation or clinical brain-age evidence.

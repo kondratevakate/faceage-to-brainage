@@ -59,6 +59,13 @@ BRANCHES = [
         "color": "#ea580c",
     },
     {
+        "label": "NeuroFM HD-BET all-94",
+        "source": DATA_DIR / "neurofm_simon_hdbet_predictions.csv",
+        "pred_col": "predicted_brain_age_years",
+        "note": "HD-BET skull-stripped all-orig branch; application/QC only.",
+        "color": "#dc2626",
+    },
+    {
         "label": "NeuroFM raw-orig all-94",
         "source": DATA_DIR / "neurofm_simon_raw_orig_predictions.csv",
         "pred_col": "predicted_brain_age_years",
@@ -91,7 +98,7 @@ def collect_points() -> list[dict[str, str]]:
     points: list[dict[str, str]] = []
     for branch in BRANCHES:
         for row in read_rows(branch["source"]):
-            if row.get("status", "ok") not in ("", "ok"):
+            if row.get("status", "ok") not in ("", "ok", "ok_existing"):
                 continue
             chron = as_float(row.get("chronological_age_years", ""))
             pred = as_float(row.get(branch["pred_col"], ""))
@@ -176,7 +183,9 @@ def write_svg(points: list[dict[str, str]]) -> None:
     for row in points:
         by_branch[row["model_branch"]].append(row)
 
-    width, height = 1420, 920
+    n_cols = 3
+    n_rows = math.ceil(len(BRANCHES) / n_cols)
+    width, height = 1420, 160 + n_rows * 378
     panel_w, panel_h = 410, 300
     left, top = 78, 92
     gap_x, gap_y = 42, 78
@@ -209,7 +218,7 @@ def write_svg(points: list[dict[str, str]]) -> None:
     ]
 
     for idx, branch in enumerate(BRANCHES):
-        row_i, col_i = divmod(idx, 3)
+        row_i, col_i = divmod(idx, n_cols)
         px = left + col_i * (panel_w + gap_x)
         py = top + row_i * (panel_h + gap_y)
         plot_x0 = px + plot_pad_left
