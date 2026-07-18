@@ -17,6 +17,9 @@ import cv2
 import numpy as np
 import yaml
 
+if not hasattr(np, "long"):
+    np.long = np.int64  # Compatibility for upstream 3DDFA_V2 on newer NumPy.
+
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 
