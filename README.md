@@ -9,7 +9,9 @@ evaluation
 
 [Project page](https://kondratevakate.github.io/faceage-to-brainage/) |
 [Manuscript](papers/manuscript/manuscript.tex) |
-[Methods and reports](docs/kate_n1_2026/) |
+[Research program](docs/research_program.md) |
+[Dataset plan](docs/dataset_acquisition_plan.md) |
+[Dataset registry](data/research_dataset_registry.csv) |
 [Branch model](docs/REPOSITORY_BRANCHES.md)
 
 `#BrainAge` `#FaceAge` `#MRI` `#Neuroimaging` `#LongitudinalImaging`
@@ -46,6 +48,14 @@ The repository has two connected workstreams:
 The shared objective is not to produce one authoritative "biological age."
 It is to separate absolute calibration, longitudinal sensitivity,
 test-retest repeatability, scanner dependence, and uncertainty.
+
+The independent evidence and metric contracts are versioned separately:
+[FaceAge review](docs/faceage/literature_review.md),
+[FaceAge metrics](docs/faceage/metrics_protocol.md),
+[BrainAge review](docs/brainage/literature_review.md), and
+[BrainAge metrics](docs/brainage/metrics_protocol.md). The branches must pass
+their own external gates before the paired FaceAge-BrainAge association is
+tested.
 
 ## Current renders
 
@@ -167,6 +177,10 @@ pytest -q
 - NeuroFM application scripts: [`experiments/kate_n1_2026/`](experiments/kate_n1_2026/)
 - Model and preprocessing status: [`data/kate_n1_2026/method_status_matrix.csv`](data/kate_n1_2026/method_status_matrix.csv)
 - Scientific reports: [`docs/kate_n1_2026/`](docs/kate_n1_2026/)
+- FaceAge evidence and metrics: [`docs/faceage/`](docs/faceage/)
+- BrainAge and NeuroFM evidence and metrics: [`docs/brainage/`](docs/brainage/)
+- Integrated protocol: [`docs/research_program.md`](docs/research_program.md)
+- Dataset acquisition registry: [`data/research_dataset_registry.csv`](data/research_dataset_registry.csv)
 - Public article source: [`project_page/`](project_page/)
 
 Raw MRI, model weights, caches, logs, private face artifacts, and large NIfTI
