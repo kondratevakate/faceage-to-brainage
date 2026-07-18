@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
-import importlib.metadata
 import json
 import os
 import subprocess
@@ -30,6 +29,7 @@ DEFAULT_HD_BET = Path("/home/kate/.venvs/midi_brainage_py311/bin/hd-bet")
 DEFAULT_HD_BET_PYTHON = Path("/home/kate/.venvs/midi_brainage_py311/bin/python")
 DEFAULT_CHECKPOINT = Path("/home/kate/hd-bet_params/release_2.0.0/fold_all/checkpoint_final.pth")
 EXPECTED_CHECKPOINT_SHA256 = "d31dc59b4c5fe0028070901870c44c0b526f48c507ce50804941344356df7b52"
+HD_BET_VERSION = "2.0.1"
 
 
 def sha256_file(path: Path, block_size: int = 1024 * 1024) -> str:
@@ -178,6 +178,29 @@ def refresh_and_write(
     return status_rows
 
 
+def row_key(row: dict[str, str]) -> tuple[str, str]:
+    return row["participant_id"], row["run_index"]
+
+
+def update_and_write_batch(
+    all_rows: list[dict[str, str]],
+    current_status: list[dict[str, str]],
+    batch: list[dict[str, str]],
+    dataset_root: Path,
+    output_dir: Path,
+    status_csv: Path,
+    inference_manifest: Path,
+) -> list[dict[str, str]]:
+    by_key = {row_key(row): row for row in current_status}
+    for row in batch:
+        inspected = inspect_row(row, dataset_root, output_dir)
+        by_key[row_key(row)] = inspected
+    updated = [by_key[row_key(row)] for row in all_rows]
+    write_csv(status_csv, updated)
+    write_csv(inference_manifest, [row for row in updated if row["status"] == "ok"])
+    return updated
+
+
 def chunks(rows: list[dict[str, str]], size: int) -> list[list[dict[str, str]]]:
     return [rows[index : index + size] for index in range(0, len(rows), size)]
 
@@ -190,7 +213,7 @@ def main() -> None:
     parser.add_argument("--hd-bet", type=Path, default=DEFAULT_HD_BET)
     parser.add_argument("--hd-bet-python", type=Path, default=DEFAULT_HD_BET_PYTHON)
     parser.add_argument("--checkpoint", type=Path, default=DEFAULT_CHECKPOINT)
-    parser.add_argument("--batch-size", type=int, default=120)
+    parser.add_argument("--batch-size", type=int, default=5)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--max-batches", type=int, default=0)
     args = parser.parse_args()
@@ -236,7 +259,7 @@ def main() -> None:
             source_path = args.dataset_root / row["relative_path"]
             make_link(batch_dir / source_path.name, source_path)
 
-        log_path = logs_dir / f"batch_{batch_index:04d}.log"
+        log_path = logs_dir / f"{invocation_id}_batch_{batch_index:04d}.log"
         low_memory_wrapper = Path(__file__).with_name("hdbet_low_memory.py")
         command = [
             str(args.hd_bet_python),
@@ -262,8 +285,14 @@ def main() -> None:
             )
         elapsed = time.time() - started
         print(f"HD-BET batch {batch_index} rc={process.returncode} elapsed={elapsed:.1f}s")
-        status_rows = refresh_and_write(
-            rows, args.dataset_root, output_dir, status_csv, inference_manifest
+        status_rows = update_and_write_batch(
+            rows,
+            status_rows,
+            batch,
+            args.dataset_root,
+            output_dir,
+            status_csv,
+            inference_manifest,
         )
         if process.returncode != 0:
             raise RuntimeError(f"HD-BET batch failed; see {log_path}")
@@ -276,7 +305,7 @@ def main() -> None:
         "dataset_id": "maclaren_ds000239",
         "release": "R1.0.1",
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "hd_bet_version": importlib.metadata.version("HD-BET"),
+        "hd_bet_version": HD_BET_VERSION,
         "hd_bet_checkpoint_sha256": checkpoint_hash,
         "device": "cpu",
         "tta_disabled": True,

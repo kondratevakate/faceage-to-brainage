@@ -40,7 +40,9 @@ outside Git.
 1. HD-BET 2.0.1, official release-2.0.0 checkpoint, CPU, TTA disabled. The
    low-memory wrapper uses one preprocessing and one export worker because the
    upstream CLI hard-codes 4 and 8 workers, which exceeds the 8 GB WSL runtime;
-   the predictor architecture and checkpoint are unchanged.
+   the predictor architecture and checkpoint are unchanged. Inputs run in
+   deterministic batches of five with status persisted after each batch so an
+   interrupted CPU run can resume without redefining inclusion.
 2. Inspect success/failure, mask fraction, shape, voxel size, and hashes. A
    deterministic external montage is used for visual skull-strip QC but is not
    committed because it is an MRI derivative.
