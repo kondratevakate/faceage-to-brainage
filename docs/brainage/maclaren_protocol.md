@@ -37,7 +37,10 @@ outside Git.
 
 ## Locked pipeline
 
-1. HD-BET 2.0.1, official release-2.0.0 checkpoint, CPU, TTA disabled.
+1. HD-BET 2.0.1, official release-2.0.0 checkpoint, CPU, TTA disabled. The
+   low-memory wrapper uses one preprocessing and one export worker because the
+   upstream CLI hard-codes 4 and 8 workers, which exceeds the 8 GB WSL runtime;
+   the predictor architecture and checkpoint are unchanged.
 2. Inspect success/failure, mask fraction, shape, voxel size, and hashes. A
    deterministic external montage is used for visual skull-strip QC but is not
    committed because it is an MRI derivative.

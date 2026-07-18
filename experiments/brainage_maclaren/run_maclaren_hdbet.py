@@ -27,6 +27,7 @@ DEFAULT_OUTPUT_ROOT = Path(
 )
 DEFAULT_MANIFEST = Path("data/brainage/maclaren_t1w_inclusion.csv")
 DEFAULT_HD_BET = Path("/home/kate/.venvs/midi_brainage_py311/bin/hd-bet")
+DEFAULT_HD_BET_PYTHON = Path("/home/kate/.venvs/midi_brainage_py311/bin/python")
 DEFAULT_CHECKPOINT = Path("/home/kate/hd-bet_params/release_2.0.0/fold_all/checkpoint_final.pth")
 EXPECTED_CHECKPOINT_SHA256 = "d31dc59b4c5fe0028070901870c44c0b526f48c507ce50804941344356df7b52"
 
@@ -187,6 +188,7 @@ def main() -> None:
     parser.add_argument("--dataset-root", type=Path, default=DEFAULT_DATASET_ROOT)
     parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT)
     parser.add_argument("--hd-bet", type=Path, default=DEFAULT_HD_BET)
+    parser.add_argument("--hd-bet-python", type=Path, default=DEFAULT_HD_BET_PYTHON)
     parser.add_argument("--checkpoint", type=Path, default=DEFAULT_CHECKPOINT)
     parser.add_argument("--batch-size", type=int, default=120)
     parser.add_argument("--limit", type=int, default=0)
@@ -195,6 +197,8 @@ def main() -> None:
 
     if not args.hd_bet.is_file() or not os.access(args.hd_bet, os.X_OK):
         raise FileNotFoundError(f"Missing HD-BET executable: {args.hd_bet}")
+    if not args.hd_bet_python.is_file() or not os.access(args.hd_bet_python, os.X_OK):
+        raise FileNotFoundError(f"Missing HD-BET Python: {args.hd_bet_python}")
     checkpoint_hash = sha256_file(args.checkpoint)
     if checkpoint_hash != EXPECTED_CHECKPOINT_SHA256:
         raise ValueError(f"Unexpected HD-BET checkpoint SHA-256: {checkpoint_hash}")
@@ -233,16 +237,18 @@ def main() -> None:
             make_link(batch_dir / source_path.name, source_path)
 
         log_path = logs_dir / f"batch_{batch_index:04d}.log"
+        low_memory_wrapper = Path(__file__).with_name("hdbet_low_memory.py")
         command = [
-            str(args.hd_bet),
-            "-i",
+            str(args.hd_bet_python),
+            str(low_memory_wrapper),
+            "--input-folder",
             str(batch_dir),
-            "-o",
+            "--output-folder",
             str(output_dir),
-            "-device",
-            "cpu",
-            "--disable_tta",
-            "--save_bet_mask",
+            "--preprocessing-workers",
+            "1",
+            "--export-workers",
+            "1",
         ]
         print(f"HD-BET batch {batch_index}/{len(pending_batches)}: {len(batch)} scan(s)")
         started = time.time()
@@ -274,6 +280,8 @@ def main() -> None:
         "hd_bet_checkpoint_sha256": checkpoint_hash,
         "device": "cpu",
         "tta_disabled": True,
+        "low_memory_preprocessing_workers": 1,
+        "low_memory_export_workers": 1,
         "batch_size": args.batch_size,
         "n_selected": len(rows),
         "n_ok": n_ok,
