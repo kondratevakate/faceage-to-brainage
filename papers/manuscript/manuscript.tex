@@ -1,27 +1,26 @@
-\documentclass{midl} % Include author names
+\documentclass[11pt]{article}
 
-% The following packages will be automatically loaded:
-% jmlr, amsmath, amssymb, natbib, graphicx, url, algorithm2e
-% ifoddpage, relsize and probably more
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
 
-% Header for extended abstracts
-\jmlrproceedings{MIDL}{Medical Imaging with Deep Learning}
-\jmlrpages{}
-\jmlryear{2026}
+\title{MRI-derived Face Age vs Brain Age from the Same T1 Scan:\\
+  a Longitudinal Single-Subject Stress Test}
 
-\jmlrworkshop{Short Paper -- MIDL 2026 submission}
-\jmlrvolume{-- Under Review}
-\editors{Under Review for MIDL 2026}
-
-\title[MRI-derived Face Age vs Brain Age]{MRI-derived Face Age vs Brain Age from the Same T1 Scan: a Longitudinal Single-Subject Stress Test}
-
-\midlauthor{%
-  \Name{Ekaterina Kondrateva\nametag{$^{1}$}} \orcid{0000-0003-3623-6106} \Email{ekaterina.kondrateva@maastrichtuniversity.nl}\\
-  \Name{Ramil Khafizov\nametag{$^{2}$}}\\
-  \Name{Gleb Bobrovskikh\nametag{$^{2}$}}\\
-  \addr $^{1}$ Department of Radiation Oncology (Maastro), GROW Research Institute for Oncology and Reproduction, Maastricht University Medical Centre+, Maastricht University, Maastricht, The Netherlands\\
-  \addr $^{2}$ Applied AI Institute
+\author{
+  Ekaterina Kondrateva\thanks{Department of Radiation Oncology (Maastro),
+  GROW Research Institute for Oncology and Reproduction, Maastricht University
+  Medical Centre+, Maastricht University, Maastricht, The Netherlands.
+  ORCID: 0000-0003-3623-6106.}\\
+  \texttt{ekaterina.kondrateva@maastrichtuniversity.nl}
+  \and Ramil Khafizov\thanks{Applied AI Institute.}
+  \and Gleb Bobrovskikh\footnotemark[2]
 }
+
+\date{}
 
 \begin{document}
 
@@ -53,10 +52,8 @@
   it from every systematic preprocessing or domain-shift effect.
 \end{abstract}
 
-\begin{keywords}
-  brain age, face age, structural MRI, longitudinal imaging, scanner robustness,
-  domain shift, SIMON
-\end{keywords}
+\noindent\textbf{Keywords:} brain age, face age, structural MRI, longitudinal
+imaging, scanner robustness, domain shift, SIMON.
 
 % -----------------------------------------------------------------------
 \section{Introduction}
@@ -183,8 +180,18 @@ appearing visually frozen, carries a statistically significant residual
 longitudinal signal.
 
 \begin{figure}[htbp]
-\floatconts{fig:simon}
-  {\caption{(A) Synthetic example of the MRI-derived multi-view face render
+  \centering
+  \begin{minipage}[t]{0.48\linewidth}
+    \centering
+    \textbf{A}\\[2pt]
+    \includegraphics[width=\linewidth]{ex_render.png}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.48\linewidth}
+    \centering
+    \textbf{B}\\[2pt]
+    \includegraphics[width=\linewidth]{simon_chron_vs_predicted.pdf}
+  \end{minipage}
+  \caption{(A) Synthetic example of the MRI-derived multi-view face render
     grid used as input to the face branch. (B) Chronological vs predicted age
     on SIMON (one subject, 36 scanners, 99 scans). Dashed line: perfect
     prediction. Dotted horizontal lines: mean predicted age per method.
@@ -192,22 +199,14 @@ longitudinal signal.
     age at scan (MAE $16.2$ yr, bias $-16.2$ yr), yet still shows a weak but
     statistically significant slope ($+0.148$, $p{<}10^{-4}$). Neither face
     method tracks aging longitudinally (morphometrics slope $+0.04$,
-    $p{=}0.84$; FaceAge slope $-0.14$, $p{=}0.44$).}}
-  {\begin{minipage}[t]{0.5\linewidth}
-    \centering
-    \textbf{A}\\[2pt]
-    \includegraphics[width=\linewidth]{ex_render.png}
-   \end{minipage}\hfill
-   \begin{minipage}[t]{0.5\linewidth}
-    \centering
-    \textbf{B}\\[2pt]
-    \includegraphics[width=\linewidth]{simon_chron_vs_predicted.pdf}
-   \end{minipage}}
+    $p{=}0.84$; FaceAge slope $-0.14$, $p{=}0.44$).}
+  \label{fig:simon}
 \end{figure}
 
 \begin{figure}[htbp]
-\floatconts{fig:training_dist}
-  {\caption{SynthBA training-distribution geometry versus SIMON predictions.
+  \centering
+  \includegraphics[width=0.95\linewidth]{synthba_training_vs_predictions.pdf}
+  \caption{SynthBA training-distribution geometry versus SIMON predictions.
     Coloured curves: per-dataset Gaussian approximations of the five
     cohorts that contributed to SynthBA training (HCP $n{=}1105$, CoRR
     $n{=}1461$, IXI $n{=}563$, ADNI $n{=}784$, AIBL $n{=}192$;
@@ -220,9 +219,9 @@ longitudinal signal.
     which sits in the trough between the two training modes.  Blue
     histogram: SynthBA predictions on the $99$ SIMON scans, clustering
     at the nearest training mode ($\sim 27$~yr) rather than within the
-    SIMON age band.  The failure mode is geometric: the model has very
-    little training mass in the SIMON age window.}}
-  {\includegraphics[width=0.95\linewidth]{synthba_training_vs_predictions.pdf}}
+    SIMON age band. This clustering is compatible with training-distribution
+    pull but does not identify a unique causal mechanism.}
+  \label{fig:training_dist}
 \end{figure}
 
 \section{Discussion and Conclusion}
@@ -303,10 +302,11 @@ SynthBA accuracy measured on IXI would reflect train/test leakage rather
 than generalisation, and including it would confuse the
 out-of-distribution narrative we develop on SIMON.
 
-% Acknowledgments---Will not appear in anonymized version
-% \midlacknowledgments{We thank the SIMON data collection team for making a
-% rare non-defaced longitudinal MRI dataset publicly available.}
+% Acknowledgments will be finalized after venue selection.
+% We thank the SIMON data collection team for making a rare non-defaced
+% longitudinal MRI dataset publicly available.
 
-\bibliography{midl-samplebibliography}
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \end{document}

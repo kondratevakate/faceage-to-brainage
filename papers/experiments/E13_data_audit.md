@@ -57,7 +57,7 @@ switch to adaptive (Otsu / N-percentile) threshold for marching cubes.
 ## What's left undone (everything above)
 None of A1–A4 is done yet. **No new statistics on IXI should be run
 until the cohort is restored.** The autoresearch ratchet
-([`papers/midl2026/autoresearch_ratchet.py`](../midl2026/autoresearch_ratchet.py))
+([`papers/manuscript/autoresearch_ratchet.py`](../manuscript/autoresearch_ratchet.py))
 was prepared but not executed for this reason.
 
 ## Pointers

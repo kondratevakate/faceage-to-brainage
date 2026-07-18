@@ -13,7 +13,7 @@ Dear Dr Valabregue,
 I read your recent preprint *SIAM: Head and Brain MRI Segmentation from Few High-Quality Templates via Synthetic Training* (arxiv 2605.02737) with great interest. The contrast-agnostic 16-class output and the explicit skin/epidermis label are exactly what I need for a pipeline I am building.
 
 <!-- TODO: personalize — see "Your turn" below. Write 5–10 sentences in your own voice about:
-     • who you are (PhD project, MIDL short-paper, etc.)
+     • who you are and how this work fits your research project
      • what specifically you are doing with faces in MRI (one sentence)
      • why SIAM's whole-head output, not FreeSurfer/FastSurfer, is the right choice for this
 -->
@@ -37,7 +37,7 @@ Ekaterina Kondratyeva
 
 Fill the `TODO: personalize` block above. Suggested skeleton (5–10 lines):
 
-> "I am [your role] working on [your one-line project]. We are submitting a short paper to [MIDL/MICCAI/etc.] that pairs face-age estimation from MRI-derived renders with brain-age estimation from the same T1w volume — the goal is to test whether the face in an MRI scan knows how old the brain is. SIAM's whole-head output is attractive because [your one specific reason — e.g., the explicit skin label avoids manually thresholding a marching-cubes mesh; or the synthetic training means no patient-data overlap with our IXI/SIMON cohorts]."
+> "I am [your role] working on [your one-line project]. Our current manuscript pairs face-age estimation from MRI-derived renders with brain-age estimation from the same T1w volume — the goal is to test whether the face in an MRI scan knows how old the brain is. SIAM's whole-head output is attractive because [your one specific reason — e.g., the explicit skin label avoids manually thresholding a marching-cubes mesh; or the synthetic training means no patient-data overlap with our IXI/SIMON cohorts]."
 
 Tone: respectful, specific, technical. Avoid "I love your paper" — replace with "I read it carefully and used X."
 

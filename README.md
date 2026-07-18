@@ -8,7 +8,7 @@ Longitudinal robustness, avatar-to-MRI quality control, and evidence-aware
 evaluation
 
 [Project page](https://kondratevakate.github.io/faceage-to-brainage/) |
-[MIDL paper](papers/midl2026/midl-shortpaper.tex) |
+[Manuscript](papers/manuscript/manuscript.tex) |
 [Methods and reports](docs/kate_n1_2026/) |
 [Branch model](docs/REPOSITORY_BRANCHES.md)
 
@@ -149,7 +149,7 @@ age biomarker.
        alt="Current face and MRI evaluation pipeline" width="94%" />
 </p>
 
-The MIDL experiment and the newer application branches use related but not
+The core manuscript experiment and the newer application branches use related but not
 identical model stacks. Every reported result therefore names its model,
 preprocessing, output interpretation, and included scans.
 

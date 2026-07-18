@@ -30,8 +30,8 @@ Working claim:
 Local source files:
 
 - `README.md`
-- `papers/midl2026/midl-shortpaper.tex`
-- `papers/midl2026/midl-samplebibliography.bib`
+- `papers/manuscript/manuscript.tex`
+- `papers/manuscript/references.bib`
 - `papers/related_works/literature_review.md`
 - `papers/related_works/sota_design.md`
 - `papers/related_works/data_methods_map.md`
@@ -232,7 +232,7 @@ Upgrade needed:
 ## Citation Issues Found
 
 1. FaceAge DOI inconsistency:
-   - `midl-samplebibliography.bib` uses `10.1016/j.landig.2025.03.002`.
+   - `references.bib` uses `10.1016/j.landig.2025.03.002`.
    - `literature_review.md` and duplicated notes use
      `10.1016/S2589-7500(25)00042-1`.
    - Crossref resolves `10.1016/j.landig.2025.03.002`; the other DOI did not

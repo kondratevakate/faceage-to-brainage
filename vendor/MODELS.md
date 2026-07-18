@@ -1,6 +1,6 @@
 # Vendor Model Versions
 
-Pinned versions used for the MIDL 2026 paper results.
+Pinned versions used for the manuscript results.
 Update this file whenever you change a model version.
 
 ---

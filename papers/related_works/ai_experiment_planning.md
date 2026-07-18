@@ -62,7 +62,7 @@ Crosswalk for our paper: write to **TRIPOD+AI + CLAIM 2024**, self-score with **
 
 | Need | Tools | Pick & rationale |
 |---|---|---|
-| **Experiment tracking** | MLflow (open, OSS); W&B (hosted, polished); Aim (open, fast); Comet; Neptune. | **W&B for MIDL revision.** Best UX, free academic tier, sweep + report features. MLflow if institutional policy forbids cloud — slower UI, but full local control ([ZenML comparison](https://www.zenml.io/blog/mlflow-vs-weights-and-biases), [MLtraq benchmarks](https://mltraq.com/benchmarks/speed/)). |
+| **Experiment tracking** | MLflow (open, OSS); W&B (hosted, polished); Aim (open, fast); Comet; Neptune. | **W&B for manuscript revision.** Best UX, free academic tier, sweep + report features. MLflow if institutional policy forbids cloud — slower UI, but full local control ([ZenML comparison](https://www.zenml.io/blog/mlflow-vs-weights-and-biases), [MLtraq benchmarks](https://mltraq.com/benchmarks/speed/)). |
 | **HPO** | Optuna (TPE, lightweight, framework-agnostic), Ray Tune (distributed, ASHA/PBT), W&B Sweeps (UI-coupled), Hyperopt **deprecated** (no longer maintained — Databricks dropped it after 16.4 LTS). | Optuna locally + Ray Tune when SLURM available. Skip Hyperopt. |
 | **Config & sweep launcher** | Hydra + Submitit ([Hydra docs](https://hydra.cc/docs/plugins/submitit_launcher/), [Meta blog](https://ai.meta.com/blog/open-sourcing-submitit-a-lightweight-tool-for-slurm-cluster-computation/)) | Hydra YAML + `submitit_slurm` launcher: zero-sbatch sweeps, Optuna sweeper plugin available. |
 | **Containers** | Docker (dev/CI); Apptainer/Singularity for HPC (rootless, no daemon, [apptainer.org](https://apptainer.org/)) | Docker → push to registry → `apptainer build .sif docker://` for cluster. |
@@ -92,16 +92,16 @@ Crosswalk for our paper: write to **TRIPOD+AI + CLAIM 2024**, self-score with **
 
 ## 6. Concrete Recommendations for THIS Project
 
-Context: 3-person team (KK, RK, GB) + Claude as autoresearch ratchet; brain-age × face-age from a single MRI; IXI + SIMON, planning OOD test-retest cohorts; **MIDL 2026 short-paper revision**.
+Context: 3-person team (KK, RK, GB) + Claude as autoresearch ratchet; brain-age × face-age from a single MRI; IXI + SIMON, planning OOD test-retest cohorts; **venue-independent manuscript revision**.
 
 ### Top-5 ranked actions
 
 1. **Adopt TRIPOD+AI 2024 as primary reporting standard, CLAIM 2024 as imaging companion, PROBAST+AI as pre-submission self-audit.**
-   - Action: copy the [TRIPOD+AI 27-item checklist](https://www.tripod-statement.org/wp-content/uploads/2024/04/TRIPODAI-Supplement.pdf) and [CLAIM 2024 Word doc](https://pubs.rsna.org/doi/full/10.1148/ryai.240300) into `papers/midl2026/checklists/`.
+   - Action: copy the [TRIPOD+AI 27-item checklist](https://www.tripod-statement.org/wp-content/uploads/2024/04/TRIPODAI-Supplement.pdf) and [CLAIM 2024 Word doc](https://pubs.rsna.org/doi/full/10.1148/ryai.240300) into `papers/manuscript/checklists/`.
    - Map every item to a `(section, line)` in the manuscript before resubmission.
-   - File path: `c:/Projects/02_academia/faceage-to-brainage/papers/midl2026/checklists/TRIPOD+AI.md` and `.../CLAIM2024.md`.
+   - File path: `c:/Projects/02_academia/faceage-to-brainage/papers/manuscript/checklists/TRIPOD+AI.md` and `.../CLAIM2024.md`.
 
-2. **Use Weights & Biases as the sole experiment tracker for the MIDL revision sprint.**
+2. **Use Weights & Biases as the sole experiment tracker for the manuscript revision sprint.**
    - Reason: best-in-class UI, free academic tier, native sweep + report sharing, low setup overhead for a 3-person team. Aim is faster but less polished; MLflow needs a server we don't want to admin. Migrate to MLflow only if a future hospital partner forbids cloud upload of metrics (no PHI is ever logged either way — only IDs and metric values, per global rules).
    - Action: `wandb login`, set `WANDB_PROJECT=faceage-to-brainage`, name runs `{YYYYMMDD}_{model}_{seed}_{cohort}`.
    - File path: integrate in `src/training/train.py`; never log raw scan paths or subject demographics — only subject IDs and aggregate metrics.
@@ -114,7 +114,7 @@ Context: 3-person team (KK, RK, GB) + Claude as autoresearch ratchet; brain-age 
      - `c:/Projects/02_academia/faceage-to-brainage/prereg/H2_test_retest_icc.md`
    - Lock test split BEFORE filling the OSF form. Each `.md` mirrors the OSF fields verbatim and links the OSF DOI once registered.
 
-4. **Ablations expected by MIDL/MICCAI reviewers (ranked by reviewer push-back probability):**
+4. **Ablations expected by medical-imaging reviewers (ranked by reviewer push-back probability):**
    - (a) **Modality / input channel** — face-only, brain-only, joint. Prove the joint signal exceeds each marginal.
    - (b) **Bias correction** — un-corrected vs Beheshti vs Cole. Reviewers will ask which curve is reported.
    - (c) **Subject-disjoint vs random split** — show the gap (Paplhám et al. CVPR 2024 will be cited *at* you if you don't pre-empt this).
@@ -123,8 +123,8 @@ Context: 3-person team (KK, RK, GB) + Claude as autoresearch ratchet; brain-age 
    - (f) **OOD generalisation** — per-site MAE on SIMON travelling-subject scans; ICC of brain-age-gap across repeats. This is the headline novelty — guard it with the most ablations.
 
 5. **First read this week (single item):** **Lipton & Steinhardt, "Troubling Trends in ML Scholarship"** ([arXiv 1807.03341](https://arxiv.org/abs/1807.03341)).
-   - Reason: 8 pages, directly maps to the writing failures most likely in our MIDL revision (mixing speculation with explanation when discussing why face-age helps brain-age; mathiness in the loss-function description; HARKed ablations). Read it before drafting the revision response.
-   - Companion (≤30 min): the **NeurIPS 2025 Paper Checklist** ([guidelines](https://neurips.cc/public/guides/PaperChecklist)) — fill it for the MIDL paper even though MIDL doesn't require it; reviewers cross-pollinate.
+   - Reason: 8 pages, directly maps to the writing failures most likely in our manuscript revision (mixing speculation with explanation when discussing why face-age helps brain-age; mathiness in the loss-function description; HARKed ablations). Read it before drafting the revision response.
+   - Companion (≤30 min): the **NeurIPS 2025 Paper Checklist** ([guidelines](https://neurips.cc/public/guides/PaperChecklist)) — use it as a venue-independent quality check; reviewers cross-pollinate.
 
 ### Process additions (low-cost, high-leverage)
 
@@ -132,7 +132,7 @@ Context: 3-person team (KK, RK, GB) + Claude as autoresearch ratchet; brain-age 
 - **Per-experiment `manifest.json`** committed in `experiments/{run_id}/`: git SHA, dataset hash (DVC), seed, hardware, wall-time. Required for any figure that goes into a paper.
 - **Weekly 30-min "ratchet review"** (KK, RK, GB): triage W&B dashboard, decide which branches die, which become confirmatory.
 - **Audit log** (HIPAA/GDPR/ISO 27001 compliance per global rules): `logs/audit/{YYYY-MM-DD}.jsonl` with `(actor_id, action, entity_id, ts)` only — never values, never names.
-- **Container pinning**: build one Apptainer `.sif` per submission: `apptainer build faceage-midl2026.sif Apptainer.def`. Push the recipe to repo; the `.sif` to Zenodo on acceptance for reproducibility-checklist credit.
+- **Container pinning**: build one Apptainer `.sif` per submission: `apptainer build faceage-manuscript.sif Apptainer.def`. Push the recipe to repo; the `.sif` to Zenodo on acceptance for reproducibility-checklist credit.
 
 ### Decisions explicitly *not* made
 
@@ -172,4 +172,4 @@ Context: 3-person team (KK, RK, GB) + Claude as autoresearch ratchet; brain-age 
 - Vasey et al. 2022 — DECIDE-AI. *Nat. Med.* [link](https://www.nature.com/articles/s41591-022-01772-9)
 
 ---
-*Last updated: 2026-04-24. Review cycle: every MIDL/MICCAI submission.*
+*Last updated: 2026-04-24. Review cycle: before every manuscript submission.*

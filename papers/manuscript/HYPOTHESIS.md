@@ -31,7 +31,7 @@ chronological age**.
 
 ## Why this matters
 
-This is the load-bearing sentence of the MIDL paper's Discussion:
+This is the load-bearing sentence of the manuscript's Discussion:
 > "The two aging gaps computed from the same scan show a statistically
 > significant positive correlation (r = 0.31, ρ = 0.32, p < 0.01),
 > suggesting partial but incomplete overlap between facial and cerebral

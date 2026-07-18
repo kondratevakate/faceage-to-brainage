@@ -215,7 +215,7 @@ geometry, age prediction, and reliability.
 
 ## 7. Candidate Next Actions
 
-1. Add a short subsection to the MIDL discussion: "Perceptual realism is not
+1. Add a short subsection to the manuscript discussion: "Perceptual realism is not
    anatomical fidelity."
 2. Add a methods table that maps each claim to a metric and ground truth source.
 3. Ask MATCH/MeshLAM authors which geometry-registration metrics they would

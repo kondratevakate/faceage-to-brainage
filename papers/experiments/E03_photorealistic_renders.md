@@ -47,5 +47,5 @@ baseline — synthetic prettifying can *hurt*.
    better OOD behavior may behave differently on synthetic renders.
 
 ## Pointers
-- Numbers reported in [`midl-shortpaper.tex`](../midl2026/midl-shortpaper.tex)
+- Numbers reported in [`manuscript.tex`](../manuscript/manuscript.tex)
 - No CSV — only summary numbers retained

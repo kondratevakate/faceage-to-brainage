@@ -78,7 +78,7 @@ pipeline — does not.
 
 ---
 
-## What this means for the MIDL paper
+## What this means for the manuscript
 
 Three load-bearing paragraphs become false or misleading:
 
@@ -165,6 +165,6 @@ follow-up.
 To reproduce:
 ```bash
 git checkout overnight-gap-confound-hypothesis
-cd papers/midl2026
+cd papers/manuscript
 PYTHONIOENCODING=utf-8 python overnight_analysis.py
 ```

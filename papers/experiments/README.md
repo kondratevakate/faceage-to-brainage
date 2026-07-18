@@ -22,7 +22,7 @@ notebooks.
 
 | Tag | Person | Owns |
 |---|---|---|
-| `KK` | Ekaterina Kondrateva | brain-age pipelines, MRI preprocessing, SIMON, MIDL paper, infra |
+| `KK` | Ekaterina Kondrateva | brain-age pipelines, MRI preprocessing, SIMON, manuscript, infra |
 | `RK` | Ramil Khafizov (`smileyenot983`) | FaceAge integration, MRI render → photo pipeline |
 | `GB` | Gleb Bobrovskikh (`BobrG`) | face morphometrics (BioFace3D-20, GPA + EDMA, Ridge) |
 | `CL` | Claude (autoresearch) | analyses, audits, hypothesis tests, documentation |
@@ -67,11 +67,11 @@ notebooks.
 
 ## Methodology actions (from [`ai_experiment_planning.md`](../related_works/ai_experiment_planning.md))
 
-These are not hypotheses but process upgrades blocking the MIDL revision:
+These are not hypotheses but process upgrades required for the manuscript revision:
 
 | # | Action | Owner | Concrete deliverable |
 |---|---|---|---|
-| MA-1 | Adopt TRIPOD+AI 2024 + CLAIM 2024 as primary reporting standard | KK | `papers/midl2026/checklists/{TRIPOD+AI,CLAIM2024}.md` mapped item-by-item to manuscript |
+| MA-1 | Adopt TRIPOD+AI 2024 + CLAIM 2024 as primary reporting standard | KK | `papers/manuscript/checklists/{TRIPOD+AI,CLAIM2024}.md` mapped item-by-item to manuscript |
 | MA-2 | PROBAST+AI 2025 as pre-submission self-audit | KK | one pass before resubmission |
 | MA-3 | W&B as sole experiment tracker | KK | `WANDB_PROJECT=faceage-to-brainage`, runs named `{YYYYMMDD}_{model}_{seed}_{cohort}`. Subject IDs only, never PHI |
 | MA-4 | OSF pre-registration with local mirror | KK | `prereg/H1_shared_variance.md` + `prereg/H2_test_retest_icc.md` — lock test split before filling OSF form |
@@ -80,7 +80,7 @@ These are not hypotheses but process upgrades blocking the MIDL revision:
 | MA-7 | Smoke test before every Colab loop — 1 scan, ETA print, GPU check, abort on fail | KK | already in `CLAUDE.md` global rule, enforce in `00_EXPERIMENT_JOURNAL.ipynb` template |
 | MA-8 | Per-experiment `manifest.json`: git SHA, dataset hash, seed, hardware, wall-time | KK | required for any figure that goes into a paper |
 | MA-9 | Apptainer `.sif` for the submission, recipe in repo + `.sif` to Zenodo on acceptance | KK | reproducibility-checklist credit |
-| MA-10 | First read this week: Lipton & Steinhardt 2018, "Troubling Trends in ML Scholarship" | all | 8 pages — read before drafting MIDL revision |
+| MA-10 | First read this week: Lipton & Steinhardt 2018, "Troubling Trends in ML Scholarship" | all | 8 pages — read before drafting the manuscript revision |
 
 ## Notebook reality check (2026-04-25)
 
@@ -106,12 +106,12 @@ notebook (`00_EXPERIMENT_JOURNAL.ipynb`) is in place.
 
 **New policy**: no more single-purpose notebooks. Add a card here, run
 code from `00_EXPERIMENT_JOURNAL.ipynb`, append numbers to
-`papers/midl2026/RESULTS.tsv`.
+`papers/manuscript/RESULTS.tsv`.
 
 ## Cumulative results log
 
-Machine-readable: [`../midl2026/RESULTS.tsv`](../midl2026/RESULTS.tsv).
-Appended by every analysis script under `papers/midl2026/` via the
+Machine-readable: [`../manuscript/RESULTS.tsv`](../manuscript/RESULTS.tsv).
+Appended by every analysis script under `papers/manuscript/` via the
 shared `log()` helper.
 
 ## Reference docs

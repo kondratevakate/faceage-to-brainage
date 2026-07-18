@@ -21,7 +21,7 @@ Standard Smith et al. 2019 brain-age bias check:
 3. Compute Pearson r on the residuals (= partial correlation).
 4. Permutation null over 10 000 shuffles.
 
-Code: [`papers/midl2026/overnight_analysis.py`](../midl2026/overnight_analysis.py)
+Code: [`papers/manuscript/overnight_analysis.py`](../manuscript/overnight_analysis.py)
 
 ## Result
 | quantity | value |
@@ -53,9 +53,9 @@ method.
 - Replicate on a SIMON-disjoint cohort (CamCAN, MR-ART, OpenBHB).
 
 ## Pointers
-- Full numbers: [`papers/midl2026/RESULTS.tsv`](../midl2026/RESULTS.tsv)
-- Findings doc: [`papers/midl2026/FINDINGS.md`](../midl2026/FINDINGS.md)
-- Pre-registration: [`papers/midl2026/HYPOTHESIS.md`](../midl2026/HYPOTHESIS.md)
+- Full numbers: [`papers/manuscript/RESULTS.tsv`](../manuscript/RESULTS.tsv)
+- Findings doc: [`papers/manuscript/FINDINGS.md`](../manuscript/FINDINGS.md)
+- Pre-registration: [`papers/manuscript/HYPOTHESIS.md`](../manuscript/HYPOTHESIS.md)
 
 ## Paper consequence
 Abstract, Results §gap correlation, Discussion bullet rewritten in

@@ -163,7 +163,7 @@ If we find no correlation — it suggests morphological face aging and brain agi
 | DoD CDMRP | Idea Award | Cross-modal biological age |
 | Dutch ZonMw | Open Competition | MAASTRO / Maastricht connection (Andre Dekker) |
 
-**Immediate next step**: MIDL 2025 short paper (April 15 deadline) — establish the method with PoC results, then use as pilot data for grant applications.
+**Immediate next step**: consolidate the proof-of-concept into a venue-independent manuscript, then use it as pilot data for grant applications.
 
 ---
 

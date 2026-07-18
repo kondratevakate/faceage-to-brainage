@@ -49,6 +49,6 @@ real test is `p = 0.84`.
 Abstract, Results §SIMON, Figure caption updated in commit `cd9b74a`.
 
 ## Pointers
-- Code: [`papers/midl2026/overnight_analysis.py`](../midl2026/overnight_analysis.py)
-- Full log: [`papers/midl2026/RESULTS.tsv`](../midl2026/RESULTS.tsv)
-- Findings: [`papers/midl2026/FINDINGS.md`](../midl2026/FINDINGS.md)
+- Code: [`papers/manuscript/overnight_analysis.py`](../manuscript/overnight_analysis.py)
+- Full log: [`papers/manuscript/RESULTS.tsv`](../manuscript/RESULTS.tsv)
+- Findings: [`papers/manuscript/FINDINGS.md`](../manuscript/FINDINGS.md)

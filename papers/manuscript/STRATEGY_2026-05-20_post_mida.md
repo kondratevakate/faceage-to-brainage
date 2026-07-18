@@ -152,7 +152,7 @@ This is honest, methodologically clean, and *publishable*. Negative result + reu
 | FaceAge fails on textureless MIDA renders | Medium | Acceptable finding. Reframe as "FaceAge requires texture; our IXI pipeline strips texture; therefore IXI face-age is operating on geometry only — and geometry alone is insufficient for within-subject aging detection". This is *the* paper. |
 | MIDA license forbids publishing renders derived from the model | Low | Verify ITIS license terms for derived works. If forbidden, publish summary statistics and Δ values only, not renders |
 | PE1 transplants create unrealistic chimeras the predictors refuse to score | Medium | Smooth label transitions, run on multiple smoothing scales, report sensitivity. If still fails, switch to in-place atrophy / hypertrophy (no transplant, just GM thickness modulation à la Rusak 2022 SynthAtrophy) |
-| Insufficient runway to MIDL2026 deadline | Unknown — depends on actual deadline | Time-box EXP-0 to 3 days. If baseline render gives nonsense, abort to alternative venue (Imaging Neuroscience, MICCAI) without the phantom angle |
+| Insufficient runway after a venue is selected | Unknown until a target and deadline are chosen | Time-box EXP-0 to 3 days. If the baseline render gives nonsense, keep the narrower confound and SIMON story without the phantom angle |
 
 ---
 
@@ -160,7 +160,7 @@ This is honest, methodologically clean, and *publishable*. Negative result + reu
 
 1. **Accept the reframe?** The headline becomes a negative result on the original claim PLUS a phantom-based methodology contribution. The original "face-age and brain-age are correlated" story is gone. Are you OK with that, or do you want to first try a larger cohort (OASIS / Cam-CAN) to see if the correlation survives there?
 
-2. **MIDL2026 deadline?** I do not know the deadline from the repo. If it is before mid-July: do EXP-0 + write up using only the confound + SIMON findings, defer phantom to a follow-up paper. If after August: full PE1 + PE2 + write.
+2. **Venue and schedule?** No target is currently selected. Complete the core confound and SIMON analysis first, then choose a venue whose scope and format fit the evidence rather than designing to an assumed deadline.
 
 3. **Forward MR simulation or mesh-only phantom?** The mesh-only path is faster but cannot use SynthBA (volumetric). The simulation path is more rigorous but adds 3–5 days. Recommendation: start mesh-only for FaceAge, decide on brain-age path after EXP-0.
 
@@ -179,7 +179,7 @@ This is honest, methodologically clean, and *publishable*. Negative result + reu
 - `scripts/mida_label_to_t1w.py` — Bloch forward simulator (only if forward-simulation route chosen)
 - `papers/tables/mida_pe1_transplants.tsv` — PE1 results
 - `papers/tables/mida_pe2_perturbations.tsv` — PE2 results
-- `papers/midl2026/midl-shortpaper.tex` — rewrite Sections 3 + 4 around new structure
+- `papers/manuscript/manuscript.tex` — rewrite Sections 3 + 4 around new structure
 
 ## References checked 2026-05-26
 

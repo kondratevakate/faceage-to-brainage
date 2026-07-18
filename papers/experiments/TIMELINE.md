@@ -11,7 +11,7 @@ top to bottom for the reasoning trail; jump to a card for the numbers.
 
 **2026-03-26** · Kate (KK) opens the repo. Claude scaffolds an initial
 structure: empty notebooks `01..04`, vendor folders for SFCN and FaceAge,
-batch scripts, MIDL paper template. **None of those scaffolded notebooks
+batch scripts, conference paper template. **None of those scaffolded notebooks
 will ever be executed**; they remain stubs (audit at the bottom of
 `README.md`).
 
@@ -100,9 +100,9 @@ BioFace3D-20 landmarks → GPA → EDMA → Ridge regression.
 
 ---
 
-## Phase 4 · MIDL submission — 16 April
+## Phase 4 · first conference submission — 16 April
 
-**2026-04-16 (KK)** — the IXI gap correlation is computed and the MIDL
+**2026-04-16 (KK)** — the IXI gap correlation is computed and the conference
 short paper is assembled.
 
 - **E07** — gap correlation on N=93 paired subjects: **r = +0.308,

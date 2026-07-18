@@ -29,12 +29,12 @@ vendor/FaceAge/models/
 results/renders/
 data/renders/
 
-# papers/ — only tex/bib/cls/pdf in git, not generated data
+# Publication sources and curated figures stay in git; generated data does not.
 papers/**/*.csv
 papers/**/*.png
 papers/**/*.jpg
-papers/midl2026/figures/*
-!papers/midl2026/figures/.gitkeep
+papers/manuscript/figures/*
+!papers/manuscript/figures/.gitkeep
 
 # Python
 __pycache__/

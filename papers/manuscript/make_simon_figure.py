@@ -1,5 +1,5 @@
 """
-Generate Figure 1 for the MIDL 2026 short paper:
+Generate the primary longitudinal figure for the manuscript:
 Chronological age vs predicted age on the SIMON dataset
 for three methods: SynthBA (brain), Face Morphometrics, FaceAge Multiview.
 """

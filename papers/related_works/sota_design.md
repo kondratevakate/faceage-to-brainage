@@ -155,7 +155,7 @@ Minimums seen in accepted papers:
 ## 4. Precedent for same-scan face-vs-brain age comparison
 
 ### 4.1 Is there a direct precedent?
-**No.** A systematic search (PubMed, arXiv 2024–2026, MICCAI/MIDL proceedings, bioRxiv/medRxiv) returns **zero papers** that (a) render a facial surface from a subject's MRI, (b) score it with a photograph-trained face-age model, (c) compare that prediction to a brain-age model run on the same MRI volume.
+**No.** A systematic search (PubMed, arXiv 2024–2026, medical-imaging proceedings, bioRxiv/medRxiv) returns **zero papers** that (a) render a facial surface from a subject's MRI, (b) score it with a photograph-trained face-age model, (c) compare that prediction to a brain-age model run on the same MRI volume.
 
 ### 4.2 Implicit / partial precedents
 - **De-identification / re-identification literature** renders faces from MRI specifically to attack privacy, not to score age. Schwarz et al. *NEJM* 2019; Abramian 2024 (*eClinicalMedicine*); *arXiv:2501.18834* (Pitfalls of defacing, 2025) — 3D rendered faces achieve 50–59% re-identification against public face-recognition models. These prove that **face recognition networks transfer from photo to MRI render** — direct evidence that a face-age network should too.
@@ -229,7 +229,7 @@ Running **all four** is the minimum the brain-age reviewer community will ask fo
 This is publishable even if the correlation between face-gap and brain-gap is weak. A clean finding like "MRI-derived face-age ICC = 0.78 (0.70–0.85) vs brain-age ICC = 0.92 (0.88–0.95) across 36 scanners" is a **novel, quantified, unscooped result** with immediate methodological implications for any downstream use of face-age on neuroimaging data. It is also the most direct answer to the single sceptical question a reviewer will ask: *is the "face-age from MRI" signal stable enough to be a biomarker at all?*
 
 ### 5.8 Closing shape of the paper
-Targeting MIDL 2026 (short paper) or *NeuroImage*: Methods (pipeline + failure-mode log), Reproducibility (SIMON + SRPBS), Correlation (IXI + OpenBHB), Clinical contrast (ADNI/OASIS-3 if accessible). Ship the pipeline as open code + a Docker image — reproducibility is the one thing the Paplhám CVPR 2024 and Dular 2025 critiques make unavoidable.
+Venue not yet selected. Current paper shape: Methods (pipeline + failure-mode log), Reproducibility (SIMON + SRPBS), Correlation (IXI + OpenBHB), Clinical contrast (ADNI/OASIS-3 if accessible). Ship the pipeline as open code + a Docker image — reproducibility is the one thing the Paplhám CVPR 2024 and Dular 2025 critiques make unavoidable.
 
 ---
 
