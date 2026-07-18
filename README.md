@@ -62,6 +62,8 @@ Older/adjacent material:
 
 The repository separates reusable methods from experiment-specific evidence:
 
+- Branch responsibilities are defined in [docs/REPOSITORY_BRANCHES.md](docs/REPOSITORY_BRANCHES.md).
+
 - `scripts/` contains reusable pipeline code.
 - `papers/` contains manuscript and literature context.
 - `project_page/` contains the current claim-facing avatar article: public page,
