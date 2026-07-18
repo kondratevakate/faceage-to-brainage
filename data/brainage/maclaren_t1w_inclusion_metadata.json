@@ -1,0 +1,24 @@
+{
+  "dataset_id": "maclaren_ds000239",
+  "release": "R1.0.1",
+  "generated_utc": "2026-07-18T19:04:10.134794+00:00",
+  "dataset_root_runtime_parameter": "MACLAREN_DATASET_ROOT",
+  "participants_tsv_sha256": "6fed7471b1c0dc1b46a769c06abf489e9156e4e7ebe6de633c476cb373496102",
+  "archive_sha256": "c3a05f7b0dc39208438a3ee4d6a728493c32718dc38a351525b5dca3fef48cf1",
+  "n_scans": 120,
+  "n_participants": 3,
+  "runs_per_participant": 40,
+  "all_included": true,
+  "source_is_defaced": true,
+  "source_is_skull_stripped": false,
+  "documented_neurofm_age_range_years": [
+    40,
+    90
+  ],
+  "observed_ages_years": [
+    26.0,
+    30.0,
+    31.0
+  ],
+  "permitted_claim": "test_retest_robustness_only_not_age_accuracy"
+}
