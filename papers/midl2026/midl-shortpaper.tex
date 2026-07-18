@@ -44,16 +44,18 @@
   chronological age is $+0.148$~yr/yr ($p<10^{-4}$), so $\sim 15\%$ of the
   true aging rate survives.  Neither face method tracks aging in this
   subject (morphometrics slope $+0.04$, $p{=}0.84$; FaceAge slope
-  $-0.14$, $p{=}0.44$); FaceAge additionally carries a $+8.5$~yr bias
-  inherited from its $\geq 60$~yr training cohort.
+  $-0.14$, $p{=}0.44$); FaceAge additionally carries a $+8.5$~yr bias,
+  consistent with substantial photo-to-MRI and training-cohort mismatch.
   %
-  When a brain-age model is reproducible across $36$ scanners (SD
-  $1.26$~yr) but biased by $16$~yr, the failure is training-distribution
-  geometry rather than scanner noise or preprocessing.
+  A brain-age model can therefore be reproducible across $36$ scanners (SD
+  $1.26$~yr) while remaining biased by $16$~yr. This pattern is consistent
+  with training-distribution pull, but the present stress test cannot isolate
+  it from every systematic preprocessing or domain-shift effect.
 \end{abstract}
 
 \begin{keywords}
-  brain age, face age, MRI, longitudinal, reproducibility, out-of-distribution, SIMON
+  brain age, face age, structural MRI, longitudinal imaging, scanner robustness,
+  domain shift, SIMON
 \end{keywords}
 
 % -----------------------------------------------------------------------
@@ -85,6 +87,16 @@ years, as a controlled stress test.  Our goals are: (1) run face-age and
 brain-age estimation on the same T1 volume; and (2) measure whether each
 branch tracks longitudinal aging or collapses to a reproducible but incorrect
 age estimate.
+
+\paragraph{Contributions.}
+This work makes three methodological contributions. First, it defines a
+same-scan paired design that extracts facial and brain-age signals from one
+non-defaced T1 volume. Second, it uses a longitudinal multi-scanner single
+subject to separate scanner repeatability, absolute calibration, and
+within-person temporal sensitivity. Third, it demonstrates empirically that
+repeatability does not imply validity: low prediction variance can coexist
+with large bias, and a detectable temporal slope can coexist with poor
+absolute accuracy.
 
 % -----------------------------------------------------------------------
 \section{Methods}
@@ -230,25 +242,28 @@ visible spread in Figure~\ref{fig:simon}~B is scanner and session
 variance, not aging.  Counter-intuitively, SynthBA --- which looks
 visually frozen --- is the only method whose predictions track the
 subject's aging at a detectable rate, recovering roughly $15\%$ of the
-true slope.  This suggests that the longitudinal aging signal in T1 MRI
-lives primarily in the parenchyma rather than in the facial surface as
-captured by our current render + regression pipeline.
+true slope. Under the tested pipelines, the brain branch therefore retains
+more detectable longitudinal signal than the current facial surface render
+and regression branches; this single-subject result does not establish that
+aging information generally resides primarily in one tissue compartment.
 
 \paragraph{Why SynthBA produces a near-constant prediction.}
-The $16.2$~yr bias is consistent with training-distribution geometry, not
-with a preprocessing failure (Figure~\ref{fig:training_dist}).  SynthBA's
+The $16.2$~yr bias is consistent with training-distribution geometry, although
+this observational stress test cannot exclude all systematic preprocessing
+or domain-shift effects (Figure~\ref{fig:training_dist}).  SynthBA's
 training cohort is bimodal with peaks at $25$ and $74$~yr; the SIMON
 subject ($29.6$--$46.4$~yr) sits in the valley between these peaks, and a
 regressor minimising squared error in such a setting is pulled toward the
 nearest training mode --- here the $25$-yr peak --- which matches the
-observed mean prediction ($27.4 \pm 1.26$~yr).  Three observations rule out a preprocessing
-artefact: (i) SynthStrip outputs pass visual inspection on every scan;
+observed mean prediction ($27.4 \pm 1.26$~yr). Three observations make a gross
+preprocessing failure less likely without ruling out systematic bias:
+(i) SynthStrip outputs pass visual inspection on every scan;
 (ii) prediction variance is small (SD $1.26$~yr across $36$ scanners),
 inconsistent with corrupted input which would inflate variance; and
 (iii) the slope of predictions against chronological age is statistically
-significant ($+0.148$ yr/yr, $p<10^{-4}$), so the model does perceive
-parenchyma aging --- it simply cannot escape its training prior.
-The implication is that SynthBA on an out-of-distribution subject behaves
+significant ($+0.148$ yr/yr, $p<10^{-4}$), so the predictions retain a
+detectable temporal association despite the large offset.
+In this out-of-distribution subject, SynthBA therefore behaves
 like a near-constant but \emph{not blind} estimator: low variance, large
 bias, residual but detectable longitudinal sensitivity.
 
