@@ -43,11 +43,17 @@ remain outside Git.
 - **Maclaren ds000239:** 3 participants scanned 40 times, small and openly
   licensed. Release R1.0.1 was downloaded and integrity-checked on 2026-07-18;
   all 130 extracted files are covered by a verified external SHA-256 manifest,
-  including 120 T1w scans. The next gate is the subject-session inclusion table
-  and locked analysis. Use for within-scanner repeat noise and perturbation
-  checks.
+  including 120 T1w scans. The frozen HD-BET and official NeuroFM-S analysis is
+  complete. The age head failed its predeclared repeatability screen; see the
+  [Maclaren results](brainage/maclaren_results.md). All three participants are
+  below NeuroFM's documented age range, so this remains a robustness result.
 - **BNU1 test-retest:** 57 young adults with two T1 sessions about six weeks
-  apart. Use for participant-level repeatability.
+  apart. The 2026-07-18 FCP/INDI S3 snapshot is acquired and hash-verified in
+  external storage: 107 T1 scans, 49 QC-passed pairs, one malformed second
+  session excluded, and seven baseline-only participants. The frozen cohort is
+  documented in the [BNU1 protocol](brainage/bnu1_protocol.md). Use for
+  participant-level repeatability, not NeuroFM age accuracy: ages 19-30 are
+  below its documented range.
 - **IXI:** nearly 600 healthy multi-site adults with demographics and raw T1.
   Verify face coverage and model-training overlap before assigning a paired or
   external role.
@@ -145,9 +151,11 @@ A dataset enters analysis only when all items are resolved:
 
 ## Immediate deliverables
 
-1. Freeze the Maclaren subject-session inclusion table and run the locked
-   short-interval repeatability protocol.
-2. Download and hash BNU1 in external controlled storage.
+1. **Completed:** Maclaren inclusion, HD-BET QC, NeuroFM-S repeatability, and
+   perturbation analysis are frozen and reported. The age output failed the
+   predefined robustness gate; this is not an age-accuracy result.
+2. **Acquisition completed:** BNU1 is hash-verified and its 49-pair QC cohort is
+   frozen. Run HD-BET and the complete official model pipelines next.
 3. Audit the local IXI release for demographics, face coverage, and overlap with
    each candidate model.
 4. Submit NoW, FaceBase, Headspace, FaceScape, CamCAN, OASIS-3, and NKI-RS access

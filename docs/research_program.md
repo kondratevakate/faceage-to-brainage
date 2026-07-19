@@ -98,6 +98,21 @@ Kate n=1, SIMON n=1, and SRPBS travelling subjects remain development or
 robustness resources. They do not establish population accuracy, prevalence,
 diagnosis, or clinical utility.
 
+## Current execution status
+
+| Branch/gate | Current evidence | Status |
+|---|---|---|
+| FaceAge independent accuracy and metric geometry | Protocols and literature review are frozen; current Case A and SIMON outputs remain development/QC | Not yet tested on a locked external cohort |
+| BrainAge test-retest robustness | Official NeuroFM-S completed on 120 Maclaren scans after HD-BET; pairwise age-difference p95 was 5.98 years against a 5-year screen | Failed the predeclared screen; out-of-range robustness only |
+| BrainAge perturbation robustness | 66/69 locked perturbations succeeded; all three valid 1 mm geometries failed the official conform path | Geometry-dependent preprocessing failure retained in denominator |
+| BNU1 repeatability cohort | 107 T1 scans acquired and verified; 49 QC-passed pairs frozen | Ready for model-specific preprocessing; not an age-accuracy cohort |
+| BrainAge independent accuracy | No unseen, in-range cohort has completed the locked comparison | Blocking any calibration or biological-age claim |
+| Paired FaceAge-BrainAge association | Branch-specific external gates are incomplete | Holdout remains closed |
+
+This table reports the highest evidence stage reached, not a model ranking.
+The detailed Maclaren result and its limitations are in
+[the robustness report](brainage/maclaren_results.md).
+
 ## Confirmatory paired analysis
 
 ### Population and split

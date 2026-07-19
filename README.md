@@ -112,6 +112,23 @@ and included scans differ.
 Long-format values and branch-specific sample counts are available in
 [`data/kate_n1_2026/simon_age_predictions_by_model_long.csv`](data/kate_n1_2026/simon_age_predictions_by_model_long.csv).
 
+### Maclaren NeuroFM repeatability
+
+<p align="center">
+  <img src="docs/brainage/figures/maclaren_neurofm_robustness.png"
+       alt="NeuroFM-S repeatability and perturbation robustness on Maclaren"
+       width="96%" />
+</p>
+
+Official NeuroFM-S inference completed on all 120 HD-BET Maclaren scans. The
+pairwise absolute age-difference p95 was 5.98 years and missed the predeclared
+5-year robustness screen. The largest fixed-grid scale response was 5.12
+years, while all three 1 mm resolution cases failed the official conform path.
+The three participants were aged 26-31, below NeuroFM's documented 40-90
+range, so these are repeatability and numerical-sensitivity results rather than
+age-accuracy, calibration, or biological-age evidence. See the
+[complete report](docs/brainage/maclaren_results.md).
+
 ### Evaluation contract
 
 <p align="center">
@@ -149,7 +166,8 @@ age biomarker.
 | Are repeated photos processable? | Four Case A photos produce usable crops, landmarks, and rough meshes | Pipeline/QC feasibility for this subject |
 | Is the current avatar anatomically accurate? | MRI facial target remains segmentation-limited | **Blocked**; no anatomical accuracy claim |
 | Do tested brain-age outputs follow SIMON's age? | Direction and slope vary by model/preprocessing; biases remain large | Robustness and domain-shift evidence only |
-| Does NeuroFM validate segmentation or morphometry? | Pretrained predictions/features can be extracted | **No**; it is a separate foundation-model application branch |
+| Is NeuroFM-S repeatable on Maclaren? | It completed 120/120 scans but age-difference p95 was 5.98 years against a 5-year screen | Failed the predeclared screen; three out-of-range participants only |
+| Does NeuroFM validate segmentation or morphometry? | Predictions/features can be extracted and identity is locally retained in Maclaren embeddings | **No**; feature stability is technical QC in a separate foundation-model application branch |
 | Is this a clinical biological-age estimate? | No population calibration or outcome validation is present | **No clinical or diagnostic interpretation** |
 
 ## Pipeline
@@ -175,6 +193,9 @@ pytest -q
 - Batch and analysis scripts: [`scripts/`](scripts/)
 - Avatar QC utilities: [`scripts/photo_mri_avatar/`](scripts/photo_mri_avatar/)
 - NeuroFM application scripts: [`experiments/kate_n1_2026/`](experiments/kate_n1_2026/)
+- Locked Maclaren NeuroFM scripts: [`experiments/brainage_maclaren/`](experiments/brainage_maclaren/)
+- Maclaren robustness report: [`docs/brainage/maclaren_results.md`](docs/brainage/maclaren_results.md)
+- Frozen BNU1 repeatability protocol: [`docs/brainage/bnu1_protocol.md`](docs/brainage/bnu1_protocol.md)
 - Model and preprocessing status: [`data/kate_n1_2026/method_status_matrix.csv`](data/kate_n1_2026/method_status_matrix.csv)
 - Scientific reports: [`docs/kate_n1_2026/`](docs/kate_n1_2026/)
 - FaceAge evidence and metrics: [`docs/faceage/`](docs/faceage/)
