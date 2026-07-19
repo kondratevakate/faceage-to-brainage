@@ -1,0 +1,48 @@
+{
+  "dataset_id": "maclaren_ds000239",
+  "release": "R1.0.1",
+  "model": "rockNroll87q/NeuroFM neurofm-s",
+  "source_commit": "d4e3c463910d939a681d24ebdeb26d44dea6878f",
+  "weights_sha256": "8015a0552214b87e43b5462b6c183f8d0da2d957d7ae11ed09a2e3355f5e991f",
+  "skullstrip": "HD-BET 2.0.1 CPU disable_tta low-memory wrapper",
+  "n_predictions": 120,
+  "latent_shape": [
+    120,
+    160
+  ],
+  "latent_dimensions_declared_by_registry": 161,
+  "latent_dimensions_observed_at_multihead_output": 160,
+  "latent_dimension_contract_note": "At commit d4e3c46 the NeuroFM-S registry declares 161 dimensions, but the loaded model's multihead_output layer and released inference output have 160. The executed 160-dimensional representation is analyzed without modifying upstream code or weights.",
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 20260718,
+  "schema_validation": {
+    "schema_status": "pass",
+    "code_level_keys": [
+      "brain_age",
+      "sex",
+      "ventricle_volume",
+      "brain_volume"
+    ],
+    "direct_output": [
+      55.10824203491211,
+      1.0,
+      19022.029296875,
+      1452974.5
+    ],
+    "named_summary_output": [
+      55.10824203491211,
+      1.0,
+      19022.029296875,
+      1452974.5
+    ],
+    "max_absolute_difference": 0.0,
+    "weights_sha256": "8015a0552214b87e43b5462b6c183f8d0da2d957d7ae11ed09a2e3355f5e991f",
+    "input_sha256": "b5677e21d8867481b7a377988672ac0b8e27a18e35be6c851caad6fedd1a3410",
+    "interpretation": "This validates output naming and execution only. It does not validate age, sex, segmentation, morphometry, or health claims."
+  },
+  "results_summary_sha256": "8c84d55fd64e258c53654455896b7d0bd38786594b93ea4d42c17389ebbb8e31",
+  "latent_array_sha256": "7fdac8924ee8b62140eb70c1a4d0c49a4ccba5af0657788fa3abdcb2d37794f1",
+  "latent_index_sha256": "bf884f379da9a9b1c00955b175cfb26a86cd9231b4542bf843ed41afd7d0ffb4",
+  "permitted_claim": "B2_test_retest_robustness_conditional_on_three_out_of_range_participants",
+  "critical_interpretation": "Ages 26-31 are below NeuroFM's documented 40-90 range. No age-accuracy, calibration, biological-age, segmentation, morphometry, diagnostic, or clinical claim is permitted. Feature stability is technical QC only."
+}

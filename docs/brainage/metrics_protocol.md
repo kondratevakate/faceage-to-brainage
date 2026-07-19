@@ -115,7 +115,10 @@ At reviewed commit `d4e3c46`:
 - official predictor schema in code is `brain_age`, `sex`,
   `ventricle_volume`, `brain_volume`;
 - supported age range is documented as 40-90 years;
-- feature dimensions are 161, 256, and 512 for S, M, and L.
+- the registry declares feature dimensions 161, 256, and 512 for S, M, and L;
+  at the executed commit, however, the loaded NeuroFM-S `multihead_output` layer
+  is 160-dimensional because `num_neck_layers=0`. Record both declared and
+  observed dimensions and analyze the unmodified executed representation.
 
 Before cohort inference, run a schema test that compares the named summary CSV
 columns with direct API output. Do not infer positional order from README prose.

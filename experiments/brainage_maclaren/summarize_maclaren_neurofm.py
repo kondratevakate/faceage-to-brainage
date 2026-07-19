@@ -19,6 +19,8 @@ RUNS = list(range(1, 41))
 BOOTSTRAP_REPLICATES = 2000
 BOOTSTRAP_SEED = 20260718
 EXPECTED_WEIGHTS_SHA256 = "8015a0552214b87e43b5462b6c183f8d0da2d957d7ae11ed09a2e3355f5e991f"
+DECLARED_LATENT_DIMENSIONS = 161
+EXECUTED_LATENT_DIMENSIONS = 160
 SCALAR_OUTPUTS = [
     ("predicted_brain_age_years", "years"),
     ("predicted_ventricle_volume_mm3", "mm3"),
@@ -299,9 +301,10 @@ def summarize_features(
 ) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
     embeddings = np.asarray(np.load(latent_array_path), dtype=float)
     index_rows = read_csv(latent_index_path)
-    if embeddings.shape != (120, 161) or len(index_rows) != 120:
+    if embeddings.shape != (120, EXECUTED_LATENT_DIMENSIONS) or len(index_rows) != 120:
         raise ValueError(
-            f"Expected latent shape (120, 161) and 120 index rows, found "
+            f"Expected executed latent shape (120, {EXECUTED_LATENT_DIMENSIONS}) "
+            f"and 120 index rows, found "
             f"{embeddings.shape} and {len(index_rows)}"
         )
     if not np.isfinite(embeddings).all():
@@ -503,6 +506,14 @@ def main() -> None:
         "skullstrip": "HD-BET 2.0.1 CPU disable_tta low-memory wrapper",
         "n_predictions": len(predictions),
         "latent_shape": list(np.load(args.latent_array, mmap_mode="r").shape),
+        "latent_dimensions_declared_by_registry": DECLARED_LATENT_DIMENSIONS,
+        "latent_dimensions_observed_at_multihead_output": EXECUTED_LATENT_DIMENSIONS,
+        "latent_dimension_contract_note": (
+            "At commit d4e3c46 the NeuroFM-S registry declares 161 dimensions, but "
+            "the loaded model's multihead_output layer and released inference output "
+            "have 160. The executed 160-dimensional representation is analyzed "
+            "without modifying upstream code or weights."
+        ),
         "bootstrap_replicates": BOOTSTRAP_REPLICATES,
         "bootstrap_seed": BOOTSTRAP_SEED,
         "schema_validation": schema,

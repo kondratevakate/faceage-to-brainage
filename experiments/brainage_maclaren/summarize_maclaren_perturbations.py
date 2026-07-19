@@ -14,6 +14,10 @@ from pathlib import Path
 import numpy as np
 
 
+DECLARED_LATENT_DIMENSIONS = 161
+EXECUTED_LATENT_DIMENSIONS = 160
+
+
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open("r", newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
@@ -57,37 +61,82 @@ def cosine(first: np.ndarray, second: np.ndarray) -> float:
 
 
 def summarize_group(group: list[dict[str, str]], label: str, value: str) -> dict[str, object]:
-    age_delta = np.asarray([number(row["brain_age_delta_years"]) for row in group])
-    ventricle_pct = np.asarray([number(row["ventricle_volume_delta_fraction"]) for row in group])
-    brain_pct = np.asarray([number(row["brain_volume_delta_fraction"]) for row in group])
-    latent_cosine = np.asarray([number(row["latent_cosine_to_baseline"]) for row in group])
-    return {
+    successful = [row for row in group if row["status"] == "ok"]
+    age_delta = np.asarray(
+        [number(row["brain_age_delta_years"]) for row in successful], dtype=float
+    )
+    ventricle_pct = np.asarray(
+        [number(row["ventricle_volume_delta_fraction"]) for row in successful],
+        dtype=float,
+    )
+    brain_pct = np.asarray(
+        [number(row["brain_volume_delta_fraction"]) for row in successful], dtype=float
+    )
+    latent_cosine = np.asarray(
+        [number(row["latent_cosine_to_baseline"]) for row in successful], dtype=float
+    )
+    attempted = len(group)
+    result: dict[str, object] = {
         "grouping": label,
         "group": value,
-        "n_rows": len(group),
+        "n_attempted": attempted,
+        "n_successful": len(successful),
+        "n_failed": attempted - len(successful),
+        "failure_rate": text((attempted - len(successful)) / attempted),
         "n_participants": len({row["participant_id"] for row in group}),
-        "mean_signed_brain_age_delta_years": text(float(age_delta.mean())),
-        "mean_abs_brain_age_delta_years": text(float(np.mean(np.abs(age_delta)))),
-        "p95_abs_brain_age_delta_years": text(float(np.percentile(np.abs(age_delta), 95))),
-        "max_abs_brain_age_delta_years": text(float(np.max(np.abs(age_delta)))),
-        "fraction_age_delta_within_2_year_margin": text(float(np.mean(np.abs(age_delta) <= 2.0))),
-        "mean_abs_ventricle_volume_delta_fraction": text(
-            float(np.mean(np.abs(ventricle_pct)))
+        "mean_signed_brain_age_delta_years": "",
+        "mean_abs_brain_age_delta_years": "",
+        "p95_abs_brain_age_delta_years": "",
+        "max_abs_brain_age_delta_years": "",
+        "fraction_attempted_age_delta_within_2_year_margin": text(
+            float(np.count_nonzero(np.abs(age_delta) <= 2.0) / attempted)
         ),
-        "max_abs_ventricle_volume_delta_fraction": text(float(np.max(np.abs(ventricle_pct)))),
-        "fraction_ventricle_delta_within_5pct_margin": text(
-            float(np.mean(np.abs(ventricle_pct) <= 0.05))
+        "mean_abs_ventricle_volume_delta_fraction": "",
+        "max_abs_ventricle_volume_delta_fraction": "",
+        "fraction_attempted_ventricle_delta_within_5pct_margin": text(
+            float(np.count_nonzero(np.abs(ventricle_pct) <= 0.05) / attempted)
         ),
-        "mean_abs_brain_volume_delta_fraction": text(float(np.mean(np.abs(brain_pct)))),
-        "max_abs_brain_volume_delta_fraction": text(float(np.max(np.abs(brain_pct)))),
-        "fraction_brain_volume_delta_within_5pct_margin": text(
-            float(np.mean(np.abs(brain_pct) <= 0.05))
+        "mean_abs_brain_volume_delta_fraction": "",
+        "max_abs_brain_volume_delta_fraction": "",
+        "fraction_attempted_brain_volume_delta_within_5pct_margin": text(
+            float(np.count_nonzero(np.abs(brain_pct) <= 0.05) / attempted)
         ),
-        "sex_class_flips": sum(int(row["sex_class_flip"]) for row in group),
-        "median_latent_cosine_to_baseline": text(float(np.median(latent_cosine))),
+        "sex_class_flips": sum(int(row["sex_class_flip"]) for row in successful),
+        "median_latent_cosine_to_baseline": "",
         "equivalence_claim": "not_permitted_n_participants_3",
         "claim_level": "numerical_robustness_probe_only",
     }
+    if successful:
+        result.update(
+            {
+                "mean_signed_brain_age_delta_years": text(float(age_delta.mean())),
+                "mean_abs_brain_age_delta_years": text(
+                    float(np.mean(np.abs(age_delta)))
+                ),
+                "p95_abs_brain_age_delta_years": text(
+                    float(np.percentile(np.abs(age_delta), 95))
+                ),
+                "max_abs_brain_age_delta_years": text(
+                    float(np.max(np.abs(age_delta)))
+                ),
+                "mean_abs_ventricle_volume_delta_fraction": text(
+                    float(np.mean(np.abs(ventricle_pct)))
+                ),
+                "max_abs_ventricle_volume_delta_fraction": text(
+                    float(np.max(np.abs(ventricle_pct)))
+                ),
+                "mean_abs_brain_volume_delta_fraction": text(
+                    float(np.mean(np.abs(brain_pct)))
+                ),
+                "max_abs_brain_volume_delta_fraction": text(
+                    float(np.max(np.abs(brain_pct)))
+                ),
+                "median_latent_cosine_to_baseline": text(
+                    float(np.median(latent_cosine))
+                ),
+            }
+        )
+    return result
 
 
 def main() -> None:
@@ -105,12 +154,18 @@ def main() -> None:
     index_rows = read_csv(args.latent_index)
     baseline_predictions = read_csv(args.baseline_predictions)
     embeddings = np.asarray(np.load(args.latent_array), dtype=float)
-    if len(manifest) != 72 or len(results) != 72 or len(index_rows) != 72:
+    if len(manifest) != 72:
         raise ValueError(
-            f"Expected 72 manifest/results/index rows, found "
-            f"{len(manifest)}/{len(results)}/{len(index_rows)}"
+            f"Expected 72 manifest rows, found {len(manifest)}"
         )
-    if embeddings.shape != (72, 161) or not np.isfinite(embeddings).all():
+    if len(results) != len(index_rows):
+        raise ValueError(
+            f"Results/index row mismatch: {len(results)}/{len(index_rows)}"
+        )
+    if embeddings.shape != (
+        len(index_rows),
+        EXECUTED_LATENT_DIMENSIONS,
+    ) or not np.isfinite(embeddings).all():
         raise ValueError(f"Unexpected perturbation latent array: {embeddings.shape}")
 
     manifest_by_input = {row["input"]: row for row in manifest}
@@ -118,13 +173,14 @@ def main() -> None:
     embedding_by_input = {
         row["input"]: embeddings[index] for index, row in enumerate(index_rows)
     }
-    input_maps = (manifest_by_input, results_by_input, embedding_by_input)
-    if any(len(mapping) != 72 for mapping in input_maps):
-        raise ValueError("Duplicate input path in perturbation manifest, results, or latent index")
-    if not (
-        set(manifest_by_input) == set(results_by_input) == set(embedding_by_input)
-    ):
-        raise ValueError("Perturbation manifest, results, and latent index do not align")
+    if len(manifest_by_input) != 72 or len(results_by_input) != len(results):
+        raise ValueError("Duplicate input path in perturbation manifest or results")
+    if len(embedding_by_input) != len(index_rows):
+        raise ValueError("Duplicate input path in perturbation latent index")
+    if set(results_by_input) != set(embedding_by_input):
+        raise ValueError("Perturbation results and latent index do not align")
+    if not set(results_by_input).issubset(manifest_by_input):
+        raise ValueError("Perturbation outputs contain an input outside the manifest")
 
     baseline_results: dict[str, dict[str, str]] = {}
     baseline_embeddings: dict[str, np.ndarray] = {}
@@ -169,6 +225,36 @@ def main() -> None:
 
     output_rows: list[dict[str, str]] = []
     for input_path, source in manifest_by_input.items():
+        if input_path not in results_by_input:
+            output_rows.append(
+                {
+                    "participant_id": source["participant_id"],
+                    "run_index": source["run_index"],
+                    "relative_path": source["relative_path"],
+                    "base_input_sha256": source["base_input_sha256"],
+                    "perturbation": source["perturbation"],
+                    "perturbation_family": source["perturbation_family"],
+                    "perturbation_level": source["perturbation_level"],
+                    "perturbation_axis": source["perturbation_axis"],
+                    "perturbation_unit": source["perturbation_unit"],
+                    "input_sha256": source["input_sha256"],
+                    "status": "failed",
+                    "failure_reason": "official_neurofm_no_summary_output",
+                    "predicted_brain_age_years": "",
+                    "brain_age_delta_years": "",
+                    "predicted_sex_binary": "",
+                    "sex_class_flip": "",
+                    "predicted_ventricle_volume_mm3": "",
+                    "ventricle_volume_delta_mm3": "",
+                    "ventricle_volume_delta_fraction": "",
+                    "predicted_brain_volume_mm3": "",
+                    "brain_volume_delta_mm3": "",
+                    "brain_volume_delta_fraction": "",
+                    "latent_cosine_to_baseline": "",
+                    "claim_level": "numerical_robustness_probe_only",
+                }
+            )
+            continue
         result = results_by_input[input_path]
         participant = source["participant_id"]
         baseline = baseline_results[participant]
@@ -195,6 +281,8 @@ def main() -> None:
                 "perturbation_axis": source["perturbation_axis"],
                 "perturbation_unit": source["perturbation_unit"],
                 "input_sha256": source["input_sha256"],
+                "status": "ok",
+                "failure_reason": "",
                 "predicted_brain_age_years": text(age),
                 "brain_age_delta_years": text(age - baseline_age),
                 "predicted_sex_binary": text(sex),
@@ -240,7 +328,33 @@ def main() -> None:
         "source_commit": "d4e3c463910d939a681d24ebdeb26d44dea6878f",
         "n_rows": len(output_rows),
         "n_nonbaseline_rows": len(nonbaseline),
+        "n_successful": sum(row["status"] == "ok" for row in output_rows),
+        "n_failed": sum(row["status"] == "failed" for row in output_rows),
+        "failed_cases": [
+            {
+                "participant_id": row["participant_id"],
+                "relative_path": row["relative_path"],
+                "perturbation": row["perturbation"],
+                "reason": row["failure_reason"],
+            }
+            for row in output_rows
+            if row["status"] == "failed"
+        ],
+        "observed_failure_note": (
+            "All three resolution_1mm inputs were 236x270x270 at 1 mm RAS. "
+            "The official NeuroFM fast conform path attempted padding/reorientation, "
+            "could not crop axes larger than 256, and therefore supplied an "
+            "incompatible shape to the model."
+        ),
         "n_participants": 3,
+        "latent_shape": list(embeddings.shape),
+        "latent_dimensions_declared_by_registry": DECLARED_LATENT_DIMENSIONS,
+        "latent_dimensions_observed_at_multihead_output": EXECUTED_LATENT_DIMENSIONS,
+        "latent_dimension_contract_note": (
+            "At commit d4e3c46 NeuroFM-S declares 161 dimensions but executes a "
+            "160-dimensional multihead_output layer; the upstream model and weights "
+            "were not modified."
+        ),
         "input_manifest_sha256": sha256_file(args.input_manifest),
         "results_summary_sha256": sha256_file(args.results_summary),
         "latent_array_sha256": sha256_file(args.latent_array),

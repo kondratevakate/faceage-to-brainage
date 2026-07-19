@@ -34,6 +34,24 @@ assert PERTURBATION_SPEC is not None and PERTURBATION_SPEC.loader is not None
 PERTURBATION_MODULE = importlib.util.module_from_spec(PERTURBATION_SPEC)
 PERTURBATION_SPEC.loader.exec_module(PERTURBATION_MODULE)
 
+PERTURBATION_SUMMARY_SCRIPT = (
+    Path(__file__).resolve().parents[1]
+    / "experiments"
+    / "brainage_maclaren"
+    / "summarize_maclaren_perturbations.py"
+)
+PERTURBATION_SUMMARY_SPEC = importlib.util.spec_from_file_location(
+    "summarize_maclaren_perturbations", PERTURBATION_SUMMARY_SCRIPT
+)
+assert (
+    PERTURBATION_SUMMARY_SPEC is not None
+    and PERTURBATION_SUMMARY_SPEC.loader is not None
+)
+PERTURBATION_SUMMARY_MODULE = importlib.util.module_from_spec(
+    PERTURBATION_SUMMARY_SPEC
+)
+PERTURBATION_SUMMARY_SPEC.loader.exec_module(PERTURBATION_SUMMARY_MODULE)
+
 
 class RepeatabilityEstimatorTests(unittest.TestCase):
     def test_perfect_repeated_agreement_has_icc_one_and_zero_within_sd(self):
@@ -79,6 +97,26 @@ class RepeatabilityEstimatorTests(unittest.TestCase):
                 result = PERTURBATION_MODULE.create_perturbation(image, spec)
                 self.assertEqual(result.get_data_dtype(), np.dtype(np.float32))
                 self.assertTrue(np.isfinite(result.get_fdata()).all())
+
+    def test_failed_perturbations_remain_in_summary_denominator(self):
+        failed_rows = [
+            {
+                "participant_id": f"sub-0{index}",
+                "status": "failed",
+                "sex_class_flip": "",
+            }
+            for index in range(1, 4)
+        ]
+        result = PERTURBATION_SUMMARY_MODULE.summarize_group(
+            failed_rows, "perturbation", "resolution_1mm"
+        )
+        self.assertEqual(result["n_attempted"], 3)
+        self.assertEqual(result["n_successful"], 0)
+        self.assertEqual(result["failure_rate"], "1")
+        self.assertEqual(
+            result["fraction_attempted_age_delta_within_2_year_margin"], "0"
+        )
+        self.assertEqual(result["mean_abs_brain_age_delta_years"], "")
 
 
 if __name__ == "__main__":

@@ -58,6 +58,12 @@ outside Git.
 6. Outputs requested: `brain_health,latent`, using summary mode to avoid
    per-volume output files.
 
+The NeuroFM-S registry at the locked commit declares a 161-dimensional latent
+space, but the loaded model's `multihead_output` layer is 160-dimensional:
+`num_neck_layers=0` means the declared 161-unit neck is not instantiated. The
+pipeline records this upstream documentation/architecture discrepancy and uses
+the unmodified 160-dimensional output produced by the released code and weights.
+
 HD-BET outputs, masks, logs, NeuroFM aggregate arrays, and perturbation NIfTI
 files are external artifacts. Git receives only scripts, source hashes, compact
 tables, metadata, and the scientific report.
@@ -131,10 +137,10 @@ Maclaren J, Han Z, Vos SB, Fischbein N, Bammer R. Reliability of brain volume
 measurements: a test-retest dataset. *Scientific Data*. 2014;1:140037.
 [doi:10.1038/sdata.2014.37](https://doi.org/10.1038/sdata.2014.37).
 
-Hoopes A, Mora JS, Dalca AV, Fischl B, Hoffmann M. SynthStrip: skull-stripping
-for any brain image. *NeuroImage*. 2022;260:119474.
-[doi:10.1016/j.neuroimage.2022.119474](https://doi.org/10.1016/j.neuroimage.2022.119474).
+Isensee F, et al. Automated brain extraction of multisequence MRI using
+artificial neural networks. *Human Brain Mapping*. 2019;40:4952-4964.
+[doi:10.1002/hbm.24750](https://doi.org/10.1002/hbm.24750).
 
-The executed pipeline uses HD-BET, not SynthStrip; the SynthStrip citation is
-retained only as the alternative reviewed skull-strip route. HD-BET must be
-cited from the exact package documentation in any resulting manuscript.
+The executed package version and checkpoint hash are recorded separately from
+the publication because the local pipeline uses HD-BET 2.0.1, whereas the paper
+describes the original validated method.
