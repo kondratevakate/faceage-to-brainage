@@ -43,9 +43,10 @@ outside Git.
    the predictor architecture and checkpoint are unchanged. Inputs run in
    deterministic batches of five with status persisted after each batch so an
    interrupted CPU run can resume without redefining inclusion.
-2. Inspect success/failure, mask fraction, shape, voxel size, and hashes. A
-   deterministic external montage is used for visual skull-strip QC but is not
-   committed because it is an MRI derivative.
+2. Inspect success/failure, mask fraction, shape, voxel size, hashes, connected
+   components, largest-component fraction, bounding box, and volume-border
+   contact. A deterministic external montage is used for visual skull-strip QC
+   but is not committed because it is an MRI derivative.
 3. `rockNroll87q/NeuroFM` commit
    `d4e3c463910d939a681d24ebdeb26d44dea6878f`, NeuroFM-S, weight SHA-256
    `8015a0552214b87e43b5462b6c183f8d0da2d957d7ae11ed09a2e3355f5e991f`.

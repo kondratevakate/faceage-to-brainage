@@ -1,0 +1,21 @@
+{
+  "dataset_id": "maclaren_ds000239",
+  "release": "R1.0.1",
+  "selection_rule": "run_index in {1,20,40} for each participant",
+  "n_scans": 9,
+  "n_topology_scans": 120,
+  "n_multicomponent_masks": 2,
+  "n_masks_largest_component_fraction_below_0p995": 0,
+  "n_masks_touching_volume_border": 0,
+  "mask_cleanup_applied": false,
+  "cleanup_decision": "Retain official HD-BET masks. Largest-component filtering would only remove islands of at most 21 voxels and would not address connected anterior inclusions; no outcome-informed cleanup is introduced.",
+  "views": [
+    "voxel axis 0",
+    "voxel axis 1",
+    "voxel axis 2"
+  ],
+  "slice_rule": "rounded center of mass of the binary HD-BET mask",
+  "overlay": "HD-BET binary-mask contour on source T1w",
+  "status_sha256": "fc6879eb44bf68934c17c6c9f71f1247d4f523db55934fd763416016e9c64607",
+  "interpretation": "This montage supports visual skull-strip QC only. It is not ground-truth segmentation validation or morphometric validation."
+}

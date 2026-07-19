@@ -15,6 +15,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import nibabel as nib  # noqa: E402
 import numpy as np  # noqa: E402
+from scipy import ndimage  # noqa: E402
 
 
 DEFAULT_STATUS = Path(
@@ -53,19 +54,60 @@ def oriented_slice(data: np.ndarray, axis: int, index: int) -> np.ndarray:
     return np.rot90(np.take(data, index, axis=axis))
 
 
+def mask_topology(row: dict[str, str]) -> dict[str, object]:
+    mask_path = Path(row["mask_path"])
+    mask_data = np.asanyarray(nib.load(str(mask_path)).dataobj)
+    mask = mask_data > 0
+    unique_mask = np.unique(mask_data)
+    if not set(unique_mask.tolist()).issubset({0, 1}) or not np.any(mask):
+        raise ValueError(f"Mask is empty or non-binary: {mask_path}")
+    labels, n_components = ndimage.label(mask, structure=np.ones((3, 3, 3)))
+    counts = np.bincount(labels.ravel())[1:]
+    counts.sort()
+    coordinates = np.argwhere(mask)
+    lower = coordinates.min(axis=0)
+    upper = coordinates.max(axis=0)
+    widths = upper - lower + 1
+    touches_border = any(
+        lower[axis] == 0 or upper[axis] == mask.shape[axis] - 1 for axis in range(3)
+    )
+    return {
+        "participant_id": row["participant_id"],
+        "run_index": row["run_index"],
+        "relative_path": row["relative_path"],
+        "mask_sha256": row["mask_sha256"],
+        "mask_nonzero_voxels": int(mask.sum()),
+        "mask_fraction": row["mask_fraction"],
+        "components_26_connected": int(n_components),
+        "largest_component_voxels": int(counts[-1]),
+        "largest_component_fraction": f"{float(counts[-1] / mask.sum()):.8g}",
+        "second_component_voxels": int(counts[-2]) if counts.size > 1 else 0,
+        "bbox_width_axis0": int(widths[0]),
+        "bbox_width_axis1": int(widths[1]),
+        "bbox_width_axis2": int(widths[2]),
+        "touches_volume_border": int(touches_border),
+        "claim_level": "skullstrip_input_qc_not_segmentation_validation",
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--status", type=Path, default=DEFAULT_STATUS)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument(
+        "--compact-output-dir", type=Path, default=Path("data/brainage")
+    )
     args = parser.parse_args()
 
     rows = read_csv(args.status)
+    successful = [row for row in rows if row["status"] == "ok"]
+    if len(successful) != 120:
+        raise ValueError(f"Expected 120 successful masks, found {len(successful)}")
     selected = [
         row
-        for row in rows
+        for row in successful
         if row["participant_id"] in PARTICIPANTS
         and int(row["run_index"]) in RUNS
-        and row["status"] == "ok"
     ]
     selected.sort(key=lambda row: (row["participant_id"], int(row["run_index"])))
     expected = {(participant, run) for participant in PARTICIPANTS for run in RUNS}
@@ -74,6 +116,16 @@ def main() -> None:
         raise ValueError(f"Expected nine successful locked QC scans, found {len(selected)}")
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    topology_rows = [mask_topology(row) for row in successful]
+    topology_rows.sort(
+        key=lambda row: (str(row["participant_id"]), int(row["run_index"]))
+    )
+    write_csv(args.output_dir / "all_mask_topology_qc.csv", topology_rows)
+    args.compact_output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(
+        args.compact_output_dir / "maclaren_skullstrip_topology_qc.csv",
+        topology_rows,
+    )
     qc_rows: list[dict[str, object]] = []
     axis_labels = ["voxel axis 0", "voxel axis 1", "voxel axis 2"]
 
@@ -149,6 +201,23 @@ def main() -> None:
         "release": "R1.0.1",
         "selection_rule": "run_index in {1,20,40} for each participant",
         "n_scans": len(qc_rows),
+        "n_topology_scans": len(topology_rows),
+        "n_multicomponent_masks": sum(
+            int(row["components_26_connected"]) > 1 for row in topology_rows
+        ),
+        "n_masks_largest_component_fraction_below_0p995": sum(
+            float(row["largest_component_fraction"]) < 0.995
+            for row in topology_rows
+        ),
+        "n_masks_touching_volume_border": sum(
+            int(row["touches_volume_border"]) for row in topology_rows
+        ),
+        "mask_cleanup_applied": False,
+        "cleanup_decision": (
+            "Retain official HD-BET masks. Largest-component filtering would only "
+            "remove islands of at most 21 voxels and would not address connected "
+            "anterior inclusions; no outcome-informed cleanup is introduced."
+        ),
         "views": axis_labels,
         "slice_rule": "rounded center of mass of the binary HD-BET mask",
         "overlay": "HD-BET binary-mask contour on source T1w",
@@ -158,8 +227,12 @@ def main() -> None:
             "segmentation validation or morphometric validation."
         ),
     }
+    metadata_text = json.dumps(metadata, indent=2) + "\n"
     (args.output_dir / "skullstrip_qc_metadata.json").write_text(
-        json.dumps(metadata, indent=2) + "\n", encoding="utf-8"
+        metadata_text, encoding="utf-8"
+    )
+    (args.compact_output_dir / "maclaren_skullstrip_qc_metadata.json").write_text(
+        metadata_text, encoding="utf-8"
     )
     print(f"Wrote external skull-strip QC to {args.output_dir}")
 
