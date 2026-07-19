@@ -1,0 +1,13 @@
+participant_id,output,unit,n_runs,mean,sd,median,mad,iqr,min,max,range,modal_class,n_nonmodal,fraction_nonmodal,claim_level
+sub-01,predicted_brain_age_years,years,40,54.593471,2.1870849,54.775392,1.113739,2.2991532,50.190109,59.502636,9.312527,,,,
+sub-02,predicted_brain_age_years,years,40,49.846008,1.6710969,49.834519,1.3455355,2.728844,46.479652,52.810658,6.331006,,,,
+sub-03,predicted_brain_age_years,years,40,51.618018,2.5481224,51.01301,1.8463515,3.9893832,47.452808,57.821968,10.36916,,,,
+sub-01,predicted_ventricle_volume_mm3,mm3,40,20889.673,2812.0161,21264.993,1662.085,3384.8215,14379.429,26098.041,11718.612,,,,
+sub-02,predicted_ventricle_volume_mm3,mm3,40,28307.984,2855.3468,28714.217,2271.201,3688.125,23163.01,33135.316,9972.306,,,,
+sub-03,predicted_ventricle_volume_mm3,mm3,40,15627.6,2432.0966,15432.746,1646.612,3022.1022,9448.8555,21097.736,11648.881,,,,
+sub-01,predicted_brain_volume_mm3,mm3,40,1498478.5,25919.81,1504147.9,14414.55,28896.1,1426737.4,1544227.8,117490.4,,,,
+sub-02,predicted_brain_volume_mm3,mm3,40,1512815.2,27153.337,1514528.1,13749.2,23946.45,1451086.4,1574657.1,123570.7,,,,
+sub-03,predicted_brain_volume_mm3,mm3,40,1463992.6,30744.312,1461477.6,24212.85,54274.65,1401372.4,1524705.5,123333.1,,,,
+sub-01,predicted_sex_binary,class,40,0.975,,,,,,,,1,1,0.025,model_audit_not_health_score
+sub-02,predicted_sex_binary,class,40,1,,,,,,,,1,0,0,model_audit_not_health_score
+sub-03,predicted_sex_binary,class,40,1,,,,,,,,1,0,0,model_audit_not_health_score

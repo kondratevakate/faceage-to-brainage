@@ -1,0 +1,50 @@
+{
+  "dataset_id": "maclaren_ds000239",
+  "release": "R1.0.1",
+  "model": "rockNroll87q/NeuroFM neurofm-s",
+  "source_commit": "d4e3c463910d939a681d24ebdeb26d44dea6878f",
+  "n_rows": 72,
+  "n_nonbaseline_rows": 69,
+  "n_successful": 69,
+  "n_failed": 3,
+  "failed_cases": [
+    {
+      "participant_id": "sub-01",
+      "relative_path": "sub-01/anat/sub-01_run-20_T1w.nii.gz",
+      "perturbation": "resolution_1mm",
+      "reason": "official_neurofm_no_summary_output"
+    },
+    {
+      "participant_id": "sub-02",
+      "relative_path": "sub-02/anat/sub-02_run-20_T1w.nii.gz",
+      "perturbation": "resolution_1mm",
+      "reason": "official_neurofm_no_summary_output"
+    },
+    {
+      "participant_id": "sub-03",
+      "relative_path": "sub-03/anat/sub-03_run-20_T1w.nii.gz",
+      "perturbation": "resolution_1mm",
+      "reason": "official_neurofm_no_summary_output"
+    }
+  ],
+  "observed_failure_note": "All three resolution_1mm inputs were 236x270x270 at 1 mm RAS. The official NeuroFM fast conform path attempted padding/reorientation, could not crop axes larger than 256, and therefore supplied an incompatible shape to the model.",
+  "n_participants": 3,
+  "latent_shape": [
+    69,
+    160
+  ],
+  "latent_dimensions_declared_by_registry": 161,
+  "latent_dimensions_observed_at_multihead_output": 160,
+  "latent_dimension_contract_note": "At commit d4e3c46 NeuroFM-S declares 161 dimensions but executes a 160-dimensional multihead_output layer; the upstream model and weights were not modified.",
+  "input_manifest_sha256": "8d91f673c75cb43fb974aaccd59ecc71fffd9bc1259f1dd7b329f64fd8b83bce",
+  "results_summary_sha256": "8ebc26e83925efcb259462beddc9c3c00e912323081381f7a70d13a39e5a0fe1",
+  "latent_array_sha256": "883b4c8227c0c5e491c3a582daefaeff9dfaf5cc609ec707270c3870f96ae83a",
+  "baseline_predictions_sha256": "629812156518536a2604523a38fb8fb1dbd5b1cc1fe4b80b9766079ba1be8a69",
+  "baseline_rerun_max_absolute_scalar_difference": 0.05000000004656613,
+  "baseline_rerun_comparison_tolerance": {
+    "rtol": 1e-06,
+    "atol": 1e-05
+  },
+  "equivalence_test_permitted": false,
+  "critical_interpretation": "Observed perturbation deltas are a three-person numerical sensitivity screen. They do not establish equivalence, biological response, age accuracy, segmentation validity, morphometry, or clinical utility."
+}

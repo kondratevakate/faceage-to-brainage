@@ -1,0 +1,55 @@
+{
+  "dataset_id": "bnu1_corr",
+  "release": "FCP_INDI_S3_snapshot_2026-07-18",
+  "dataset_doi": "10.15387/fcp_indi.corr.bnu1",
+  "generated_utc": "2026-07-18T21:10:01.086946+00:00",
+  "download_manifest_sha256": "5d2d82cb6bc77e1c8f31fe207f2d2c7c5104e245c98ea477743543cdddbbd776",
+  "participants_tsv_sha256": "e8da6e55ca84a2575afb8c9eaf8df1d92f13fe926dc1f499b68c868b0dc71204",
+  "t1w_json_sha256": "904c0d1dd3441de5cced1f95df10f9fe0cda910536a9d38b73ef619d24e5078a",
+  "n_participants_metadata": 57,
+  "n_t1_scans": 107,
+  "n_session_1_t1": 57,
+  "n_session_2_t1": 50,
+  "n_complete_source_t1_pairs": 50,
+  "n_primary_qc_passed_t1_pairs": 49,
+  "n_header_numeric_qc_pass": 106,
+  "n_header_numeric_qc_fail": 1,
+  "header_numeric_qc_failures": [
+    "sub-0025913/ses-2/anat/sub-0025913_ses-2_run-1_T1w.nii.gz"
+  ],
+  "paired_qc_excluded_participants": [
+    "sub-0025913"
+  ],
+  "n_baseline_only": 7,
+  "baseline_only_participants": [
+    "sub-0025914",
+    "sub-0025915",
+    "sub-0025916",
+    "sub-0025917",
+    "sub-0025918",
+    "sub-0025919",
+    "sub-0025920"
+  ],
+  "baseline_age_years": {
+    "minimum": 19.0,
+    "maximum": 30.0,
+    "mean": 23.05263157894737
+  },
+  "reported_sex_counts": {
+    "female": 27,
+    "male": 30
+  },
+  "retest_duration_days": {
+    "minimum": 33,
+    "maximum": 55,
+    "mean": 40.94736842105263,
+    "sd": 4.509597117860257
+  },
+  "documented_neurofm_age_range_years": [
+    40,
+    90
+  ],
+  "all_participants_below_neurofm_documented_age_range": true,
+  "source_face_status": "face_removed_per_CoRR_data_aggregation_policy",
+  "permitted_claim": "test_retest_robustness_only_not_age_accuracy"
+}
