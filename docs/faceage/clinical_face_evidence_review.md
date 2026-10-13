@@ -22,7 +22,9 @@ modes have already produced retractions. Dataset routes for paired twin
 face-brain data are in
 [`../twin_head_imaging_datasets.md`](../twin_head_imaging_datasets.md); this
 review adds only the computer-vision twin benchmarks that registry does not
-cover.
+cover. The regulatory and partnership consequences of the claims discussed here
+are in
+[translation_and_regulatory_landscape.md](translation_and_regulatory_landscape.md).
 
 ## Research question
 
