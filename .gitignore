@@ -86,3 +86,11 @@ notebooks/
 # Public article source lives in project_page/. Raw crops, meshes, MRI surfaces,
 # CSV manifests, model binaries, and alignment dumps stay local.
 data/avatar_2026_work/
+
+# Outreach drafts and contact tracker hold third-party contact details; keep local
+papers/outreach/email_*.md
+data/twin_dataset_outreach.csv
+
+# Syncthing conflict copies and local worktrees
+*.sync-conflict-*
+_worktrees/
