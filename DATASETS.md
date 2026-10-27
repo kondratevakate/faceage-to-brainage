@@ -2,6 +2,12 @@
 
 A curated catalog of imaging datasets that matter for this project. Sorted by *what they let you do for face-from-MRI work*, not by acquisition modality.
 
+For the separately audited catalog of **twin** MRI/fMRI, face, 3D, dental,
+ocular, biometric, and commercial resources, see
+[docs/twin_head_imaging_datasets.md](docs/twin_head_imaging_datasets.md). That
+catalog records whether each link is a real download, licensed/DUA access,
+commercial offer, or only a paper, and whether the released MRI retains a face.
+
 The project's central premise is **paired face-age and brain-age estimation from the same non-defaced T1 volume** ([README](README.md)). That premise needs data along four axes:
 
 1. **MRI with face preserved** — the actual input modality. Most public brain MRI is defaced; we need the small subset that isn't.

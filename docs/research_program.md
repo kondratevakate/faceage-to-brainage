@@ -71,12 +71,15 @@ causal ageing rate or that one modality diagnoses the other.
 flowchart TD
     D[Development data] --> F[Freeze FaceAge pipeline]
     D --> B[Freeze BrainAge pipelines]
-    F --> FV[External FaceAge gates]
-    B --> BV[External BrainAge gates]
+    F --> FP[Register external FaceAge validation]
+    B --> BP[Register external BrainAge validation]
+    FP --> FV[External FaceAge gates]
+    BP --> BV[External BrainAge gates]
     FV --> G{Both branches pass?}
     BV --> G
     G -->|No| Q[Report branch-specific limitations]
-    G -->|Yes| P[Open paired holdout]
+    G -->|Yes| PR[Register paired analysis]
+    PR --> P[Open paired holdout]
     P --> R[Cross-fitted residual association]
     P --> N[Negative controls]
     R --> E[External replication]
@@ -217,6 +220,10 @@ The research program is complete only when:
 Follow TRIPOD+AI/PROBAST+AI principles for prediction studies and report all
 attempted cases. Preregister the primary endpoint, exclusions, equivalence
 margins, covariates, and multiplicity families before opening the holdout.
+The staged decision and branch-specific OSF drafts are documented in the
+[preregistration strategy](preregistration/README.md). Existing development and
+robustness results are disclosed as prior knowledge; they are not retroactively
+described as preregistered.
 
 Faces and non-defaced head MRI are highly identifying biometric data. Raw data,
 linkage keys, NIfTI files, photographs, model weights, and logs stay in approved

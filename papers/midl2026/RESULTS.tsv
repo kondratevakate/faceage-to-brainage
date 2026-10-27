@@ -1,0 +1,7 @@
+ts	tag	n	r_raw	r_bias_corrected	partial_r_given_age	face_gap_age_slope	brain_gap_age_slope	decision
+2026-04-24T22:55:54	primary_gap_confound	93	0.3079	-0.01481	-0.01481	-0.4636	-0.2829	ACCEPT H1 — the claim is age-bias-confounded.
+2026-04-24T22:55:54	secondary_simon_slope	SynthBA (brain)	102	0.1484	6.937e-05	0.1471	-16.23
+2026-04-24T22:55:54	secondary_simon_slope	Face morphometrics	82	0.03821	0.837	0.0005325	5.141
+2026-04-24T22:55:54	secondary_simon_slope	FaceAge multiview	90	-0.1399	0.4436	0.006685	8.517
+2026-04-24T22:55:54	tertiary_ixi_strat	20-45	75	0.3058	0.08337	0.007638
+2026-04-24T22:55:54	tertiary_ixi_strat	45-65	15	-0.3494	-0.3982	0.2018

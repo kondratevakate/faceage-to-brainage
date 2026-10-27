@@ -151,14 +151,27 @@ A dataset enters analysis only when all items are resolved:
 
 ## Immediate deliverables
 
-1. **Completed:** Maclaren inclusion, HD-BET QC, NeuroFM-S repeatability, and
+1. **Data-discovery audit completed:** the twin head-imaging catalogue and
+   [search log](twin_head_imaging_search_log.md) are versioned. RATSS and the
+   Forsyth/Moorrees archive are newly promoted to P0; hidden clinical archives
+   remain addressable only through holder snowballing.
+2. **Outreach ready:** send the first-wave feasibility messages in
+   [`papers/outreach/twin_data_access_campaign.md`](../papers/outreach/twin_data_access_campaign.md)
+   after affiliation, sponsor and ethics fields are completed. Track every send,
+   response and follow-up in
+   [`data/twin_dataset_outreach.csv`](../data/twin_dataset_outreach.csv).
+3. **Preregistration drafts ready:** finalize separate
+   [FaceAge and BrainAge registrations](preregistration/README.md) after one
+   untouched external cohort, model hash, sample size and ethics route are
+   locked. Do not open paired outcomes before the later paired registration.
+4. **Completed:** Maclaren inclusion, HD-BET QC, NeuroFM-S repeatability, and
    perturbation analysis are frozen and reported. The age output failed the
    predefined robustness gate; this is not an age-accuracy result.
-2. **Acquisition completed:** BNU1 is hash-verified and its 49-pair QC cohort is
+5. **Acquisition completed:** BNU1 is hash-verified and its 49-pair QC cohort is
    frozen. Run HD-BET and the complete official model pipelines next.
-3. Audit the local IXI release for demographics, face coverage, and overlap with
+6. Audit the local IXI release for demographics, face coverage, and overlap with
    each candidate model.
-4. Submit NoW, FaceBase, Headspace, FaceScape, CamCAN, OASIS-3, and NKI-RS access
+7. Submit NoW, FaceBase, Headspace, FaceScape, CamCAN, OASIS-3, and NKI-RS access
    requests where institutional credentials and approvals are available.
-5. Build the prospective ethics/consent package only after the public-data gap
+8. Build the prospective ethics/consent package only after the public-data gap
    audit is complete.
